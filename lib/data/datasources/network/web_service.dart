@@ -15,7 +15,11 @@ class WebService {
 
   Future<Dio> httpClient() async {
     _dio.options.baseUrl = Enviroment.BASE_URL_QA;
+    _dio.options.headers.addAll({"content-type": "application/json"});
+    _dio.options.headers.addAll({"Accept": "application/json"});
+    // _dio.options.responseType.
     final token = await Preferences.storage.read(key: 'token');
+    
     if (token != null) {
       _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
         options.headers['Authorization'] = token;

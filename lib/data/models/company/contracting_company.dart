@@ -2,39 +2,40 @@ import 'package:carpooling_passenger/data/models/helpers/only_id.dart';
 import 'package:carpooling_passenger/data/models/helpers/parameter.dart';
 
 class ContractingCompany {
-    ContractingCompany({
-        required this.updateDate,
-        required this.address,
-        required this.companyType,
-        required this.mobileNumber,
-        required this.businessName,
-        required this.contractNumber,
-        required this.identificationType,
-        required this.updater,
-        required this.phoneNumber,
-        required this.nit,
-        this.companyResponsible,
-        required this.id,
-        required this.email,
-        required this.status,
-    });
+  ContractingCompany({
+    required this.updateDate,
+    required this.address,
+    required this.companyType,
+    required this.mobileNumber,
+    required this.businessName,
+    required this.contractNumber,
+    required this.identificationType,
+    required this.updater,
+    required this.phoneNumber,
+    required this.nit,
+    required this.companyResponsible,
+    required this.id,
+    required this.email,
+    required this.status,
+  });
 
-    DateTime updateDate;
-    String address;
-    Parameter companyType;
-    String mobileNumber;
-    String businessName;
-    String contractNumber;
-    Parameter identificationType;
-    OnlyId updater;
-    String phoneNumber;
-    String nit;
-    dynamic companyResponsible;
-    int id;
-    String email;
-    bool status;
+  DateTime updateDate;
+  String address;
+  Parameter companyType;
+  String mobileNumber;
+  String businessName;
+  String contractNumber;
+  Parameter identificationType;
+  OnlyId updater;
+  String phoneNumber;
+  String nit;
+  dynamic companyResponsible;
+  int id;
+  String email;
+  bool status;
 
-    factory ContractingCompany.fromJson(Map<String, dynamic> json) => ContractingCompany(
+  factory ContractingCompany.fromJson(Map<String, dynamic> json) =>
+      ContractingCompany(
         updateDate: DateTime.parse(json["updateDate"]),
         address: json["address"],
         companyType: Parameter.fromJson(json["companyType"]),
@@ -45,13 +46,15 @@ class ContractingCompany {
         updater: OnlyId.fromJson(json["updater"]),
         phoneNumber: json["phoneNumber"],
         nit: json["nit"],
-        companyResponsible: ContractingCompany.fromJson(json["companyResponsible"]),
+        companyResponsible: json["companyResponsible"] == null
+            ? null
+            : ContractingCompany.fromJson(json["companyResponsible"]),
         id: json["id"],
         email: json["email"],
         status: json["status"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "updateDate": updateDate.toIso8601String(),
         "address": address,
         "companyType": companyType.toJson(),
@@ -62,9 +65,9 @@ class ContractingCompany {
         "updater": updater.toJson(),
         "phoneNumber": phoneNumber,
         "nit": nit,
-        "companyResponsible": companyResponsible.toJson(),
+        "companyResponsible": companyResponsible == null ? null : companyResponsible.toJson(),
         "id": id,
         "email": email,
         "status": status,
-    };
+      };
 }
