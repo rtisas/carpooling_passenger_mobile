@@ -1,8 +1,8 @@
 import 'package:carpooling_passenger/data/models/helpers/only_id.dart';
 import 'package:carpooling_passenger/data/models/helpers/parameter.dart';
 
-class ContractingCompany {
-  ContractingCompany({
+class Company {
+  Company({
     required this.updateDate,
     required this.address,
     required this.companyType,
@@ -34,8 +34,8 @@ class ContractingCompany {
   String email;
   bool status;
 
-  factory ContractingCompany.fromJson(Map<String, dynamic> json) =>
-      ContractingCompany(
+  factory Company.fromJson(Map<String, dynamic> json) =>
+      Company(
         updateDate: DateTime.parse(json["updateDate"]),
         address: json["address"],
         companyType: Parameter.fromJson(json["companyType"]),
@@ -48,7 +48,7 @@ class ContractingCompany {
         nit: json["nit"],
         companyResponsible: json["companyResponsible"] == null
             ? null
-            : ContractingCompany.fromJson(json["companyResponsible"]),
+            : Company.fromJson(json["companyResponsible"]),
         id: json["id"],
         email: json["email"],
         status: json["status"],

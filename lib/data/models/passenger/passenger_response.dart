@@ -19,25 +19,25 @@ class PassengerResoponse {
 
     String frDestinyLatitude;
     String frOriginLatitude;
-    ContractingCompany contractingCompany;
+    Company contractingCompany;
     String frDestinyLongitude;
     BasicData basicData;
     int id;
     String frOriginHour;
     String pushToken;
-    ContractingCompany transportCompany;
+    Company transportCompany;
     String frOriginLongitude;
 
     factory PassengerResoponse.fromJson(Map<String, dynamic> json) => PassengerResoponse(
         frDestinyLatitude: json["frDestinyLatitude"],
         frOriginLatitude: json["frOriginLatitude"],
-        contractingCompany: ContractingCompany.fromJson(json["contractingCompany"]),
+        contractingCompany: Company.fromJson(json["contractingCompany"]),
         frDestinyLongitude: json["frDestinyLongitude"],
         basicData: BasicData.fromJson(json["basicData"]),
         id: json["id"],
         frOriginHour: json["frOriginHour"],
         pushToken: json["pushToken"],
-        transportCompany: ContractingCompany.fromJson(json["transportCompany"]),
+        transportCompany: Company.fromJson(json["transportCompany"]),
         frOriginLongitude: json["frOriginLongitude"],
     );
 
