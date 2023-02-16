@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import '../pages.dart';
-import '../routes/routes.page.dart';
 import 'package:carpooling_passenger/presentation/pages/home/controller/home.controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,33 +11,30 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeCtrl = Get.find<HomeController>();
     return Scaffold(
-      body: Obx(
-        () => Screen(positionTap: homeCtrl.tabIndex.value),
-      ),
+      body: Screen(homeCtrl: homeCtrl),
       bottomNavigationBar: const _ButtomNavigationBar(),
     );
   }
 }
 
 class Screen extends StatelessWidget {
-  final int positionTap;
+  final HomeController homeCtrl;
   const Screen({
-    required this.positionTap,
     Key? key,
+    required this.homeCtrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print('LOG valor postionTap ${positionTap}');
-    if (positionTap == 0) {
-      return const ProfileMenuPage();
-    } else if (positionTap == 1) {
-      return const RoutesPage();
-    } else {
-      return const Center(
-        child: Text('Monedero'),
-      );
-    }
+    return Obx(() {
+      if (homeCtrl.tabIndex.value == 0) {
+        return const ProfileMenuPage();
+      } else if (homeCtrl.tabIndex.value == 1) {
+        return RoutesPage(homeCtrl: homeCtrl);
+      } else {
+        return const VirtualWalletPage();
+      }
+    });
   }
 }
 
@@ -49,27 +44,26 @@ class _ButtomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeCtrl = Get.find<HomeController>();
-    return BottomNavigationBar(
-      elevation: 0,
-      currentIndex: homeCtrl.tabIndex.value,
-      onTap: (value) {
-        print('LOG cambio de tabIndex ${homeCtrl.tabIndex.value}');
-        homeCtrl.tabIndex.value = value;
-      },
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.monetization_on_rounded),
-          label: 'Monedero',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.route),
-          label: 'Rutas',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Perfil',
-        ),
-      ],
-    );
+    return Obx(() => BottomNavigationBar(
+          elevation: 0,
+          currentIndex: homeCtrl.tabIndex.value,
+          onTap: (value) {
+            homeCtrl.tabIndex.value = value;
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.monetization_on_rounded),
+              label: 'Monedero',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.route),
+              label: 'Rutas',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Perfil',
+            ),
+          ],
+        ));
   }
 }
