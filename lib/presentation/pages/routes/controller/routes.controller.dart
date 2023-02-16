@@ -5,17 +5,16 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../data/models/routes/station_response.dart';
 import '../../../../domain/usescases/routes/routes_use_case.dart';
 
-
 class RoutesController extends GetxController {
   final RoutesUseCase routesUseCase;
-  
+
   RxBool isLoading = false.obs;
   Rx<List<StationResponse>> listStations = Rx([]);
   Rx<Set<Marker>> markersRoute = Rx({});
   List<LatLng> latLen = [];
-  List<PointLatLng>? polylinePoints;
-  Function onTapMarker = (){};
-  RxBool showDialogReserve = false.obs; // nos permite saber si quiere agendar 
+  Rx<List<PointLatLng>>? polylinePoints = Rx([]);
+  Function onTapMarker = () {};
+  RxBool showDialogReserve = false.obs; // nos permite saber si quiere agendar
 
   RoutesController(this.routesUseCase);
 
@@ -27,31 +26,33 @@ class RoutesController extends GetxController {
 
   getStationsByRoute() async {
     isLoading.value = true;
-    return await routesUseCase
+    await routesUseCase
         .getStationsByRoute(Get.arguments.id.toString())
         .then((value) => value.fold((failure) {
               isLoading.value = false;
               return null;
             }, (stationsResponse) async {
-              // this.isLoading.value = false;
+              isLoading.value = false;
               listStations.value = stationsResponse;
               listStations.value.sort((a, b) => a.index.compareTo(b.index));
 
-              listStations.value.forEach((station) {
-                latLen.add(LatLng(double.parse(station.latitude),double.parse(station.longitude)));
+              for (var station in listStations.value) {
+                latLen.add(LatLng(double.parse(station.latitude),
+                    double.parse(station.longitude)));
                 Marker marker = Marker(
                   markerId: MarkerId(station.index.toString()),
-                  position: LatLng(double.parse(station.latitude),double.parse(station.longitude)),
+                  position: LatLng(double.parse(station.latitude),
+                      double.parse(station.longitude)),
                   icon: BitmapDescriptor.defaultMarker,
                   infoWindow: InfoWindow(title: station.nameStation),
                   onTap: () {
-                    print('LOG agendar  ${ station.nameStation }');
+                    print('LOG agendar  ${station.nameStation}');
                     showDialogReserve.value = true;
                     onTapMarker;
                   },
                 );
                 markersRoute.value.add(marker);
-              });
+              }
               return await getWayPointsFromGoogleMaps();
             }));
   }
@@ -60,19 +61,19 @@ class RoutesController extends GetxController {
     StationResponse destine =
         listStations.value.where((element) => element.index == 99).toList()[0];
     String latlogDestine = '${destine.latitude},${destine.longitude}';
-    List<String> waypoints = latLen.map((e) => '${e.latitude},${e.longitude}').toList();
+    List<String> waypoints =
+        latLen.map((e) => '${e.latitude},${e.longitude}').toList();
 
-    return await routesUseCase
+    await routesUseCase
         .getWayPointsFromGoogleMaps(
             '${latLen[0].latitude},${latLen[0].longitude}',
             latlogDestine,
             waypoints)
         .then((value) => value.fold((l) => null, (responsePolyline) {
-              this.polylinePoints = PolylinePoints().decodePolyline(
+              polylinePoints?.value = PolylinePoints().decodePolyline(
                   responsePolyline.routes[0].overviewPolyline.points);
-              this.isLoading.value = false;
-              return this.polylinePoints;
+              isLoading.value = false;
+              return polylinePoints;
             }));
   }
-  
 }

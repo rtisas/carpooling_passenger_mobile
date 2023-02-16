@@ -16,8 +16,6 @@ class _RoutesAvailablesTabState extends State<RoutesAvailablesTab>
   @override
   bool get wantKeepAlive => true;
 
-  // final HomeController homeCtrl;
-
   @override
   Widget build(BuildContext context) {
     final homeCtrl = Get.find<HomeController>();

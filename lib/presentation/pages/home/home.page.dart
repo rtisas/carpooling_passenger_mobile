@@ -30,7 +30,7 @@ class Screen extends StatelessWidget {
       if (homeCtrl.tabIndex.value == 0) {
         return const ProfileMenuPage();
       } else if (homeCtrl.tabIndex.value == 1) {
-        return RoutesPage(homeCtrl: homeCtrl);
+        return const RoutesPage();
       } else {
         return const VirtualWalletPage();
       }

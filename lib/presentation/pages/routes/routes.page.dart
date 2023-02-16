@@ -1,14 +1,10 @@
 import 'package:carpooling_passenger/presentation/pages/routes/tabs/routes_availables_tab.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../../data/models/routes/route_response.dart';
-import '../home/controller/home.controller.dart';
 
 class RoutesPage extends StatelessWidget {
-  const RoutesPage({Key? key, required this.homeCtrl}) : super(key: key);
+  const RoutesPage({Key? key}) : super(key: key);
 
-  final HomeController homeCtrl;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
