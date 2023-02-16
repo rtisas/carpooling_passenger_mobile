@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authCtrl = Get.find<AuthController>();
-    SizeConfig(context);
+    SizeConfig(context); // obteniendo el tamaño de pantalla
 
     return Scaffold(
       appBar: AppBar(

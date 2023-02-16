@@ -11,7 +11,7 @@ class CardRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed('detail-route',arguments: route);
+        Get.toNamed('detail-route',arguments: route,  );
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 5),

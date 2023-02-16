@@ -6,7 +6,6 @@ import 'package:carpooling_passenger/core/styles/app_theme.dart';
 import 'presentation/exports/binding.dart';
 import 'presentation/pages/pages.dart';
 
-
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -15,14 +14,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      transitionDuration: Duration.zero,
       debugShowCheckedModeBanner: !Enviroment.production,
       initialRoute: '/login',
       initialBinding: AuthBinding(),
       theme: AppTheme().getTheme(),
       getPages: [
-        GetPage( name: '/login', page: () => const LoginPage() ),
-        GetPage( name: '/home',  page: () => const HomePage(), binding: HomeBinding()),
-        GetPage( name: '/detail-route',  page: () => const DetailRoutePage(), binding: RoutesBinding()),
+        GetPage(name: '/login', page: () => const LoginPage()),
+        GetPage(
+            name: '/home',
+            page: () => const HomePage(),
+            binding: HomeBinding()),
+        GetPage(
+            name: '/detail-route',
+            page: () => const DetailRoutePage(),
+            bindings: [RoutesBinding(), DetailRouteBinding()]),
       ],
     );
   }

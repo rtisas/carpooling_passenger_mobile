@@ -44,7 +44,7 @@ class RoutesController extends GetxController {
                   position: LatLng(double.parse(station.latitude),
                       double.parse(station.longitude)),
                   icon: BitmapDescriptor.defaultMarker,
-                  infoWindow: InfoWindow(title: station.nameStation),
+                  infoWindow: InfoWindow(title: station.nameStation, ),
                   onTap: () {
                     print('LOG agendar  ${station.nameStation}');
                     showDialogReserve.value = true;

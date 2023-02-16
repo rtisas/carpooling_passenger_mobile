@@ -18,6 +18,7 @@ class _RoutesAvailablesTabState extends State<RoutesAvailablesTab>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final homeCtrl = Get.find<HomeController>();
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),

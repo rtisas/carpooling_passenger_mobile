@@ -13,13 +13,11 @@ class AppTheme {
   static const colorError = Color(0xffff4d6d);
 
   ThemeData getTheme() => ThemeData(
-    // useMaterial3: true,
+    useMaterial3: true,
     brightness: Brightness.light,
     colorScheme: const ColorScheme.light(
     primary: colorPrimaryColor,
-
     ),
-
   );
 
 
