@@ -185,8 +185,14 @@ class _GenerateBooking extends StatelessWidget {
             '¡Agenda tu puesto ahora!',
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
           ),
+          /**
+           * Hay que agregar la startStation
+           * Hay que agregar la endStation
+           * index: oculto
+           * hay que agregar timeBooking
+           * hay que agregar datebooking
+           */
         ),
-        
       ],
     );
   }

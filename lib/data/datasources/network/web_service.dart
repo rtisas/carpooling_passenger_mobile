@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 
 import '../../../core/application/preferences.dart';
 
-
 class WebService {
   static final WebService _webService = WebService._internal();
   final Dio _dio = Dio();
@@ -12,6 +11,7 @@ class WebService {
   }
 
   WebService._internal();
+  //TODO: BORRAR LA SESIÓN CUANDO SE EXPIRE EL TOKEN 401
 
   Future<Dio> httpClient() async {
     _dio.options.baseUrl = Enviroment.BASE_URL_QA;
@@ -19,7 +19,7 @@ class WebService {
     _dio.options.headers.addAll({"Accept": "application/json"});
     // _dio.options.responseType.
     final token = await Preferences.storage.read(key: 'token');
-    
+
     if (token != null) {
       _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
         options.headers['Authorization'] = token;
