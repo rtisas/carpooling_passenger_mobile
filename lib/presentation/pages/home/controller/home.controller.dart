@@ -29,7 +29,6 @@ class HomeController extends GetxController {
     //Obteniendo el usuario de las preferenecias del usuario
     user.value = PassengerResoponse.fromJson(
         jsonDecode(await Preferences.storage.read(key: 'userPassenger') ?? ''));
-    print('LOG llamando el gt User de homeCtrl ${ user.value?.basicData.firstName }');
   }
 
   getRoutesAvailable() async {

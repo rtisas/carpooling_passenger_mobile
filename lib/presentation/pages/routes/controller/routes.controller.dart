@@ -13,7 +13,6 @@ class RoutesController extends GetxController {
   Rx<Set<Marker>> markersRoute = Rx({});
   List<LatLng> latLen = [];
   Rx<List<PointLatLng>>? polylinePoints = Rx([]);
-  Function onTapMarker = () {};
   RxBool showDialogReserve = false.obs; // nos permite saber si quiere agendar
 
   RoutesController(this.routesUseCase);
@@ -44,11 +43,11 @@ class RoutesController extends GetxController {
                   position: LatLng(double.parse(station.latitude),
                       double.parse(station.longitude)),
                   icon: BitmapDescriptor.defaultMarker,
-                  infoWindow: InfoWindow(title: station.nameStation, ),
+                  infoWindow: InfoWindow(
+                    title: station.nameStation,
+                  ),
                   onTap: () {
-                    print('LOG agendar  ${station.nameStation}');
                     showDialogReserve.value = true;
-                    onTapMarker;
                   },
                 );
                 markersRoute.value.add(marker);
