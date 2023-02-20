@@ -1,4 +1,5 @@
 
+import 'package:carpooling_passenger/data/models/helpers/only_id.dart';
 import 'package:carpooling_passenger/data/models/passenger/passenger_response.dart';
 import 'package:carpooling_passenger/data/models/routes/route_response.dart';
 import 'package:carpooling_passenger/data/models/routes/station_response.dart';
@@ -22,33 +23,33 @@ class BookingResponse {
     });
   
     String timeBooking;
-    StationResponse endStation;
+    OnlyId endStation;
     dynamic comments;
     int index;
     int qualifiying;
     dynamic finalizedService;
     dynamic aproxBooking;
-    RouteResponse route;
+    OnlyId route;
     dynamic startService;
-    PassengerResoponse passenger;
+    OnlyId passenger;
     dynamic service;
-    StationResponse startStation;
+    OnlyId startStation;
     int id;
     String dateBooking;
 
     factory BookingResponse.fromJson(Map<String, dynamic> json) => BookingResponse(
         timeBooking: json["timeBooking"],
-        endStation: StationResponse.fromJson(json["endStation"]),
+        endStation: OnlyId.fromJson(json["endStation"]),
         comments: json["comments"],
         index: json["index"],
         qualifiying: json["qualifiying"],
         finalizedService: json["finalizedService"],
         aproxBooking: json["aproxBooking"],
-        route: RouteResponse.fromJson(json["route"]),
+        route: OnlyId.fromJson(json["route"]),
         startService: json["startService"],
-        passenger: PassengerResoponse.fromJson(json["passenger"]),
+        passenger: OnlyId.fromJson(json["passenger"]),
         service: json["service"],
-        startStation: StationResponse.fromJson(json["startStation"]),
+        startStation: OnlyId.fromJson(json["startStation"]),
         id: json["id"],
         dateBooking: json["dateBooking"],
     );

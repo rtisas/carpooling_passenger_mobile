@@ -64,45 +64,43 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
     final detailRouteCtrl = Get.find<DetailRouteController>();
 
     if (routeCtrl.latLen.isEmpty) return const Text('No hay estaciones');
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-              margin: const EdgeInsets.all(15),
-              alignment: Alignment.topLeft,
-              child: const Text(
-                'Revisa las paradas',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              )),
-          Obx(() {
-            return SizedBox(
-              height: SizeConfig.safeBlockSizeVertical(30),
-              width: double.infinity,
-              child: GoogleMap(
-                mapType: MapType.normal,
-                initialCameraPosition: CameraPosition(
-                    target: routeCtrl.latLen[0], zoom: 14.4746, tilt: 45.0),
-                polylines: {
-                  if (routeCtrl.polylinePoints != null)
-                    Polyline(
-                      polylineId: const PolylineId('overview_polyline'),
-                      color: Colors.red,
-                      width: 5,
-                      points: routeCtrl.polylinePoints!.value
-                          .map((e) => LatLng(e.latitude, e.longitude))
-                          .toList(),
-                    ),
-                },
-                markers: routeCtrl.markersRoute.value,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-              ),
-            );
-          }),
-          const _GenerateBooking(),
-        ],
-      ),
+    return Column(
+      children: [
+        Container(
+            margin: const EdgeInsets.all(15),
+            alignment: Alignment.topLeft,
+            child: const Text(
+              'Revisa las paradas',
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            )),
+        Obx(() {
+          return SizedBox(
+            height: SizeConfig.safeBlockSizeVertical(30),
+            width: double.infinity,
+            child: GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: CameraPosition(
+                  target: routeCtrl.latLen[0], zoom: 14.4746, tilt: 45.0),
+              polylines: {
+                if (routeCtrl.polylinePoints != null)
+                  Polyline(
+                    polylineId: const PolylineId('overview_polyline'),
+                    color: Colors.red,
+                    width: 5,
+                    points: routeCtrl.polylinePoints!.value
+                        .map((e) => LatLng(e.latitude, e.longitude))
+                        .toList(),
+                  ),
+              },
+              markers: routeCtrl.markersRoute.value,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            ),
+          );
+        }),
+        const _GenerateBooking(),
+      ],
     );
   }
 }
@@ -112,25 +110,22 @@ class _GenerateBooking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.all(15),
-          alignment: Alignment.topLeft,
-          child: const Text(
-            '¡Reserva tu puesto ahora!',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-          ),
-          /**
-           * Hay que agregar la startStation
-           * Hay que agregar la endStation
-           * index: oculto
-           * hay que agregar timeBooking
-           * hay que agregar datebooking
-           */
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.all(15),
+              alignment: Alignment.topLeft,
+              child: const Text(
+                '¡Reserva tu puesto ahora!',
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const _FormBooking()
+          ],
         ),
-        const _FormBooking()
-      ],
+      ),
     );
   }
 }
@@ -153,23 +148,21 @@ class _FormBooking extends StatelessWidget {
           children: [
             Text('Estación inicial'),
             Obx(() {
-              return Container(
-                child: DropdownButtonFormField(
-                    isExpanded: true,
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Por favor selecciona una opción';
-                      }
-                      return null;
-                    },
-                    value: detailRouteCtrl.idSelectedStartStation.value,
-                    items: detailRouteCtrl.stationsDropdown,
-                    onChanged: (value) {
-                      detailRouteCtrl.findStationsEnd(value.toString());
-                      detailRouteCtrl.idSelectedStartStation.value =
-                          value.toString();
-                    }),
-              );
+              return DropdownButtonFormField(
+                  isExpanded: true,
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Por favor selecciona una opción';
+                    }
+                    return null;
+                  },
+                  value: detailRouteCtrl.idSelectedStartStation.value,
+                  items: detailRouteCtrl.stationsDropdown,
+                  onChanged: (value) {
+                    detailRouteCtrl.findStationsEnd(value.toString());
+                    detailRouteCtrl.idSelectedStartStation.value =
+                        value.toString();
+                  });
             }),
             Obx(() {
               return Column(

@@ -1,14 +1,10 @@
-import 'dart:convert';
-
 import 'package:carpooling_passenger/data/models/booking/booking_request.dart';
 import 'package:carpooling_passenger/data/models/helpers/only_id.dart';
-import 'package:carpooling_passenger/data/models/passenger/passenger_response.dart';
 import 'package:carpooling_passenger/domain/usescases/booking/booking_use_case.dart';
 import 'package:carpooling_passenger/domain/usescases/routes/routes_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/application/preferences.dart';
 import '../../../../data/models/routes/route_response.dart';
 
 class DetailRouteController extends GetxController {
@@ -72,36 +68,71 @@ class DetailRouteController extends GetxController {
   }
 
   bool validaFormDetail() {
-    if(idSelectedStartStation.value != "0" && idSelectedEndStation.value != "0"  && dateinput.value.text.length > 3 && timeinput.value.text.length > 3){
+    if (idSelectedStartStation.value != "0" &&
+        idSelectedEndStation.value != "0" &&
+        dateinput.value.text.length > 3 &&
+        timeinput.value.text.length > 3) {
       isValidForm.value = true;
-    }else{
+    } else {
       isValidForm.value = false;
     }
     return isValidForm.value;
   }
 
   createBooking() async {
-    if(validaFormDetail()){
-    // PassengerResoponse? passengerResponse = jsonDecode( await Preferences.storage.read(key: "userPassenger") ?? '');
-
+    if (validaFormDetail()) {
+      // PassengerResoponse? passengerResponse = jsonDecode( await Preferences.storage.read(key: "userPassenger") ?? '');
+      showLoading();
       BookingRequest bookingRequest = BookingRequest(
-        timeBooking: timeinput.text, 
-        endStation: OnlyId(id: int.parse(idSelectedEndStation.value)), 
-        startStation: OnlyId(id: int.parse(idSelectedStartStation.value)), 
-        index: 1, 
-        route: OnlyId(id: route.id), 
+        timeBooking: timeinput.text,
+        endStation: OnlyId(id: int.parse(idSelectedEndStation.value)),
+        startStation: OnlyId(id: int.parse(idSelectedStartStation.value)),
+        index: 1,
+        route: OnlyId(id: route.id),
         dateBooking: dateinput.text,
-        passenger: OnlyId(id: 59), 
-        service: null, 
-        startService: "" , 
-        finalizedService: "", 
+        passenger: OnlyId(id: 59),
+        service: null,
+        startService: "",
+        finalizedService: "",
       );
 
-      final failureOrBookingOK = await _bookingUseCase.createBooking(bookingRequest);
+      final failureOrBookingOK =
+          await _bookingUseCase.createBooking(bookingRequest);
 
-      failureOrBookingOK.fold((l) => print('LOG Ocurrió un error ${ l }'), (r) {
-        print('LOG Todo salió bien  ${ r }');
+      failureOrBookingOK.fold((errorResponse ) {
+        print('LOG: errorResponse Ocurrió un error ${errorResponse}');
+        showMessage('Ocurrió un error', '${errorResponse.message}');
+        
+      }, (r) {
+        print('LOG salió  ${r}');
+        closeDialogLoading();
+        showMessage('Reserva creada',
+            'Gracias por reservar, ten en cuenta que el administrador generará el servicio en base a la cantidad de pasajeros que reserven.');
       });
     }
+  }
+
+  void showMessage(String title, String content) {
+    Get.closeAllSnackbars();
+    Get.snackbar(
+      title,
+      content,
+      backgroundColor: Colors.grey,
+      colorText: Colors.white,
+      snackPosition: SnackPosition.TOP,
+    );
+    Get.toNamed('/home');
+  }
+
+  void showLoading() {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+
+  void closeDialogLoading() {
+    Get.back();
   }
 }

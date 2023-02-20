@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Versión: ${Enviroment.VERSION_APP}'),
+        title: Text('Versión: ${Enviroment.VERSION_APP}.1'),
         centerTitle: true,
       ),
       body: Obx(
