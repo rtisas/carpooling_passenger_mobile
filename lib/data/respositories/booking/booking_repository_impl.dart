@@ -15,7 +15,7 @@ class BookingRepositoryImpl implements BookingRepository{
 
   @override
   Future<Either<Failure, BookingResponse>> createBookingRequest(BookingRequest bookingRequest) async {
-      try {
+    try {
       final bookingResponse = await _bookingRemoteDataSource.createBooking(bookingRequest);
       return Right(bookingResponse);
     } on DataIncorrect {

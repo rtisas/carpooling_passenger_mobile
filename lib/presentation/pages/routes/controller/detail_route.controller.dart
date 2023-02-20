@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carpooling_passenger/data/models/booking/booking_request.dart';
 import 'package:carpooling_passenger/data/models/helpers/only_id.dart';
 import 'package:carpooling_passenger/domain/usescases/booking/booking_use_case.dart';
@@ -5,6 +7,8 @@ import 'package:carpooling_passenger/domain/usescases/routes/routes_use_case.dar
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/application/preferences.dart';
+import '../../../../data/models/passenger/passenger_response.dart';
 import '../../../../data/models/routes/route_response.dart';
 
 class DetailRouteController extends GetxController {
@@ -81,7 +85,10 @@ class DetailRouteController extends GetxController {
 
   createBooking() async {
     if (validaFormDetail()) {
-      // PassengerResoponse? passengerResponse = jsonDecode( await Preferences.storage.read(key: "userPassenger") ?? '');
+      PassengerResoponse? passengerResponse = PassengerResoponse.fromJson(
+          jsonDecode(
+              await Preferences.storage.read(key: "userPassenger") ?? ''));
+
       showLoading();
       BookingRequest bookingRequest = BookingRequest(
         timeBooking: timeinput.text,
@@ -90,7 +97,7 @@ class DetailRouteController extends GetxController {
         index: 1,
         route: OnlyId(id: route.id),
         dateBooking: dateinput.text,
-        passenger: OnlyId(id: 59),
+        passenger: OnlyId(id: passengerResponse.id),
         service: null,
         startService: "",
         finalizedService: "",
@@ -99,10 +106,9 @@ class DetailRouteController extends GetxController {
       final failureOrBookingOK =
           await _bookingUseCase.createBooking(bookingRequest);
 
-      failureOrBookingOK.fold((errorResponse ) {
+      failureOrBookingOK.fold((errorResponse) {
         print('LOG: errorResponse Ocurrió un error ${errorResponse}');
         showMessage('Ocurrió un error', '${errorResponse.message}');
-        
       }, (r) {
         print('LOG salió  ${r}');
         closeDialogLoading();

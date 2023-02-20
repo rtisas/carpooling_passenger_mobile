@@ -28,11 +28,11 @@ class Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (homeCtrl.tabIndex.value == 0) {
-        return const ProfileMenuPage();
+        return const VirtualWalletPage();
       } else if (homeCtrl.tabIndex.value == 1) {
         return const RoutesPage();
       } else {
-        return const VirtualWalletPage();
+        return const ProfileMenuPage();
       }
     });
   }
