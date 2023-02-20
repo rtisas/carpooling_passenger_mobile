@@ -2,6 +2,7 @@ import 'package:carpooling_passenger/data/models/helpers/only_id.dart';
 import 'package:carpooling_passenger/data/models/helpers/parameter.dart';
 
 import '../company/contracting_company.dart';
+import '../file_carpooling/file_carpooling.dart';
 
 class PassengerResoponse {
     PassengerResoponse({
@@ -27,6 +28,7 @@ class PassengerResoponse {
     String pushToken;
     Company transportCompany;
     String frOriginLongitude;
+
 
     factory PassengerResoponse.fromJson(Map<String, dynamic> json) => PassengerResoponse(
         frDestinyLatitude: json["frDestinyLatitude"],
@@ -68,6 +70,7 @@ class BasicData {
         required this.email,
         required this.status,
         required this.updater,
+        this.profilePicture
     });
 
     String firstName;
@@ -81,6 +84,7 @@ class BasicData {
     String email;
     Parameter status;
     OnlyId updater;
+    FileCarpooling? profilePicture;
 
     factory BasicData.fromJson(Map<String, dynamic> json) => BasicData(
         firstName: json["firstName"],
@@ -94,6 +98,7 @@ class BasicData {
         email: json["email"],
         status: Parameter.fromJson(json["status"]),
         updater: OnlyId.fromJson(json["updater"]),
+        profilePicture: FileCarpooling.fromJson(json["profilePicture"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -108,5 +113,6 @@ class BasicData {
         "email": email,
         "status": status.toJson(),
         "updater": updater.toJson(),
+        "profilePicture": profilePicture?.toJson(),
     };
 }

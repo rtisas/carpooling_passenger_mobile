@@ -25,7 +25,7 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-  Future<PassengerResoponse?> getUser() async {
+  getUser() async {
     //Obteniendo el usuario de las preferenecias del usuario
     user.value = PassengerResoponse.fromJson(
         jsonDecode(await Preferences.storage.read(key: 'userPassenger') ?? ''));

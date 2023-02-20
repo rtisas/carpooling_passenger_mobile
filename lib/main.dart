@@ -1,5 +1,3 @@
-import 'package:carpooling_passenger/presentation/pages/virtual_wallet/controller/virtual_wallet.binding.dart';
-import 'package:carpooling_passenger/presentation/pages/virtual_wallet/controller/virtual_wallet.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,7 +28,8 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/detail-route',
             page: () => const DetailRoutePage(),
-            bindings: [RoutesBinding(), DetailRouteBinding()])
+            bindings: [RoutesBinding(), DetailRouteBinding()]),
+        GetPage(name: '/edit-profile', page: () => const EditProfilePage())
       ],
     );
   }
