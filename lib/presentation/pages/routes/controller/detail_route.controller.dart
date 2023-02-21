@@ -18,6 +18,7 @@ class DetailRouteController extends GetxController {
   //Formulario
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RxBool isValidForm = false.obs;
+  RxBool isInvalidDropdown = false.obs;
 
   // RxString selectedDate = "".obs;
   TextEditingController dateinput = TextEditingController();
@@ -44,7 +45,12 @@ class DetailRouteController extends GetxController {
         await _routesUseCase.getStationsByRoute(route.id.toString());
     stationsDropdown.clear();
     return failureOrStations.fold((failure) => null, (stationsResponse) {
-      idSelectedStartStation.value = stationsResponse[0].id.toString();
+      idSelectedStartStation.value = stationsResponse
+          .where((element) => element.index == 1)
+          .first
+          .id
+          .toString();
+      stationsResponse.sort((a, b) => a.index.compareTo(b.index));
       for (var stationElement in stationsResponse) {
         stationsDropdown.add(
           DropdownMenuItem(
@@ -63,12 +69,25 @@ class DetailRouteController extends GetxController {
     for (var i = 0; i < stationsDropdown.length; i++) {
       if (stationsDropdown[i].value == idStationStart) {
         positionStationStart = i;
-        idSelectedEndStation.value = stationsDropdown[i + 1].value ?? '0';
+        if (i != stationsDropdown.length - 1) {
+          //Cuando el usuario selecciona una estación de inicio -> la estación de fin por defecto es la siguiente estación que le sigue
+          idSelectedEndStation.value = stationsDropdown[i + 1].value ?? '0';
+        } else {
+          idSelectedEndStation.value = '0';
+          isInvalidDropdown.value = true;
+        }
       }
     }
-
-    stationsDropdownEnd.value =
-        stationsDropdown.sublist(positionStationStart + 1);
+ 
+    //Se evaluá que si la parada de inicio es la última -> no debe seleccionar una estación de fin
+    if (positionStationStart == stationsDropdown.length - 1) {
+      isInvalidDropdown.value = true;
+      return stationsDropdownEnd.value = [];
+    } else {
+      isInvalidDropdown.value = false;
+      stationsDropdownEnd.value =
+          stationsDropdown.sublist(positionStationStart + 1);
+    }
   }
 
   bool validaFormDetail() {

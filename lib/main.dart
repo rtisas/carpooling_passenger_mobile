@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       transitionDuration: Duration.zero,
       debugShowCheckedModeBanner: !Enviroment.production,
-      initialRoute: '/login',
+      initialRoute: '/login', // hacer lógica para navegar al home
       initialBinding: AuthBinding(),
       theme: AppTheme().getTheme(),
       getPages: [
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
             name: '/detail-route',
             page: () => const DetailRoutePage(),
             bindings: [RoutesBinding(), DetailRouteBinding()]),
-        GetPage(name: '/edit-profile', page: () => const EditProfilePage())
+        GetPage(name: '/edit-profile', page: () => const EditProfilePage(), binding: ProfileBinding())
       ],
     );
   }

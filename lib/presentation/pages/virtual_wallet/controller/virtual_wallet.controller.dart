@@ -10,6 +10,7 @@ import '../../../../data/models/passenger/passenger_response.dart';
 class VirtualWalletController extends GetxController {
   final VirtualWalletUseCase _virtualWalletUseCase;
 
+  RxBool userContainVirtualWallet = false.obs;
   Rx<VirtualWalletResponse?> virtualWalletPassenger = Rx(null);
   VirtualWalletController(this._virtualWalletUseCase);
 
@@ -26,7 +27,9 @@ class VirtualWalletController extends GetxController {
         .getVirtualWalletByPassenger(passengerResponse.id.toString())
         .then((value) => value.fold((l) {
               print('LOG Ocurrió un error ${l.message}');
+              userContainVirtualWallet.value = false;
             }, (responseVirtualWallet) {
+              userContainVirtualWallet.value = true;
               virtualWalletPassenger.value = responseVirtualWallet;
             }));
   }

@@ -12,8 +12,7 @@ class Patterns {
   }
 
   static RegExp patternNumbers() {
-    String numbers = r"^[1-9][0-9]*$";
-    return RegExp(numbers);
+    return RegExp('^([1-9]\\d{8,48})\$', caseSensitive: false);
   }
 
   static RegExp patternName() {

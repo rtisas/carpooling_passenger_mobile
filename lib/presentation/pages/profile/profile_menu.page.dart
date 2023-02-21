@@ -13,27 +13,33 @@ class ProfileMenuPage extends StatelessWidget {
     final homeCtrl = Get.find<HomeController>();
     return Scaffold(body: Builder(builder: (context) {
       return Center(
-          child: SingleChildScrollView(
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               margin: const EdgeInsets.only(top: 30, bottom: 5),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    homeCtrl.user.value!.basicData.profilePicture?.url ?? ''),
-                backgroundColor: Colors.transparent,
-                radius: 80,
-              ),
+              child: Obx(() {
+                return CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      homeCtrl.user.value!.basicData.profilePicture?.url ?? ''),
+                  backgroundColor: Colors.transparent,
+                  radius: 80,
+                );
+              }),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                '${homeCtrl.user.value?.basicData.firstName} ${homeCtrl.user.value?.basicData.lastName}',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            Obx(() {
+              return Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Text(
+                  '${homeCtrl.user.value?.basicData.firstName} ${homeCtrl.user.value?.basicData.lastName}',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 25),
+                  textAlign: TextAlign.center,
+                ),
+              );
+            }),
             OptionProfile(
               title: 'Editar datos personales',
               iconLeading: Icons.person_outline,

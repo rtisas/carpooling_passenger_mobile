@@ -49,6 +49,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource{
           throw NoFound();
         default:
           throw NoNetwork();
+      //TODO: VALIDAR QUE EL USUARIO CON ESTADO CREADO PUEDA INGRESAR NORMAL MIENTRAS QUE EL USUARIO CON ESTADO CAMBIO DE CONTRASEÑA TENGA QUE CAMBIAR LA CONTRASEÑAW
+
       }
       //TODO: BORRAR LA SESIÓN CUANDO SE EXPIRE EL TOKEN 401
     }
@@ -60,8 +62,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource{
       final response = await http.get('facade/get-passenger/user/${idUser}');
       if (response.statusCode == 200) {
         final passenger = PassengerResoponse.fromJson(response.data);
-        await Preferences.storage
-            .write(key: 'userPassenger', value: jsonEncode(passenger.toJson()));
+        await Preferences.storage.write(key: 'userPassenger', value: jsonEncode(passenger.toJson()));
 
         return passenger;
       } else {

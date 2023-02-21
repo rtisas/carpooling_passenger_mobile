@@ -13,5 +13,4 @@ class HomeBinding extends Bindings{
     Get.lazyPut(() => RoutesUseCase(RoutesRepositoryImpl(RoutesRemoteDataSourceImpl(WebService()))));
     Get.put(HomeController(Get.find()), permanent: true);
   }
-
 }

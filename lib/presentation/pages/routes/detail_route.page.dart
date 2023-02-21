@@ -179,7 +179,7 @@ class _FormBooking extends StatelessWidget {
                         return null;
                       },
                       isExpanded: true,
-                      value: detailRouteCtrl.idSelectedEndStation.value,
+                      value: detailRouteCtrl.isInvalidDropdown.value ? null :detailRouteCtrl.idSelectedEndStation.value,
                       items: detailRouteCtrl.stationsDropdownEnd,
                       onChanged: (value) {
                         detailRouteCtrl.idSelectedEndStation.value =

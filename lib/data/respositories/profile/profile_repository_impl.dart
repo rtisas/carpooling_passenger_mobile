@@ -1,5 +1,7 @@
 import 'package:carpooling_passenger/data/models/file_carpooling/upload_file_response.dart';
 import 'package:carpooling_passenger/core/errors/failure.dart';
+import 'package:carpooling_passenger/data/models/passenger/passenger_update_request.dart';
+import 'package:carpooling_passenger/data/models/passenger/passenger_response.dart';
 import 'package:carpooling_passenger/domain/repositories/profile/profile_repository.dart';
 import 'package:dartz/dartz.dart';
 
@@ -13,9 +15,9 @@ class ProfileRepositoryImpl implements ProfileRepositoy {
 
   @override
   Future<Either<Failure, UploadFileResponse>> uploadPictureProfile(
-      String pathFilePicture) async {
+      String pathFilePicture, String idUser) async {
     try {
-      final uploadProfileResponse = await profileRemoteDataSource.uploadPictureUserPasseger(pathFilePicture);
+      final uploadProfileResponse = await profileRemoteDataSource.uploadPictureUserPasseger(pathFilePicture, idUser);
       return Right(uploadProfileResponse);
     } on DataIncorrect {
       return Left(FailureResponse(
@@ -33,6 +35,32 @@ class ProfileRepositoryImpl implements ProfileRepositoy {
       return Left(FailureResponse(
           message:
               'Su rol no tiene permiso de ingresar, comuníquese con administración'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PassengerResoponse>> updatePassenger(String idPassenger, UpdatePassager updatePassager) async {
+    try {
+      final passengerResponse = await profileRemoteDataSource.updatePassenger(idPassenger, updatePassager);
+      return Right(passengerResponse);
+    } on DataIncorrect {
+      return Left(FailureResponse(message: 'Usuario no es válido'));
+    } on NoValidRole {
+      return Left(FailureResponse(
+          message:
+              'No eres un usuario válido'));
+    }on NoNetwork {
+      return Left(FailureResponse(
+          message:
+              'Ocurrió un error, No hay conexión'));
+    } on NoFound {
+      return Left(FailureResponse(
+          message:
+              'Ocurrió un error por parte de nosotros, por favor intente más tarde'));
+    } on ServerException {
+      return Left(FailureResponse(
+          message:
+              'Ocurrió un error, comuníquese con administración'));
     }
   }
 }
