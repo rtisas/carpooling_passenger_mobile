@@ -73,7 +73,9 @@ class ProfileMenuPage extends StatelessWidget {
               iconLeading: Icons.exit_to_app_outlined,
               onPress: () async {
                 await Preferences.storage.deleteAll();
-                Get.offAll(const LoginPage());
+                // homeCtrl.dispose();
+                // Get.clearRouteTree();
+                Get.offAll(() => const LoginPage());
               },
             )
           ],

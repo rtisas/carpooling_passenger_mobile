@@ -35,7 +35,7 @@ class HomeController extends GetxController {
     isLoading.value = true;
     return await routesUseCase.routesRepository
         .listRoutesByCompanyResponsible(
-            this.user.value?.transportCompany.id.toString() ?? '0')
+            user.value?.transportCompany.id.toString() ?? '0')
         .then((value) => value.fold((failure) {
               isLoading.value = false;
               return null;

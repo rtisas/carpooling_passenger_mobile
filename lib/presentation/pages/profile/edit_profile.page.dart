@@ -97,6 +97,9 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
     return Form(
       key: _formKey,
       autovalidateMode: AutovalidateMode.always,
+      onChanged: () {
+        setState(() {});
+      },
       child: Column(
         children: [
           Container(
@@ -106,7 +109,6 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
                 widget.passegerProfileCtrl.userUpdate.value
                     .addAll({'email': value});
                 _formKey.currentState!.validate();
-                setState(() {});
               },
               validator: (value) {
                 return Patterns.patternEmail().hasMatch(value ?? '')
@@ -128,8 +130,6 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
                 widget.passegerProfileCtrl.userUpdate.value
                     .addAll({'firstName': value});
                 _formKey.currentState!.validate();
-                setState(() {});
-
               },
               validator: (value) {
                 return Patterns.validateField(value ?? '', 2, 50,
@@ -144,14 +144,12 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
+            margin: const EdgeInsets.symmetric(vertical: 10),
             child: TextFormField(
               onChanged: (value) {
                 widget.passegerProfileCtrl.userUpdate.value
                     .addAll({'lastName': value});
                 _formKey.currentState!.validate();
-                setState(() {});
-
               },
               validator: (value) {
                 return Patterns.validateField(value ?? '', 2, 50,
@@ -172,8 +170,6 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
                 widget.passegerProfileCtrl.userUpdate.value
                     .addAll({'phoneNumber': value});
                 _formKey.currentState!.validate();
-                setState(() {});
-
               },
               validator: (value) {
                 return Patterns.patternNumbers().hasMatch(value ?? '')
@@ -190,19 +186,20 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
           ),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.only(top: 10, bottom: 30),
+            margin: const EdgeInsets.only(top: 10, bottom: 30),
             child: MaterialButton(
                 padding: EdgeInsets.all(10),
-                shape: StadiumBorder(),
+                shape: const StadiumBorder(),
                 elevation: 0,
                 color: Colors.blue,
-                onPressed: (_formKey.currentState?.validate() == true)
-                    ? () {
-                        widget.passegerProfileCtrl
-                            .updatePassager(widget.homeCtrl);
-                      }
-                    : null,
-                child: Text('Guardar')),
+                onPressed: () {
+                  if (_formKey.currentState?.validate() != null && _formKey.currentState?.validate() == true) {
+                    widget.passegerProfileCtrl.updatePassager(widget.homeCtrl);
+                    // Aquí puedes guardar los datos ingresados en el formulario.
+                  } else {
+                  }
+                },
+                child: const Text('Guardar')),
           )
         ],
       ),
