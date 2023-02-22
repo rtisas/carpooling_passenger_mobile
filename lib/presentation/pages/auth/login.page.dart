@@ -77,12 +77,10 @@ class FormLogin extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              child: Text(
-                'Iniciar Sesión',
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-              ),
+            const Text(
+              'Iniciar Sesión',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
             ),
             TextFormField(
               onChanged: (value) {
@@ -91,7 +89,7 @@ class FormLogin extends StatelessWidget {
               validator: (email) {
                 return Patterns.patternEmail().hasMatch(email ?? '')
                     ? null
-                    : 'No es un correo electrónico ';
+                    : 'No es un correo electrónico válido';
               },
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
@@ -165,9 +163,9 @@ class FormLogin extends StatelessWidget {
                 color: AppTheme.colorPrimaryColor,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
-                child: Text(
+                child: const Text(
                   'Ingresar',
-                  style: const TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             )

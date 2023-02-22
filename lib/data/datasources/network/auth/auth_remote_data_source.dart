@@ -31,12 +31,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource{
         if (loginResonse.user.roleId.id != ROL.passenger.value) {
           throw NoValidRole();
         }
-        await Preferences.storage
-            .write(key: 'token', value: loginResonse.token);
-        await this.getPassengerByUser(loginResonse.user.id);
-        // await Preferences.storage
-        //     .write(key: 'user', value: jsonEncode(loginResonse.user.toJson()));
-
+        await Preferences.storage.write(key: 'token', value: loginResonse.token);
+        await getPassengerByUser(loginResonse.user.id);
         return loginResonse;
       } else {
         throw ServerException();
