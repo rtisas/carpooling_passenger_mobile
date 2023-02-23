@@ -16,7 +16,7 @@ class Patterns {
   }
 
   static RegExp patternName() {
-    String valueName = r"[a-zA-Z0-9À-ÿ]$";
+    String valueName = r'^[a-zA-ZÑñ]{2,15}( [a-zA-ZÑñ]{2,15})*$';
     return RegExp(valueName);
   }
 

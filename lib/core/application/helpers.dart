@@ -21,17 +21,17 @@ class Helpers {
       }
     } catch (e) {
       print('LOG Ocurrió un error al momento de válidar ${1}');
+      return false;
     }
-
     return false;
   }
 
   static bool verifyPassenger(PassengerResoponse passenger) {
-    if (passenger.frDestinyLatitude.isEmpty ||
-        passenger.frDestinyLatitude.isEmpty ||
-        passenger.frOriginLatitude.isEmpty ||
-        passenger.frOriginLongitude.isEmpty ||
-        passenger.frOriginHour.isEmpty) {
+    if (passenger.frDestinyLatitude!.isEmpty ||
+        passenger.frDestinyLatitude!.isEmpty ||
+        passenger.frOriginLatitude!.isEmpty ||
+        passenger.frOriginLongitude!.isEmpty ||
+        passenger.frOriginHour!.isEmpty) {
       return false;
     } else {
       return true;

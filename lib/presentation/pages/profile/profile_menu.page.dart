@@ -11,77 +11,78 @@ class ProfileMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeCtrl = Get.find<HomeController>();
-    return Scaffold(body: Builder(builder: (context) {
-      return Center(
-      child: SingleChildScrollView(
-        child: Column(
+    return Scaffold(
+        body: Container(
+          margin: const EdgeInsets.only(top: 30),
+          child: SingleChildScrollView(
+              child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 30, bottom: 5),
-              child: Obx(() {
-                return CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      homeCtrl.user.value!.basicData.profilePicture?.url ?? ''),
-                  backgroundColor: Colors.transparent,
-                  radius: 80,
-                );
-              }),
+          margin: const EdgeInsets.only(top: 30, bottom: 5),
+          child: Obx(() {
+            return CircleAvatar(
+              backgroundImage: NetworkImage(
+                  homeCtrl.user.value!.basicData.profilePicture?.url ?? ''),
+              backgroundColor: Colors.transparent,
+              radius: 80,
+            );
+          }),
             ),
             Obx(() {
-              return Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Text(
-                  '${homeCtrl.user.value?.basicData.firstName} ${homeCtrl.user.value?.basicData.lastName}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 25),
-                  textAlign: TextAlign.center,
-                ),
-              );
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(
+              '${homeCtrl.user.value?.basicData.firstName} ${homeCtrl.user.value?.basicData.lastName}',
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              textAlign: TextAlign.center,
+            ),
+          );
             }),
             OptionProfile(
-              title: 'Editar datos personales',
-              iconLeading: Icons.person_outline,
-              onPress: () {
-                Get.toNamed('/edit-profile');
-              },
+          title: 'Editar datos personales',
+          iconLeading: Icons.person_outline,
+          onPress: () {
+            Get.toNamed('/edit-profile');
+          },
             ),
             OptionProfile(
-              title: 'Mis reservas',
-              iconLeading: Icons.calendar_month_outlined,
-              onPress: () {
-                print('LOG press Mis reservas ${1}');
-              },
+          title: 'Mis reservas',
+          iconLeading: Icons.calendar_month_outlined,
+          onPress: () {
+            print('LOG press Mis reservas ${1}');
+          },
             ),
             OptionProfile(
-              title: 'Historial de servicios',
-              iconLeading: Icons.history,
-              onPress: () {
-                Get.toNamed('history-services');
-              },
+          title: 'Historial de servicios',
+          iconLeading: Icons.history,
+          onPress: () {
+            Get.toNamed('history-services');
+          },
             ),
             OptionProfile(
-              title: 'Promociones',
-              iconLeading: Icons.topic_outlined,
-              onPress: () {
-                print('LOG press Promociones ${1}');
-              },
+          title: 'Promociones',
+          iconLeading: Icons.topic_outlined,
+          onPress: () {
+            print('LOG press Promociones ${1}');
+          },
             ),
             OptionProfile(
-              title: 'Cerrar Sesión',
-              iconLeading: Icons.exit_to_app_outlined,
-              onPress: () async {
-                await Preferences.storage.deleteAll();
-                // homeCtrl.dispose();
-                // Get.clearRouteTree();
-                Get.offAll(() => const LoginPage());
-              },
+          title: 'Cerrar Sesión',
+          iconLeading: Icons.exit_to_app_outlined,
+          onPress: () async {
+            await Preferences.storage.deleteAll();
+            // homeCtrl.dispose();
+            // Get.clearRouteTree();
+            Get.offAll(() => const LoginPage());
+          },
             )
           ],
-        ),
-      ));
-    }));
+              ),
+            ),
+        ));
   }
 }
 

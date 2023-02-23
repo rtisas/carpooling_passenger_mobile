@@ -79,8 +79,7 @@ class FormLogin extends StatelessWidget {
           children: [
             const Text(
               'Iniciar Sesión',
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
             ),
             TextFormField(
               onChanged: (value) {
@@ -125,25 +124,24 @@ class FormLogin extends StatelessWidget {
                 onPressed: () async {
                   if (await authCtrl.validForm()) {
                     if (await authCtrl.login()) {
-                      if ((authCtrl.passenger?.frDestinyLatitude == null ||
-                                  authCtrl
-                                      .passenger!.frDestinyLatitude!.isEmpty) ||
-                              (authCtrl.passenger?.frDestinyLongitude == null ||
-                                  authCtrl.passenger!.frDestinyLongitude!
-                                      .isEmpty) ||
-                              (authCtrl.passenger?.frOriginHour == null ||
-                                  authCtrl.passenger!.frOriginHour!.isEmpty) ||
-                              (authCtrl.passenger?.frOriginLatitude == null ||
-                                  authCtrl
-                                      .passenger!.frOriginLatitude!.isEmpty) ||
-                              (authCtrl.passenger?.frOriginLongitude == null ||
-                                  authCtrl
-                                      .passenger!.frOriginLongitude!.isEmpty)
-                          // authCtrl.passenger?.pushToken != null &&   //TODO:  implementar firebase para obtener el push token
+                      if (authCtrl.passenger?.frDestinyLatitude == null ||
+                              authCtrl.passenger!.frDestinyLatitude!.isEmpty ||
+                              authCtrl.passenger?.frDestinyLongitude == null ||
+                              authCtrl.passenger!.frDestinyLongitude!.isEmpty ||
+                              authCtrl.passenger?.frOriginHour == null ||
+                              authCtrl.passenger!.frOriginHour!.isEmpty ||
+                              authCtrl.passenger?.frOriginLatitude == null ||
+                              authCtrl.passenger!.frOriginLatitude!.isEmpty ||
+                              authCtrl.passenger?.frOriginLongitude == null ||
+                              authCtrl.passenger!.frOriginLongitude!.isEmpty ||
+                              authCtrl.passenger?.pushToken == null ||
+                              authCtrl.passenger!.pushToken!.isEmpty
+                          //TODO:  implementar firebase para obtener el push token
                           ) {
                         Get.offNamed('/frecuent_profile');
                       } else {
-                        Get.offNamed('/home');
+                        Get.offNamed(
+                            '/home'); //TODO SER INVERTTIO CON FRECUENT PARA PRUEBAS
                       }
                     } else {
                       Get.closeAllSnackbars();

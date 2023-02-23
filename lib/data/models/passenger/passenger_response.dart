@@ -6,28 +6,28 @@ import '../file_carpooling/file_carpooling.dart';
 
 class PassengerResoponse {
     PassengerResoponse({
-        required this.frDestinyLatitude,
-        required this.frOriginLatitude,
+        this.frDestinyLatitude,
+        this.frOriginLatitude,
+        this.frOriginLongitude,
+        this.frOriginHour,
+        this.pushToken,
         required this.contractingCompany,
         required this.frDestinyLongitude,
         required this.basicData,
         required this.id,
-        required this.frOriginHour,
-        required this.pushToken,
         required this.transportCompany,
-        required this.frOriginLongitude,
     });
 
-    String frDestinyLatitude;
-    String frOriginLatitude;
+    String? frDestinyLatitude;
+    String? frOriginLatitude;
+    String? pushToken;
+    String? frDestinyLongitude;
+    String? frOriginLongitude;
+    String? frOriginHour;
     Company contractingCompany;
-    String frDestinyLongitude;
     BasicData basicData;
     int id;
-    String frOriginHour;
-    String pushToken;
     Company transportCompany;
-    String frOriginLongitude;
 
 
     factory PassengerResoponse.fromJson(Map<String, dynamic> json) => PassengerResoponse(
@@ -98,7 +98,7 @@ class BasicData {
         email: json["email"],
         status: Parameter.fromJson(json["status"]),
         updater: OnlyId.fromJson(json["updater"]),
-        profilePicture: FileCarpooling.fromJson(json["profilePicture"]),
+        profilePicture: (json["profilePicture"] != null) ?  FileCarpooling?.fromJson(json["profilePicture"]): null,
     );
 
     Map<String, dynamic> toJson() => {

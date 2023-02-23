@@ -48,7 +48,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource{
       //TODO: VALIDAR QUE EL USUARIO CON ESTADO CREADO PUEDA INGRESAR NORMAL MIENTRAS QUE EL USUARIO CON ESTADO CAMBIO DE CONTRASEÑA TENGA QUE CAMBIAR LA CONTRASEÑAW
 
       }
-      //TODO: BORRAR LA SESIÓN CUANDO SE EXPIRE EL TOKEN 401
     }
   }
 
@@ -73,7 +72,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource{
         default:
           throw NoNetwork();
       }
-      //TODO: BORRAR LA SESIÓN CUANDO SE EXPIRE EL TOKEN 401
     }
   }
 

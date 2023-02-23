@@ -124,7 +124,7 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
+            margin: const EdgeInsets.symmetric(vertical: 10),
             child: TextFormField(
               onChanged: (value) {
                 widget.passegerProfileCtrl.userUpdate.value
@@ -132,8 +132,7 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
                 _formKey.currentState!.validate();
               },
               validator: (value) {
-                return Patterns.validateField(value ?? '', 2, 50,
-                    Patterns.patternName(), 'El nombre no es válido');
+                return Patterns.validateField(value ?? '', 2, 50, Patterns.patternName(), 'El nombre no es válido');
               },
               initialValue: widget.homeCtrl.user.value?.basicData.firstName,
               keyboardType: TextInputType.emailAddress,
@@ -152,8 +151,7 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
                 _formKey.currentState!.validate();
               },
               validator: (value) {
-                return Patterns.validateField(value ?? '', 2, 50,
-                    Patterns.patternName(), 'El apellido no es válido');
+                return Patterns.validateField(value ?? '', 2, 50, Patterns.patternName(), 'El apellido no es válido');
               },
               initialValue: widget.homeCtrl.user.value?.basicData.lastName,
               keyboardType: TextInputType.emailAddress,

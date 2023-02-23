@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       transitionDuration: Duration.zero,
       debugShowCheckedModeBanner: !Enviroment.production,
-      initialRoute: validateAuth
+      initialRoute: validateAuth // validamos si el usuario ya había ingresado anteriormente para salterse el login
           ? '/home'
           : '/login', // hacer lógica para navegar al home
       initialBinding: AuthBinding(),
@@ -43,7 +43,11 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/edit-profile',
             page: () => const EditProfilePage(),
-            binding: ProfileBinding())
+            binding: ProfileBinding()),
+        GetPage(
+            name: '/frecuent_profile',
+            page: () => const FrecuentDataPage(),
+            binding: FrecuentDataBinding()),
       ],
     );
   }

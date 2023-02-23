@@ -78,6 +78,7 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
             height: SizeConfig.safeBlockSizeVertical(30),
             width: double.infinity,
             child: GoogleMap(
+              rotateGesturesEnabled: false,
               mapType: MapType.normal,
               initialCameraPosition: CameraPosition(
                   target: routeCtrl.latLen[0], zoom: 14.4746, tilt: 45.0),
