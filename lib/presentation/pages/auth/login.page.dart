@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../core/application/patterns.dart';
 import '../../../core/styles/app_theme.dart';
+import '../../../data/models/auth/login_request.dart';
 import 'controller/auth.controller.dart';
 
 class LoginPage extends StatelessWidget {
@@ -138,10 +139,12 @@ class FormLogin extends StatelessWidget {
                               authCtrl.passenger!.pushToken!.isEmpty
                           //TODO:  implementar firebase para obtener el push token
                           ) {
+                        authCtrl.userLogin.value =  LoginRequest(email: '', password: '');
                         Get.offNamed('/frecuent_profile');
                       } else {
-                        Get.offNamed(
-                            '/home'); //TODO SER INVERTTIO CON FRECUENT PARA PRUEBAS
+                        authCtrl.userLogin.value =  LoginRequest(email: '', password: ''); 
+                        //TODO: para análisis debido a que se puede eliminar el controlador de autenticación cuando ingresa al home
+                        Get.offNamed('/home');
                       }
                     } else {
                       Get.closeAllSnackbars();

@@ -9,6 +9,6 @@ class AuthBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => LoginUseCase(AuthRepositoryImpl(AuthRemoteDataSourceImpl(WebService()))));
-    Get.put(AuthController(Get.find()), permanent: true);
+    Get.put(AuthController(Get.find()), permanent: false);
   }
 }
