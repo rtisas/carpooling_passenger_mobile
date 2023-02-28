@@ -5,18 +5,6 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAT1_rBhAVOX851KH99hsif_Ef0KB57abM"/>
-        <queries>
-  <!-- If your app checks for SMS support -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="sms" />
-        </intent>
-  <!-- If your app checks for call support -->
-        <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="tel" />
-        </intent>
-        </queries>
         <activity
             android:name=".MainActivity"
             android:exported="true"
