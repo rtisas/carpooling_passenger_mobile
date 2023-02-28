@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:carpooling_passenger/domain/usescases/profile/profile_use_case.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/application/preferences.dart';
@@ -34,7 +33,6 @@ class FrecuentDataController extends GetxController {
         frOriginHour:
             frecuentDataPasseger["frOriginHour"] ?? passenger.frOriginHour,
         pushToken: passenger.pushToken,
-        // Datos a actualizar
         identification: passenger.basicData.identification,
         firstName: passenger.basicData.firstName,
         lastName: passenger.basicData.lastName,
@@ -49,14 +47,17 @@ class FrecuentDataController extends GetxController {
         identificationType:
             OnlyId(id: passenger.basicData.identificationType.id));
 
-            print('LOG valor ${ frecuentDataPasseger["frOriginHour"] }');
+            print('LOG valor ${ updatePassager }');
 
     _profileUseCase
         .updatePassenger(passenger.id.toString(), updatePassager)
         .then((value) => value.fold((errorResponse) async {
               closeDialogLoading();
+              showMessage('¡Algo salió mal!', 'Intenta más tarde');
+              Get.offNamed('/home');
               print('LOG Ocurrió un error ${errorResponse.message}');
             }, (responseUpdate) async {
+
               closeDialogLoading();
               showMessage('¡Todo salió bien!', 'Muchas gracias por completar tu perfil');
               Get.offNamed('/home');

@@ -8,6 +8,7 @@ import '../../../../core/errors/exeptions.dart';
 import '../../../models/auth/login_request.dart';
 import '../../../models/auth/login_response.dart';
 import '../../../models/helpers/roles.dart';
+import '../../../models/helpers/statusUser.dart';
 import '../../../models/passenger/passenger_response.dart';
 import '../web_service.dart';
 
@@ -30,6 +31,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource{
         final loginResonse = LoginResponse.fromJson(response.data);
         if (loginResonse.user.roleId.id != ROL.passenger.value) {
           throw NoValidRole();
+        }
+        if(loginResonse.user.status.id == STATUS_USER.CHANGE_PASSWORD.value){
+          throw NeedChangePassword();
         }
         await Preferences.storage.write(key: 'token', value: loginResonse.token);
         await getPassengerByUser(loginResonse.user.id);

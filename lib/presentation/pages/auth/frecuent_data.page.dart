@@ -62,7 +62,7 @@ class _FrecuentDataPage extends State<FrecuentDataPage> {
     final frecuentDataCtrl = Get.find<FrecuentDataController>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Completa tus datos ${form.currentState?.validate()}'),
+        title: Text('Completa tus datos'),
         centerTitle: true,
       ),
       body: Stepper(
@@ -195,7 +195,7 @@ class _FrecuentDataPage extends State<FrecuentDataPage> {
           ),
           Step(
             isActive: _currentStep == 1,
-            title: Text('Lugar de destino'),
+            title: Text('Destino (frecuente)'),
             content: Column(
               children: [
                 TextFormField(
@@ -259,7 +259,7 @@ class _FrecuentDataPage extends State<FrecuentDataPage> {
           ),
           Step(
               isActive: _currentStep == 2,
-              title: Text('Hora frecuente'),
+              title: Text('Hora frecuente de partida'),
               content: Column(
                 children: [
                   TextFormField(

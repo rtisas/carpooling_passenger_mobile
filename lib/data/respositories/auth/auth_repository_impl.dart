@@ -17,12 +17,15 @@ class AuthRepositoryImpl implements AuthRepository {
       final loginResponse = await _authRemoteDataSource.login(userLogin);
       return Right(loginResponse);
     } on DataIncorrect {
-      return Left(FailureResponse(message: 'Usuario no es válido'));
+      return Left(FailureResponse(message: 'Usuario no es válido', exception: DataIncorrect()));
     } on NoValidRole {
-      return Left(FailureResponse(message: 'No eres un usuario válido'));
-    } on NoNetwork {
+      return Left(FailureResponse(message: 'No eres un usuario válido', exception: NoValidRole()));
+    }on NeedChangePassword {
       return Left(
-          FailureResponse(message: 'Ocurrió un error, No hay conexión'));
+          FailureResponse(message: 'Necesita cambiar contraseña', exception: NeedChangePassword()));
+    }on NoNetwork {
+      return Left(
+          FailureResponse(message: 'Ocurrió un error, No hay conexión', exception: NoNetwork())); 
     } on NoFound {
       return Left(FailureResponse(
           message:
