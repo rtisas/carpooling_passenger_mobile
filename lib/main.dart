@@ -1,4 +1,5 @@
 import 'package:carpooling_passenger/core/application/helpers.dart';
+import 'package:carpooling_passenger/presentation/pages/routes/controller/booking/booking.binding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/home',
             page: () => const HomePage(),
-            bindings: [HomeBinding(), VirtualWalletBinding()]),
+            bindings: [HomeBinding(), VirtualWalletBinding(), BookingBinding()]),
         GetPage(
             name: '/detail-route',
             page: () => const DetailRoutePage(),

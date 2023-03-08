@@ -262,8 +262,8 @@ class _FormBooking extends StatelessWidget {
                 textColor: Colors.white,
                 disabledColor: Colors.grey,
                 shape: const StadiumBorder(),
-                onPressed: () {
-                  detailRouteCtrl.createBooking();
+                onPressed: () async {
+                  await detailRouteCtrl.createBooking();
                 },
                 child: const Text(
                   "Reservar puesto",

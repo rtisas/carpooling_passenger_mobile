@@ -20,7 +20,6 @@ class DetailRouteController extends GetxController {
   RxBool isValidForm = false.obs;
   RxBool isInvalidDropdown = false.obs;
 
-  // RxString selectedDate = "".obs;
   TextEditingController dateinput = TextEditingController();
   TextEditingController timeinput = TextEditingController();
 
@@ -131,8 +130,7 @@ class DetailRouteController extends GetxController {
       }, (r) {
         print('LOG salió  ${r}');
         closeDialogLoading();
-        showMessage('Reserva creada',
-            'Gracias por reservar, ten en cuenta que el administrador generará el servicio en base a la cantidad de pasajeros que reserven.');
+        showMessage('Reserva creada', 'Gracias por reservar, ten en cuenta que el administrador generará el servicio en base a la cantidad de pasajeros que reserven.');
       });
     }
   }
@@ -146,7 +144,8 @@ class DetailRouteController extends GetxController {
       colorText: Colors.white,
       snackPosition: SnackPosition.TOP,
     );
-    Get.toNamed('/home');
+    Get.offNamed('/home');
+    Get.delete<DetailRouteController>();
   }
 
   void showLoading() {

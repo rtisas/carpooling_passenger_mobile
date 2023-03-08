@@ -20,7 +20,7 @@ class Parameter {
     factory Parameter.fromJson(Map<String, dynamic> json) => Parameter(
         id: json["id"],
         parameterName: json["parameterName"],
-        parameterValue:  json["parameterName"],
+        parameterValue:  json["parameterValue"],
         parameterRelationShip:json["parameterRelationShip"] == null
             ? null
             : Parameter.fromJson(json["parameterRelationShip"]),

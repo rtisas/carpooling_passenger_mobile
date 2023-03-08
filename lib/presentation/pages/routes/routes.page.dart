@@ -1,3 +1,4 @@
+import 'package:carpooling_passenger/presentation/pages/routes/tabs/bookings_availables_tab.dart';
 import 'package:carpooling_passenger/presentation/pages/routes/tabs/routes_availables_tab.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class RoutesPage extends StatelessWidget {
           children: [
             Text('Hola a todos'),
             RoutesAvailablesTab(),
-            Text('2'),
+            BookingsAvailablesTab()
           ],
         ),
       ),
@@ -41,7 +42,7 @@ class _AppBarTabsRoutes extends StatelessWidget with PreferredSizeWidget {
             text: 'Rutas disponibles',
           ),
           Tab(
-            text: 'Servicios',
+            text: 'Reservas',
           )
         ],
       ),

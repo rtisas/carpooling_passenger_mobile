@@ -14,7 +14,7 @@ class RoutesAvailablesTab extends StatefulWidget {
 class _RoutesAvailablesTabState extends State<RoutesAvailablesTab>
     with AutomaticKeepAliveClientMixin<RoutesAvailablesTab> {
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 
   @override
   Widget build(BuildContext context) {

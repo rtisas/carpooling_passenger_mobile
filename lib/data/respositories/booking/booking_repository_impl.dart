@@ -36,4 +36,48 @@ class BookingRepositoryImpl implements BookingRepository{
     }
   }
   
+  @override
+  Future<Either<Failure, List<BookingResponseComplete>>> getBookingsPassengerByState(String idPassenger, String status) async  {
+     try {
+      final listBookingResponse = await _bookingRemoteDataSource.getBookingsPassengerByState(idPassenger, status);
+      return Right(listBookingResponse);
+    } on DataIncorrect {
+      return Left(FailureResponse(message: 'Algo salió mal, por favor verifique los datos'));
+    } on NoValidRole {
+      return Left(FailureResponse(message: 'No eres un usuario válido'));
+    } on NoNetwork {
+      return Left(
+          FailureResponse(message: 'Ocurrió un error, No hay conexión'));
+    } on NoFound {
+      return const Right([]);
+      // return Left(FailureResponse(message:'Aún no hay reservas disponibles'));
+    } on ServerException {
+      return Left(FailureResponse(
+          message:
+              'Su rol no tiene permiso de ingresar, comuníquese con administración'));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, dynamic>> deleteBooking(String idBooking) async {
+      try {
+      final listBookingResponse = await _bookingRemoteDataSource.deleteBooking(idBooking);
+      return Right(listBookingResponse);
+    } on DataIncorrect {
+      return Left(FailureResponse(message: 'Algo salió mal, por favor verifique los datos'));
+    } on NoValidRole {
+      return Left(FailureResponse(message: 'No eres un usuario válido'));
+    } on NoNetwork {
+      return Left(
+          FailureResponse(message: 'Ocurrió un error, No hay conexión'));
+    } on NoFound {
+      return const Right([]);
+      // return Left(FailureResponse(message:'Aún no hay reservas disponibles'));
+    } on ServerException {
+      return Left(FailureResponse(
+          message:
+              'Su rol no tiene permiso de ingresar, comuníquese con administración'));
+    }
+  }
+  
 }
