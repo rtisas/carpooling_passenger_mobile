@@ -26,12 +26,12 @@ class ServiceCarpooling {
     String scheduledTime;
     int chairsAvailable;
     UserIdCompanyResponsible userIdCompanyResponsible;
-    String commentsAlert;
-    VehicleReponse vehicle;
+    String? commentsAlert;
+    VehicleReponse? vehicle;
     Parameter alerts;
     RouteResponse route;
-    DriverResponse driver;
-    String serviceStartTime;
+    DriverResponse? driver;
+    String? serviceStartTime;
     String servicePrice;
     DateTime dateService;
     int reservation;
@@ -62,10 +62,10 @@ class ServiceCarpooling {
         "chairsAvailable": chairsAvailable,
         "userIdCompanyResponsible": userIdCompanyResponsible.toJson(),
         "commentsAlert": commentsAlert,
-        "vehicle": vehicle.toJson(),
+        "vehicle": vehicle?.toJson(),
         "alerts": alerts.toJson(),
         "route": route.toJson(),
-        "driver": driver.toJson(),
+        "driver": driver?.toJson(),
         "serviceStartTime": serviceStartTime,
         "servicePrice": servicePrice,
         "dateService": dateService.toIso8601String(),

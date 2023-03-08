@@ -17,8 +17,6 @@ class BookingsAvailablesTab extends StatelessWidget {
         return ListView.builder(
           itemCount: bookingCtrl.listBookings.length,
           itemBuilder: (BuildContext context, int index) {
-            print('LOG valor de la lista ${bookingCtrl.listBookings.length}');
-            print('LOG valor de la lista ${bookingCtrl.listBookings}');
             return _CardBooking(booking: bookingCtrl.listBookings[index]);
           },
         );
@@ -39,7 +37,10 @@ class _CardBooking extends StatelessWidget {
   Widget build(BuildContext context) {
     final bookingCtrl = Get.find<BookingController>();
 
-    return Container(
+    return GestureDetector(
+      onTap: (){
+        Get.toNamed('detail_booking', arguments: booking);
+      },
       child: Card(
         child: Column(
           children: [
@@ -93,7 +94,7 @@ class _CardBooking extends StatelessWidget {
                         label: Text(booking.state.parameterValue ?? ''),
                       ),
                       if (booking.service != null)
-                        Text('Vehículo ${booking.service?.vehicle.id}')
+                        Text('Vehículo ${booking.service?.vehicle?.id}')
                     ],
                   ),
                 )

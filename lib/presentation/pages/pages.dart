@@ -1,3 +1,4 @@
+export 'package:carpooling_passenger/presentation/pages/routes/detail_booking/detail_booking.page.dart';
 export 'package:carpooling_passenger/presentation/pages/auth/frecuent_data.page.dart';
 export 'package:carpooling_passenger/presentation/pages/profile/edit_profile.page.dart';
 export 'package:carpooling_passenger/presentation/pages/routes/detail_route.page.dart';

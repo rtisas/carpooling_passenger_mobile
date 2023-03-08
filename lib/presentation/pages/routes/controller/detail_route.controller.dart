@@ -128,7 +128,6 @@ class DetailRouteController extends GetxController {
         print('LOG: errorResponse Ocurrió un error ${errorResponse}');
         showMessage('Ocurrió un error', '${errorResponse.message}');
       }, (r) {
-        print('LOG salió  ${r}');
         closeDialogLoading();
         showMessage('Reserva creada', 'Gracias por reservar, ten en cuenta que el administrador generará el servicio en base a la cantidad de pasajeros que reserven.');
       });
@@ -144,7 +143,7 @@ class DetailRouteController extends GetxController {
       colorText: Colors.white,
       snackPosition: SnackPosition.TOP,
     );
-    Get.offNamed('/home');
+    Get.offAllNamed('/home');
     Get.delete<DetailRouteController>();
   }
 

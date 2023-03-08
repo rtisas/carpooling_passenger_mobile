@@ -62,6 +62,7 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
     SizeConfig(context);
     final routeCtrl = Get.find<RoutesController>();
     final detailRouteCtrl = Get.find<DetailRouteController>();
+    print('LOG valor de  ${ 1 }');
 
     if (routeCtrl.latLen.isEmpty) return const Text('No hay estaciones');
     return Column(
@@ -78,7 +79,7 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
             height: SizeConfig.safeBlockSizeVertical(30),
             width: double.infinity,
             child: GoogleMap(
-              rotateGesturesEnabled: false,
+              rotateGesturesEnabled: true,
               mapType: MapType.normal,
               initialCameraPosition: CameraPosition(
                   target: routeCtrl.latLen[0], zoom: 14.4746, tilt: 45.0),
