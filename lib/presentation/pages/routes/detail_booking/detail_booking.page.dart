@@ -14,6 +14,8 @@ class DetailBookingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bookingDetail = Get.arguments as BookingResponseComplete;
+    final detailBookingCtrl = Get.find<BookingDetailController>();
+
     return Scaffold(
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
@@ -40,7 +42,32 @@ class DetailBookingPage extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
               child: OutlinedButton.icon(
                 icon: const Icon(Icons.qr_code_2),
-                onPressed: () {},
+                onPressed: () {
+                   showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                            title: Text('Tú código QR de pago'),
+                            content: (detailBookingCtrl.passenger.basicData.profilePicture?.qrUrl != null)
+                                ? Image.network(detailBookingCtrl.passenger.basicData.profilePicture!.qrUrl!)
+                                : Container(),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pop(); // Cierra el diálogo
+                                },
+                                child: Text('Aceptar'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pop(); // Cierra el diálogo
+                                },
+                                child: Text('Cancelar'),
+                              ),
+                            ],
+                          ));
+                },
                 label: const Text(
                   'Realizar pago',
                   style: TextStyle(fontSize: 20, letterSpacing: 2),

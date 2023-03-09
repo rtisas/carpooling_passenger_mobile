@@ -1,8 +1,11 @@
-import 'package:carpooling_passenger/data/models/routes/station_response.dart';
+import 'dart:convert';
+
+import 'package:carpooling_passenger/data/models/passenger/passenger_response.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../../../core/application/preferences.dart';
 import '../../../../../data/models/booking/booking_response.dart';
 import '../../../../../domain/usescases/routes/routes_use_case.dart';
 
@@ -10,12 +13,14 @@ class BookingDetailController extends GetxController {
   final RoutesUseCase _routesUseCase;
   Rx<List<PointLatLng>>? polylinePoints = Rx([]);
   Rx<Set<Marker>> markersRoute = Rx({});
+  late PassengerResoponse passenger;
 
   RxBool isLoading = false.obs;
   final bookingDetail = Get.arguments as BookingResponseComplete;
 
   @override
   void onInit() async {
+    passenger = PassengerResoponse.fromJson(jsonDecode(await Preferences.storage.read(key: 'userPassenger') ?? ''));
     markersRoute.value.add(Marker(
         markerId: MarkerId(bookingDetail.startStation.index.toString()),
         position: LatLng(double.parse(bookingDetail.startStation.latitude),
