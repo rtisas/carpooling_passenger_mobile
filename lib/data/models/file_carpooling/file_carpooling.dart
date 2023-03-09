@@ -7,6 +7,8 @@ class FileCarpooling {
         required this.user,
         required this.url,
         required this.fileType,
+        this.qrUrl,
+        this.qrName,
     });
 
     String nameFile;
@@ -14,6 +16,8 @@ class FileCarpooling {
     OnlyId user;
     String url;
     OnlyId fileType;
+    String? qrUrl;
+    String? qrName;
 
     factory FileCarpooling.fromJson(Map<String, dynamic> json) => FileCarpooling(
         nameFile: json["nameFile"],
@@ -21,6 +25,8 @@ class FileCarpooling {
         user: OnlyId.fromJson(json["user"]),
         url: json["url"],
         fileType: OnlyId.fromJson(json["fileType"]),
+        qrUrl: json["qrUrl"],
+        qrName: json["qrName"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -29,5 +35,7 @@ class FileCarpooling {
         "user": user.toJson(),
         "url": url,
         "fileType": fileType.toJson(),
+        "qrUrl": qrUrl,
+        "qrName": qrName,
     };
 }

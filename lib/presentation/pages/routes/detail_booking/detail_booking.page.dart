@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:carpooling_passenger/data/models/booking/booking_response.dart';
 import 'package:carpooling_passenger/presentation/pages/routes/controller/booking_detail/booking_detail.controller.dart';
@@ -36,16 +35,18 @@ class DetailBookingPage extends StatelessWidget {
           )
         ],
       ),
-      bottomNavigationBar: Container(
-          margin: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
-          child: OutlinedButton.icon(
-            icon: const Icon(Icons.qr_code_2),
-            onPressed: () {},
-            label: const Text(
-              'Realizar pago',
-              style: TextStyle(fontSize: 20, letterSpacing: 2),
-            ),
-          )),
+      bottomNavigationBar: (bookingDetail.service != null)
+          ? Container(
+              margin: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
+              child: OutlinedButton.icon(
+                icon: const Icon(Icons.qr_code_2),
+                onPressed: () {},
+                label: const Text(
+                  'Realizar pago',
+                  style: TextStyle(fontSize: 20, letterSpacing: 2),
+                ),
+              ))
+          : null,
     );
   }
 }
@@ -185,15 +186,18 @@ class _AppBarCustom extends StatelessWidget {
                   style: const TextStyle(letterSpacing: 1),
                   softWrap: true,
                 ),
-                Chip(
-                  backgroundColor: booking.color,
-                  elevation: 0,
-                  side: BorderSide.none,
-                  label: Text(
-                    "${booking.state.parameterValue}",
-                    overflow: TextOverflow.visible,
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
-                    softWrap: true,
+                Flexible(
+                  child: Chip(
+                    backgroundColor: booking.color,
+                    elevation: 0,
+                    side: BorderSide.none,
+                    label: Text(
+                      "${booking.state.parameterValue}",
+                      overflow: TextOverflow.visible,
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
+                      softWrap: true,
+                    ),
                   ),
                 )
               ],
@@ -231,7 +235,7 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final detailBookingCtrl = Get.find<BookingDetailController>();
-    print('LOG polylinePoints carga ${ detailBookingCtrl.polylinePoints }');
+    print('LOG polylinePoints carga ${detailBookingCtrl.polylinePoints}');
     SizeConfig(context);
     return Column(
       children: [
@@ -241,38 +245,37 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
             child: const Text(
               'Revisa las paradas',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            )), SizedBox(
-            height: SizeConfig.safeBlockSizeVertical(30),
-            width: double.infinity,
-            child: Obx( () {
-                return GoogleMap(
-                  rotateGesturesEnabled: false,
-                  mapType: MapType.normal,
-                  markers: detailBookingCtrl.markersRoute.value,
-                  initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                          double.parse(widget.booking.startStation.latitude),
-                          double.parse(widget.booking.startStation.longitude)),
-                      zoom: 14.4746,
-                      tilt: 45.0),
-                  polylines: {
-                      Polyline(
-                        polylineId: const PolylineId('overview_polyline1'),
-                        color: Colors.red,
-                        width: 5,
-                        points: detailBookingCtrl.polylinePoints!.value
-                            .map((e) => LatLng(e.latitude, e.longitude))
-                            .toList()
-                      ),
-                  },
-                  // markers: routeCtrl.markersRoute.value,
-                  onMapCreated: (GoogleMapController controller) {
-                    _controller.complete(controller);
-                  },
-                );
-              }
-            ),
-          )
+            )),
+        SizedBox(
+          height: SizeConfig.safeBlockSizeVertical(30),
+          width: double.infinity,
+          child: Obx(() {
+            return GoogleMap(
+              rotateGesturesEnabled: false,
+              mapType: MapType.normal,
+              markers: detailBookingCtrl.markersRoute.value,
+              initialCameraPosition: CameraPosition(
+                  target: LatLng(
+                      double.parse(widget.booking.startStation.latitude),
+                      double.parse(widget.booking.startStation.longitude)),
+                  zoom: 14.4746,
+                  tilt: 45.0),
+              polylines: {
+                Polyline(
+                    polylineId: const PolylineId('overview_polyline1'),
+                    color: Colors.red,
+                    width: 5,
+                    points: detailBookingCtrl.polylinePoints!.value
+                        .map((e) => LatLng(e.latitude, e.longitude))
+                        .toList()),
+              },
+              // markers: routeCtrl.markersRoute.value,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            );
+          }),
+        )
       ],
     );
   }
