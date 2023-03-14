@@ -146,7 +146,7 @@ class _DataBookingInformation extends StatelessWidget {
             Row(children: [
               const Text('Hora estiamda bus: ',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
-              Text('${bookingDetail.service?.route.nameRoute ?? 'No definida'}')
+              Text('${bookingDetail.aproxBooking ?? 'No definida'}')
             ]),
             // Image.network('https://carpooling-bucket.s3.amazonaws.com/user/123213123/qr/2dfcd789-9cc4-48eb-b2fc-d2d1571a1807.PNG'),
             Row(children: [

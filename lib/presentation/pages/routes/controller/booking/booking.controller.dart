@@ -71,11 +71,11 @@ class BookingController extends GetxController {
   Future deleteBooking(String idBooking) async {
     final failureOrBookings = await _bookingUseCase.deleteBooking(idBooking);
     failureOrBookings.fold((failure) {
-      showMessage('Error', '${failure.message ?? 'Ocurrió un error'}');
+      showMessage('Error', failure.message);
     }, (response) async {
       await loadBookingsActiveByPassenger();
       closeDialogLoading();
-      showMessage('Reserva cancelda', 'La reserva ha sido cancelada correctamente');
+      showMessage('Reserva cancelada', 'La reserva ha sido cancelada correctamente');
     });
   }
 

@@ -60,7 +60,7 @@ class BookingRepositoryImpl implements BookingRepository{
   
   @override
   Future<Either<Failure, dynamic>> deleteBooking(String idBooking) async {
-      try {
+    try {
       final listBookingResponse = await _bookingRemoteDataSource.deleteBooking(idBooking);
       return Right(listBookingResponse);
     } on DataIncorrect {

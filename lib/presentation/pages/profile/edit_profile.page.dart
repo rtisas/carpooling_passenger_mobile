@@ -117,6 +117,7 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
               },
               initialValue: widget.homeCtrl.user.value?.basicData.email,
               keyboardType: TextInputType.emailAddress,
+              enabled: false,
               decoration: const InputDecoration(
                   label: Text('Correo electrónico'),
                   border: OutlineInputBorder(),

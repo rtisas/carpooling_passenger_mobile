@@ -60,7 +60,6 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
           if(bookingResponse.state.id.toString() == STATUS_BOOKING.APROBADO.value){
             bookingResponse.color = Colors.green;
           }else if( bookingResponse.state.id.toString() == STATUS_BOOKING.PENDIENTE.value ){
-            print('LOG entra ${ 1 }');
             bookingResponse.color = Color.fromARGB(204, 234, 212, 98);
           }else if( bookingResponse.state.id.toString() == STATUS_BOOKING.EN_EJECUCION.value ){
             bookingResponse.color = Colors.blue;
