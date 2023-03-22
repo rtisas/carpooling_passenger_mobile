@@ -105,6 +105,25 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10),
             child: TextFormField(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: Text('¡Ten cuidado!'),
+                        content: Container(
+                          child: Text(
+                              'Recuerda que si cambias el correo electrónico, se cerrará la sesión y llegará un código de seguridad al correo electrónico'),
+                        ),
+                        actions: [
+                          TextButton(onPressed: (){
+                            Navigator.of(context).pop();
+                          }, child: Text('Aceptar'))
+                        ]
+                        ,
+                      );
+                    });
+              },
               onChanged: (value) {
                 widget.passegerProfileCtrl.userUpdate.value
                     .addAll({'email': value});
@@ -117,7 +136,7 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
               },
               initialValue: widget.homeCtrl.user.value?.basicData.email,
               keyboardType: TextInputType.emailAddress,
-              enabled: false,
+              // enabled: false,
               decoration: const InputDecoration(
                   label: Text('Correo electrónico'),
                   border: OutlineInputBorder(),
@@ -133,7 +152,8 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
                 _formKey.currentState!.validate();
               },
               validator: (value) {
-                return Patterns.validateField(value ?? '', 2, 50, Patterns.patternName(), 'El nombre no es válido');
+                return Patterns.validateField(value ?? '', 2, 50,
+                    Patterns.patternName(), 'El nombre no es válido');
               },
               initialValue: widget.homeCtrl.user.value?.basicData.firstName,
               keyboardType: TextInputType.emailAddress,
@@ -152,7 +172,8 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
                 _formKey.currentState!.validate();
               },
               validator: (value) {
-                return Patterns.validateField(value ?? '', 2, 50, Patterns.patternName(), 'El apellido no es válido');
+                return Patterns.validateField(value ?? '', 2, 50,
+                    Patterns.patternName(), 'El apellido no es válido');
               },
               initialValue: widget.homeCtrl.user.value?.basicData.lastName,
               keyboardType: TextInputType.emailAddress,
@@ -192,11 +213,11 @@ class _FormEditUserPassegerState extends State<_FormEditUserPasseger> {
                 elevation: 0,
                 color: Colors.blue,
                 onPressed: () {
-                  if (_formKey.currentState?.validate() != null && _formKey.currentState?.validate() == true) {
+                  if (_formKey.currentState?.validate() != null &&
+                      _formKey.currentState?.validate() == true) {
                     widget.passegerProfileCtrl.updatePassager(widget.homeCtrl);
                     // Aquí puedes guardar los datos ingresados en el formulario.
-                  } else {
-                  }
+                  } else {}
                 },
                 child: const Text('Guardar')),
           )

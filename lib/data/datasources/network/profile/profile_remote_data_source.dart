@@ -7,6 +7,7 @@ import 'package:carpooling_passenger/data/models/file_carpooling/upload_file_res
 
 import '../../../../core/application/preferences.dart';
 import '../../../../core/errors/exeptions.dart';
+import '../../../models/helpers/statusUser.dart';
 import '../../../models/passenger/passenger_update_request.dart';
 
 abstract class ProfileRemoteDataSource {
@@ -60,7 +61,16 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       final response = await http.put('facade/put-passenger/$idPassanger',
           data: updatePassager);
       if (response.statusCode == 200) {
-        PassengerResoponse passenger = await getPassengerByUser(response.data["basicData"]["id"].toString()); // actualizar el usuario de las preferencias de la aplicación
+        
+        //esto es debido a que el usuario cambio la el correo electrónico
+        if (response.data["basicData"]["status"]["id"] == STATUS_USER.CHANGE_PASSWORD.value) {
+          // await Preferences.storage.deleteAll();
+          // Get.offAll(() => const LoginPage());
+          throw NeedChangePassword(); 
+        }
+        PassengerResoponse passenger = await getPassengerByUser(response
+            .data["basicData"]["id"]
+            .toString()); // actualizar el usuario de las preferencias de la aplicación
         return passenger;
       } else {
         throw ServerException();

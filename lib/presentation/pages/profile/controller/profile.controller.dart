@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:carpooling_passenger/data/models/passenger/passenger_response.dart';
 import 'package:carpooling_passenger/domain/usescases/profile/profile_use_case.dart';
 import 'package:carpooling_passenger/presentation/pages/home/controller/home.controller.dart';
@@ -9,8 +8,11 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/application/preferences.dart';
+import '../../../../core/errors/exeptions.dart';
 import '../../../../data/models/helpers/only_id.dart';
+import '../../../../data/models/helpers/statusUser.dart';
 import '../../../../data/models/passenger/passenger_update_request.dart';
+import '../../auth/login.page.dart';
 
 class ProfileController extends GetxController {
   // GlobalKey<FormState> form = GlobalKey<FormState>();
@@ -65,19 +67,29 @@ class ProfileController extends GetxController {
         identificationType:
             OnlyId(id: passenger.basicData.identificationType.id));
 
-    _profileUseCase
+    await _profileUseCase
         .updatePassenger(passenger.id.toString(), updatePassager)
         .then((value) => value.fold((errorResponse) async {
+              await Preferences.storage.deleteAll();
+              print('LOG es del mismo erorr ${ errorResponse.exception is NeedChangePassword }');
               closeDialogLoading();
+              if (errorResponse.exception is NeedChangePassword) {
+                showMessage('Exito',
+                    'Se ha actualizado el usuario, es necesario cambiar la contraseña');
+              }
+              // Future.delayed(Duration(milliseconds: 200));
+              Get.offAll(() => const LoginPage());
               print('LOG Ocurrió un error ${errorResponse.message}');
             }, (responseUpdate) async {
               //subir foto
               if (image.value.isNotEmpty) {
-                _profileUseCase
-                    .uploadFilePictureUser(image.value, passenger.basicData.id.toString())
+                await _profileUseCase
+                    .uploadFilePictureUser(
+                        image.value, passenger.basicData.id.toString())
                     .then((value) => value.fold((errorResponse) {
                           closeDialogLoading();
-                          showMessage('Error','Ocurrió un error al momento de cargar la foto');
+                          showMessage('Error',
+                              'Ocurrió un error al momento de cargar la foto');
                         }, (fotoResponse) {
                           closeDialogLoading();
                           homeCtrl.onInit();
@@ -89,6 +101,13 @@ class ProfileController extends GetxController {
                 homeCtrl.onInit();
                 showMessage('Exito', 'Se ha actualizado el usuario');
                 Get.toNamed('/home');
+              }
+              print(
+                  'LOG profile: son iguales  ${responseUpdate.basicData.status.id == STATUS_USER.CHANGE_PASSWORD.value}');
+              if (responseUpdate.basicData.status.id ==
+                  STATUS_USER.CHANGE_PASSWORD.value) {
+                await Preferences.storage.deleteAll();
+                Get.offAll(() => const LoginPage());
               }
               // showMessage('Exito', 'Se ha actualizado el usuario');
               // Get.toNamed('/home');
