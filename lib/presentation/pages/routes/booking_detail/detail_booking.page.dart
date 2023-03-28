@@ -7,9 +7,10 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/styles/size_config.dart';
+import '../../../../data/models/helpers/statusService.dart';
 
-class DetailBookingPage extends StatelessWidget {
-  const DetailBookingPage({Key? key}) : super(key: key);
+class BookingDetailPage extends StatelessWidget {
+  const BookingDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class DetailBookingPage extends StatelessWidget {
           _AppBarCustom(booking: bookingDetail),
           SliverToBoxAdapter(
             child: Container(
-              margin: EdgeInsets.only(right: 20, left: 20, top: 10),
+              margin: const EdgeInsets.only(right: 20, left: 20, top: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -37,18 +38,25 @@ class DetailBookingPage extends StatelessWidget {
           )
         ],
       ),
+      floatingActionButton:
+          (bookingDetail.service?.state.id == STATUS_SERVICE.EN_EJECUCION.value)
+              ? const _FloatingButtonService()
+              : null,
       bottomNavigationBar: (bookingDetail.service != null)
           ? Container(
               margin: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
               child: OutlinedButton.icon(
                 icon: const Icon(Icons.qr_code_2),
                 onPressed: () {
-                   showDialog(
+                  showDialog(
                       context: context,
                       builder: (_) => AlertDialog(
                             title: Text('Tú código QR de pago'),
-                            content: (detailBookingCtrl.passenger.basicData.profilePicture?.qrUrl != null)
-                                ? Image.network(detailBookingCtrl.passenger.basicData.profilePicture!.qrUrl!)
+                            content: (detailBookingCtrl.passenger.basicData
+                                        .profilePicture?.qrUrl !=
+                                    null)
+                                ? Image.network(detailBookingCtrl
+                                    .passenger.basicData.profilePicture!.qrUrl!)
                                 : Container(),
                             actions: [
                               TextButton(
@@ -75,6 +83,19 @@ class DetailBookingPage extends StatelessWidget {
               ))
           : null,
     );
+  }
+}
+
+class _FloatingButtonService extends StatelessWidget {
+  const _FloatingButtonService();
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.extended(
+        onPressed: () {
+          Get.toNamed('detail_service');
+        },
+        label: Text('Ver servicio'));
   }
 }
 
@@ -262,7 +283,6 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final detailBookingCtrl = Get.find<BookingDetailController>();
-    print('LOG polylinePoints carga ${detailBookingCtrl.polylinePoints}');
     SizeConfig(context);
     return Column(
       children: [

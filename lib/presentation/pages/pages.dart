@@ -1,4 +1,5 @@
-export 'package:carpooling_passenger/presentation/pages/routes/detail_booking/detail_booking.page.dart';
+export 'package:carpooling_passenger/presentation/pages/routes/service_detail/service_detail_map.dart';
+export 'package:carpooling_passenger/presentation/pages/routes/booking_detail/detail_booking.page.dart';
 export 'package:carpooling_passenger/presentation/pages/auth/frecuent_data.page.dart';
 export 'package:carpooling_passenger/presentation/pages/profile/edit_profile.page.dart';
 export 'package:carpooling_passenger/presentation/pages/routes/detail_route.page.dart';

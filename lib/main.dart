@@ -50,8 +50,12 @@ class MyApp extends StatelessWidget {
             binding: FrecuentDataBinding()),
         GetPage(
             name: '/detail_booking',
-            page: () => const DetailBookingPage(),
+            page: () => const BookingDetailPage(),
             bindings: [BookingDetailBinding(), RoutesBinding()]),
+        GetPage(
+            name: '/detail_service',
+            page: () => const ServiceDetailMapScreen(),
+            ),
       ],
     );
   }

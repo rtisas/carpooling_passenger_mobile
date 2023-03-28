@@ -29,7 +29,7 @@ class DetailRoutePage extends StatelessWidget {
             child: (routesCtrl.isLoading.value)
                 ? const LoadingWidget()
                 : const _Maps());
-      }),
+      })
     );
   }
 }
@@ -61,8 +61,6 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     SizeConfig(context);
     final routeCtrl = Get.find<RoutesController>();
-    final detailRouteCtrl = Get.find<DetailRouteController>();
-    print('LOG valor de  ${ 1 }');
 
     if (routeCtrl.latLen.isEmpty) return const Text('No hay estaciones');
     return Column(
@@ -181,7 +179,9 @@ class _FormBooking extends StatelessWidget {
                         return null;
                       },
                       isExpanded: true,
-                      value: detailRouteCtrl.isInvalidDropdown.value ? null :detailRouteCtrl.idSelectedEndStation.value,
+                      value: detailRouteCtrl.isInvalidDropdown.value
+                          ? null
+                          : detailRouteCtrl.idSelectedEndStation.value,
                       items: detailRouteCtrl.stationsDropdownEnd,
                       onChanged: (value) {
                         detailRouteCtrl.idSelectedEndStation.value =

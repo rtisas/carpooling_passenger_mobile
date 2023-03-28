@@ -58,8 +58,7 @@ class RoutesController extends GetxController {
 
   getWayPointsFromGoogleMaps() async {
     //TODO: EL 99 ES LA ÚLTIMA ESTACIÓN
-    StationResponse destine =
-        listStations.value.where((element) => element.index == 99).toList()[0];
+    StationResponse destine = listStations.value.where((element) => element.index == 99).toList()[0];
     String latlogDestine = '${destine.latitude},${destine.longitude}';
     List<String> waypoints =
         latLen.map((e) => '${e.latitude},${e.longitude}').toList();
