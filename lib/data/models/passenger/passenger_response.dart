@@ -64,7 +64,7 @@ class BasicData {
         required this.updateDate,
         required this.identification,
         required this.phoneNumber,
-        required this.role,
+        required this.roleId,
         required this.identificationType,
         required this.id,
         required this.email,
@@ -78,7 +78,7 @@ class BasicData {
     DateTime updateDate;
     String identification;
     String phoneNumber;
-    Parameter role;
+    Parameter roleId;
     Parameter identificationType;
     int id;
     String email;
@@ -92,7 +92,7 @@ class BasicData {
         updateDate: DateTime.parse(json["updateDate"]),
         identification: json["identification"],
         phoneNumber: json["phoneNumber"],
-        role: Parameter.fromJson(json["role"]),
+        roleId: Parameter.fromJson(json["roleId"]),
         identificationType: Parameter.fromJson(json["identificationType"]),
         id: json["id"],
         email: json["email"],
@@ -107,7 +107,7 @@ class BasicData {
         "updateDate": updateDate.toIso8601String(),
         "identification": identification,
         "phoneNumber": phoneNumber,
-        "role": role.toJson(),
+        "roleId": roleId.toJson(),
         "identificationType": identificationType.toJson(),
         "id": id,
         "email": email,

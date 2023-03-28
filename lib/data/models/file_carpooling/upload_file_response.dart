@@ -10,7 +10,7 @@ class UploadFileResponse {
         required this.updateDate,
         required this.identification,
         required this.phoneNumber,
-        required this.role,
+        required this.roleId,
         required this.identificationType,
         required this.id,
         required this.email,
@@ -24,7 +24,7 @@ class UploadFileResponse {
     DateTime updateDate;
     String identification;
     String phoneNumber;
-    OnlyId role;
+    OnlyId roleId;
     OnlyId identificationType;
     int id;
     String email;
@@ -38,7 +38,7 @@ class UploadFileResponse {
         updateDate: DateTime.parse(json["updateDate"]),
         identification: json["identification"],
         phoneNumber: json["phoneNumber"],
-        role: OnlyId.fromJson(json["role"]),
+        roleId: OnlyId.fromJson(json["roleId"]),
         identificationType: OnlyId.fromJson(json["identificationType"]),
         id: json["id"],
         email: json["email"],
@@ -53,7 +53,7 @@ class UploadFileResponse {
         "updateDate": updateDate.toIso8601String(),
         "identification": identification,
         "phoneNumber": phoneNumber,
-        "role": role.toJson(),
+        "roleId": roleId.toJson(),
         "identificationType": identificationType.toJson(),
         "id": id,
         "email": email,

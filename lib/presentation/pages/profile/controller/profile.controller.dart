@@ -59,7 +59,7 @@ class ProfileController extends GetxController {
             userUpdate.value['phoneNumber'] ?? passenger.basicData.phoneNumber,
         email: userUpdate.value['email'] ?? passenger.basicData.email,
         status: OnlyId(id: passenger.basicData.status.id),
-        roleId: OnlyId(id: passenger.basicData.role.id),
+        roleId: OnlyId(id: passenger.basicData.roleId.id),
         updater: OnlyId(id: passenger.basicData.id),
         updateDate: DateTime.now(),
         contractingCompany: OnlyId(id: passenger.contractingCompany.id),

@@ -39,7 +39,7 @@ class FrecuentDataController extends GetxController {
         phoneNumber: passenger.basicData.phoneNumber,
         email: passenger.basicData.email,
         status: OnlyId(id: passenger.basicData.status.id),
-        roleId: OnlyId(id: passenger.basicData.role.id),
+        roleId: OnlyId(id: passenger.basicData.roleId.id),
         updater: OnlyId(id: passenger.basicData.id),
         updateDate: DateTime.now(),
         contractingCompany: OnlyId(id: passenger.contractingCompany.id),
