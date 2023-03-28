@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/detail_service',
             page: () => const ServiceDetailMapScreen(),
+            binding: ServiceDetailBinding()
             ),
       ],
     );

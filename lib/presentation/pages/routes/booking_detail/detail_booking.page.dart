@@ -93,9 +93,9 @@ class _FloatingButtonService extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
         onPressed: () {
-          Get.toNamed('detail_service');
+          Get.toNamed('detail_service',arguments: Get.arguments as BookingResponseComplete );
         },
-        label: Text('Ver servicio'));
+        label: const Text('Ver servicio'));
   }
 }
 

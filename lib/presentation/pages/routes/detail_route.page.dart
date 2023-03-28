@@ -20,17 +20,16 @@ class DetailRoutePage extends StatelessWidget {
     final detailRouteCtrl = Get.find<DetailRouteController>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Ruta - ${detailRouteCtrl.route.nameRoute}'),
-        elevation: 0,
-      ),
-      body: Obx(() {
-        return Center(
-            child: (routesCtrl.isLoading.value)
-                ? const LoadingWidget()
-                : const _Maps());
-      })
-    );
+        appBar: AppBar(
+          title: Text('Ruta - ${detailRouteCtrl.route.nameRoute}'),
+          elevation: 0,
+        ),
+        body: Obx(() {
+          return Center(
+              child: (routesCtrl.isLoading.value)
+                  ? const LoadingWidget()
+                  : const _Maps());
+        }));
   }
 }
 
@@ -62,7 +61,6 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
     SizeConfig(context);
     final routeCtrl = Get.find<RoutesController>();
 
-    if (routeCtrl.latLen.isEmpty) return const Text('No hay estaciones');
     return Column(
       children: [
         Container(
