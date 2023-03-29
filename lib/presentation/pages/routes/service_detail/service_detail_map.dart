@@ -12,7 +12,9 @@ class ServiceDetailMapScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Servicio en ejecución'),),
+      appBar: AppBar(
+        title: const Text('Servicio en ejecución'),
+      ),
       body: const _MapsRouteComponent(),
     );
   }
@@ -48,7 +50,14 @@ class _MapsRouteComponent extends StatelessWidget {
                           .toList(),
                     ),
                 },
-                markers: detailServiceCtrl.markersRoute.value,
+                markers: {
+                  if (detailServiceCtrl.postionConductor.value != null)
+                    Marker(
+                        icon:detailServiceCtrl.busIcon,
+                        markerId: const MarkerId("currentLocation"),
+                        position: detailServiceCtrl.postionConductor.value!),
+                  ...detailServiceCtrl.markersRoute.value
+                },
                 onMapCreated: (GoogleMapController controller) {
                   detailServiceCtrl.controllerMap.complete(controller);
                 },

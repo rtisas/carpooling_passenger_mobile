@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "868704184638",
+    "firebase_url": "https://carpooling-11c56-default-rtdb.firebaseio.com",
+    "project_id": "carpooling-11c56",
+    "storage_bucket": "carpooling-11c56.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868704184638:android:b113a0cb16ffdc5a4a646f",
+        "android_client_info": {
+          "package_name": "com.example.carpooling_driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "868704184638-4iiupkbepf8kij30res0ifjjohhciue2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaysp9XJzncqk6AzwLVcAVkuQsC57Ew-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "868704184638-4iiupkbepf8kij30res0ifjjohhciue2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "868704184638-r1bfs2gj0c9nru8t4rb58h3ejovgnvgm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.carpoolingDriver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868704184638:android:bb8d3310de5aa3a44a646f",
+        "android_client_info": {
+          "package_name": "com.example.carpooling_passenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "868704184638-4iiupkbepf8kij30res0ifjjohhciue2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaysp9XJzncqk6AzwLVcAVkuQsC57Ew-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "868704184638-4iiupkbepf8kij30res0ifjjohhciue2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "868704184638-r1bfs2gj0c9nru8t4rb58h3ejovgnvgm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.carpoolingDriver"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

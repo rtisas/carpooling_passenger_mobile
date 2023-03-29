@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,27 +20,42 @@ class ServiceDetailController extends GetxController {
   Rx<Set<Marker>> markersRoute = Rx({});
   List<LatLng> latLen = [];
   Rx<List<PointLatLng>>? polylinePoints = Rx([]);
-  RxBool showDialogReserve = false.obs; // nos permite saber si quiere agendar
-  ServiceDetailController(this._routesUseCase);
+  Rx<LatLng?> postionConductor = Rx(null);
 
+  BitmapDescriptor busIcon = BitmapDescriptor.defaultMarker;
+
+  ServiceDetailController(this._routesUseCase);
+  final refFirebase = FirebaseDatabase.instance.ref();
 
   @override
   void onInit() async {
     await getStationsByRoute();
     super.onInit();
+    getLocationDriverRealTime();
+    setMarkerIcon();
   }
 
-  getLocationDriverRealTime(){
-    // databaseReference.child('locations').child('user1').onValue.listen((event) {
-    //   if (event.snapshot.value != null) {
-    //     setState(() {
-    //       _user1Location = LatLng(
-    //         event.snapshot.value['latitude'],
-    //         event.snapshot.value['longitude'],
-    //       );
-    //     });
-    //   }
-    // });
+  getLocationDriverRealTime() {
+    refFirebase
+        .child('services')
+        .child(Get.arguments.service.id.toString())
+        .onValue
+        .listen((event) {
+      final dynamic data = event.snapshot.value;
+      if (data != null) {
+        final latitude = (data['latitude'] ?? 0).toDouble();
+        final longitude = (data['longitude'] ?? 0).toDouble();
+        postionConductor.value = LatLng(latitude, longitude);
+      }
+    });
+  }
+
+//método que nos permite establecer icono del bus
+  setMarkerIcon() async {
+    BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(64, 64)),
+      'assets/bus_icon.png',
+    ).then((value) => busIcon = value);
   }
 
   getStationsByRoute() async {
@@ -63,9 +80,6 @@ class ServiceDetailController extends GetxController {
                   infoWindow: InfoWindow(
                     title: station.nameStation,
                   ),
-                  onTap: () {
-                    showDialogReserve.value = true;
-                  },
                 );
                 markersRoute.value.add(marker);
               }
