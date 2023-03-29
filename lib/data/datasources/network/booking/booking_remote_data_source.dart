@@ -11,6 +11,7 @@ abstract class BookingRemoteDataSource {
   Future<BookingResponse> createBooking(BookingRequest bookingRequest);
   Future<List<BookingResponseComplete>> getBookingsPassengerByState(
       String idPassenger, String status);
+  Future<BookingResponseComplete> getBookingById(String idBooking);
   Future<dynamic> deleteBooking(String idBooking);
 }
 
@@ -52,23 +53,14 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
         "status": status
       };
       final http = await webService.httpClient();
-      final response = await http.get('facade/get-booking/passenger', queryParameters: queryParameters);
+      final response = await http.get('facade/get-booking/passenger',
+          queryParameters: queryParameters);
       if (response.statusCode == 200) {
         final List<BookingResponseComplete> listBookingsResponse = [];
         for (var element in response.data) {
-          BookingResponseComplete bookingResponse = BookingResponseComplete.fromJson(element);
-          if(bookingResponse.state.id.toString() == STATUS_BOOKING.APROBADO.value){
-            bookingResponse.color = Colors.green;
-          }else if( bookingResponse.state.id.toString() == STATUS_BOOKING.PENDIENTE.value ){
-            bookingResponse.color = Color.fromARGB(204, 234, 212, 98);
-          }else if( bookingResponse.state.id.toString() == STATUS_BOOKING.EN_EJECUCION.value ){
-            bookingResponse.color = Colors.blue;
-          }else if( bookingResponse.state.id.toString() == STATUS_BOOKING.FINALIZADO.value){
-            bookingResponse.color = Colors.purpleAccent;
-          }else if( bookingResponse.state.id.toString() == STATUS_BOOKING.RECHAZADO.value){
-            bookingResponse.color = Colors.redAccent;
-          }
-          listBookingsResponse.add(bookingResponse);
+          BookingResponseComplete bookingResponse =
+              BookingResponseComplete.fromJson(element);
+          listBookingsResponse.add(assignedColoBooking(bookingResponse));
         }
         return listBookingsResponse;
       } else {
@@ -85,13 +77,12 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
       }
     }
   }
-  
+
   @override
-  Future<dynamic> deleteBooking(String idBooking)  async {
-     try {
+  Future<dynamic> deleteBooking(String idBooking) async {
+    try {
       final http = await webService.httpClient();
-      final response =
-          await http.delete('facade/delete-booking/$idBooking');
+      final response = await http.delete('facade/delete-booking/$idBooking');
       if (response.statusCode == 200) {
         return response.data;
       }
@@ -105,5 +96,48 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
           throw NoNetwork();
       }
     }
+  }
+
+  @override
+  Future<BookingResponseComplete> getBookingById(String idBooking) async {
+    try {
+      final http = await webService.httpClient();
+      final response = await http.get('facade/get-booking/$idBooking');
+      if (response.statusCode == 200) {
+        BookingResponseComplete bookingResponse = BookingResponseComplete.fromJson(response.data);
+        return assignedColoBooking(bookingResponse);
+      }else{
+        throw ServerException();
+      }
+    } on DioError catch (e) {
+      switch (e.response?.statusCode) {
+        case 400:
+          throw DataIncorrect();
+        case 404:
+          throw NoFound();
+        default:
+          throw NoNetwork();
+      }
+    }
+  }
+
+//Asignado un color al estado de la reserva
+  BookingResponseComplete assignedColoBooking(BookingResponseComplete bookingResponse) {
+    if (bookingResponse.state.id.toString() == STATUS_BOOKING.APROBADO.value) {
+      bookingResponse.color = Colors.green;
+    } else if (bookingResponse.state.id.toString() ==
+        STATUS_BOOKING.PENDIENTE.value) {
+      bookingResponse.color = Color.fromARGB(204, 234, 212, 98);
+    } else if (bookingResponse.state.id.toString() ==
+        STATUS_BOOKING.EN_EJECUCION.value) {
+      bookingResponse.color = Colors.blue;
+    } else if (bookingResponse.state.id.toString() ==
+        STATUS_BOOKING.FINALIZADO.value) {
+      bookingResponse.color = Colors.purpleAccent;
+    } else if (bookingResponse.state.id.toString() ==
+        STATUS_BOOKING.RECHAZADO.value) {
+      bookingResponse.color = Colors.redAccent;
+    }
+    return bookingResponse;
   }
 }

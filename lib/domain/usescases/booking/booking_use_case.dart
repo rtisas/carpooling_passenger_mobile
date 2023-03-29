@@ -16,6 +16,9 @@ class BookingUseCase{
   Future<Either<Failure, List<BookingResponseComplete>>> getBookingsPassengerByState(String idPassenger, String status) {
     return bookingRepository.getBookingsPassengerByState(idPassenger, status);
   }
+  Future<Either<Failure, BookingResponseComplete>> getBookingById(String idBooking) {
+    return bookingRepository.getBookingsById(idBooking);
+  }
   Future<Either<Failure, dynamic>> deleteBooking(String idBooking) {
     return bookingRepository.deleteBooking(idBooking);
   }

@@ -23,6 +23,7 @@ class WebService {
       _dio.interceptors.add(InterceptorsWrapper(
         onResponse: ((Response response, ResponseInterceptorHandler handler) async {
           int statusCode = response.statusCode ?? 0;
+          print('LOG valor del statusCode ${ statusCode }');
           if(statusCode == 401 || statusCode == 0){
                 await Preferences.storage.deleteAll();
                 Get.offAll(() => const LoginPage());
