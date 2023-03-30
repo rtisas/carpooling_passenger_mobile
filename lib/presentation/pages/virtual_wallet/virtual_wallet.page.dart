@@ -15,7 +15,6 @@ class VirtualWalletPage extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          print('LOG valor refresh ${1}');
           await Future.delayed(Duration(seconds: 3));
 
           virtualCtrl.getVirtualWalletByPassenger();
@@ -26,8 +25,8 @@ class VirtualWalletPage extends StatelessWidget {
                 return Container(
                   child: (virtualCtrl.userContainVirtualWallet.value)
                       ? SizedBox(
-                          width: SizeConfig.safeBlockSizeHorizontal(90),
-                          height: SizeConfig.safeBlockSizeHorizontal(40),
+                          // width: SizeConfig.safeBlockSizeHorizontal(90),
+                          // height: SizeConfig.safeBlockSizeHorizontal(40),
                           child: Card(
                             // margin: const EdgeInsets.all(20),
                             child: Container(
@@ -66,7 +65,7 @@ class VirtualWalletPage extends StatelessWidget {
                                   Obx(() {
                                     return RichText(
                                       text: TextSpan(
-                                        text: 'Tú saldo anterior era: ',
+                                        text: 'Tú última recarga fue de: ',
                                         style: DefaultTextStyle.of(context).style,
                                         children: <TextSpan>[
                                           TextSpan(
@@ -86,10 +85,7 @@ class VirtualWalletPage extends StatelessWidget {
                       : Center(child: Text('Billetera no disponible')),
                 );
               }
-            ),
-            const Center(
-              child: Text('VirtualWalletPage'),
-            ),
+            )
           ],
         ),
       ),
