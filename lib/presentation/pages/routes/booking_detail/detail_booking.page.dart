@@ -36,7 +36,7 @@ class BookingDetailPage extends StatelessWidget {
                             bookingDetail:
                                 detailBookingCtrl.bookingComplete.value ??
                                     detailBookingCtrl.bookingDetailArgument),
-                        // if (bookingDetail.service != null)
+                        if (detailBookingCtrl.bookingComplete.value?.service != null)
                         _CardServiceInformation(
                             bookingDetail:
                                 detailBookingCtrl.bookingComplete.value ??
