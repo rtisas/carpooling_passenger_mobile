@@ -22,10 +22,13 @@ class _RoutesAvailablesTabState extends State<RoutesAvailablesTab>
     final homeCtrl = Get.find<HomeController>();
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          ...homeCtrl.listRoutes.value.map((route) => CardRoute(route: route))
-        ],
+      child: Obx(() {
+          return Column(
+            children: [
+              ...homeCtrl.listRoutes.value.map((route) => CardRoute(route: route))
+            ],
+          );
+        }
       ),
     );
   }

@@ -53,6 +53,7 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
+    _controller.future.then((value) => value.dispose());
     super.dispose();
   }
 
@@ -71,7 +72,11 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             )),
         Obx(() {
-          return SizedBox(
+
+          if(routeCtrl.listStations.value.isEmpty) {
+            return const Center(child: Text('No hay paradas'));
+          }
+          return (routeCtrl.latLen.isEmpty)? const Center(child: Text('No hay paradas'),) :SizedBox(
             height: SizeConfig.safeBlockSizeVertical(30),
             width: double.infinity,
             child: GoogleMap(

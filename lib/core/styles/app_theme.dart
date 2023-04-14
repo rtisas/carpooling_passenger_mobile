@@ -14,10 +14,8 @@ class AppTheme {
 
   ThemeData getTheme() => ThemeData(
     useMaterial3: true,
-    brightness: Brightness.light,
-    colorScheme: const ColorScheme.light(
-    primary: colorPrimaryColor,
-    ),
+    // brightness: Brightness.light,
+    colorSchemeSeed: colorPrimaryColor
   );
 
 

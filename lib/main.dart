@@ -1,20 +1,17 @@
 import 'package:carpooling_passenger/core/application/helpers.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:carpooling_passenger/push_notifications_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:carpooling_passenger/core/application/enviroment.dart';
 import 'package:carpooling_passenger/core/styles/app_theme.dart';
-import 'firebase_options.dart';
 import 'presentation/exports/binding.dart';
 import 'presentation/pages/pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   bool validateAuth = await Helpers.verificarAuth();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await PushNotificationsService.initializeApp();
   runApp(MyApp(
     validateAuth: validateAuth,
   ));

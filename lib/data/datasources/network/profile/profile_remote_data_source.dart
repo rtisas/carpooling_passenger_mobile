@@ -9,12 +9,13 @@ import '../../../../core/application/preferences.dart';
 import '../../../../core/errors/exeptions.dart';
 import '../../../models/helpers/statusUser.dart';
 import '../../../models/passenger/passenger_update_request.dart';
+import '../../../models/user/push_token_request.dart';
 
 abstract class ProfileRemoteDataSource {
   Future<UploadFileResponse> uploadPictureUserPasseger(
       String pathFilePicture, String idUser);
-  Future<PassengerResoponse> updatePassenger(
-      String idPassanger, UpdatePassager updatePassager);
+  Future<PassengerResoponse> updatePassenger(String idPassanger, UpdatePassager updatePassager);
+  Future updatePushTokenPassenger(String idUser, PushTokenRequest pushTokenRequest);
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -97,6 +98,28 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
             .write(key: 'userPassenger', value: jsonEncode(passenger.toJson()));
 
         return passenger;
+      } else {
+        throw ServerException();
+      }
+    } on DioError catch (e) {
+      switch (e.response?.statusCode) {
+        case 400:
+          throw DataIncorrect();
+        case 404:
+          throw NoFound();
+        default:
+          throw NoNetwork();
+      }
+    }
+  }
+  
+  @override
+  Future updatePushTokenPassenger(String idUser, PushTokenRequest pushTokenRequest) async {
+    try {
+      final http = await webService.httpClient();
+      final response = await http.put('facade/put-token/$idUser',  data: pushTokenRequest);
+      if (response.statusCode == 200) {
+        return true;
       } else {
         throw ServerException();
       }

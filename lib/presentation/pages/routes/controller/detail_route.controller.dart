@@ -125,7 +125,6 @@ class DetailRouteController extends GetxController {
           await _bookingUseCase.createBooking(bookingRequest);
 
       failureOrBookingOK.fold((errorResponse) {
-        print('LOG: errorResponse Ocurrió un error ${errorResponse}');
         showMessage('Ocurrió un error', '${errorResponse.message}');
       }, (r) {
         closeDialogLoading();

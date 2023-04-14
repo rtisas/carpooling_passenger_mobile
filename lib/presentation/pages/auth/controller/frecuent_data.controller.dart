@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:carpooling_passenger/domain/usescases/profile/profile_use_case.dart';
+import 'package:carpooling_passenger/push_notifications_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +33,7 @@ class FrecuentDataController extends GetxController {
             passenger.frOriginLongitude,
         frOriginHour:
             frecuentDataPasseger["frOriginHour"] ?? passenger.frOriginHour,
-        pushToken: passenger.pushToken,
+        pushToken: PushNotificationsService.token ?? passenger.pushToken,
         identification: passenger.basicData.identification,
         firstName: passenger.basicData.firstName,
         lastName: passenger.basicData.lastName,

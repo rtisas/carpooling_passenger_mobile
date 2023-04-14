@@ -11,46 +11,51 @@ class CardRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed('detail-route',arguments: route,  );
+        Get.toNamed('detail-route', arguments: route);
       },
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        padding: const EdgeInsets.symmetric(horizontal: 2),
-        child: Card(
+      child: Column(
+        children: [
+          Container(
+            color: Colors.transparent,
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              flex: 1,
-              child: Text(
-                route.nameRoute,
-                style:
-                    const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Wrap(
-                    spacing: 2,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    route.nameRoute,
+                    style: const TextStyle(
+                        fontSize: 30, fontWeight: FontWeight.w500),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      ...route.availableDays
-                          .split(',')
-                          .map((e) => Chip(label: Text(e)))
+                      Wrap(
+                        spacing: 2,
+                        children: [
+                          ...route.availableDays
+                              .split(',')
+                              .map((e) => Chip(label: Text(e)))
+                        ],
+                      ),
+                      Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          child: Text(route.availableTime))
                     ],
                   ),
-                  Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
-                      child: Text(route.availableTime))
-                ],
-              ),
-            )
-          ],
-        )),
+                )
+              ],
+            ),
+          ),
+          const Divider()
+        ],
       ),
     );
   }

@@ -9,12 +9,11 @@ class RoutesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: _AppBarTabsRoutes(),
         body: const TabBarView(
           children: [
-            Text('Hola a todos'),
             RoutesAvailablesTab(),
             BookingsAvailablesTab()
           ],
@@ -35,9 +34,6 @@ class _AppBarTabsRoutes extends StatelessWidget with PreferredSizeWidget {
       centerTitle: true,
       bottom: const TabBar(
         tabs: [
-          Tab(
-            text: 'Tu ubicación',
-          ),
           Tab(
             text: 'Rutas disponibles',
           ),
