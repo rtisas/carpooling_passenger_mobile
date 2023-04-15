@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final homeCtrl = Get.find<HomeController>();
     return Scaffold(
       body: Screen(homeCtrl: homeCtrl),

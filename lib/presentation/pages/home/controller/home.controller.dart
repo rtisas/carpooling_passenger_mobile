@@ -23,6 +23,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
+    await PushNotificationsService.requestPermission();
     await getUser();
     await getRoutesAvailable();
     super.onInit();

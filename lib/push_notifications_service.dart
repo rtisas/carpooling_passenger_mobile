@@ -13,6 +13,7 @@ class PushNotificationsService {
 
   static Future initializeApp() async {
     //Push notifications
+   
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
       print('Message data: ${message.data}');
@@ -27,7 +28,6 @@ class PushNotificationsService {
     //grabar en el local storage
     token = await FirebaseMessaging.instance.getToken();
     setupFlutterNotifications();
-    print('LOG valor del token ${token}');
 
     //handlers
 
@@ -65,7 +65,11 @@ class PushNotificationsService {
       importance: Importance.high,
     );
 
+    //logo de la notificación
+    var initializationSettingsAndroid = AndroidInitializationSettings('logo');
+    var initializationSettings = InitializationSettings(android: initializationSettingsAndroid );
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
     /// Create an Android Notification Channel.
     ///
@@ -75,6 +79,7 @@ class PushNotificationsService {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
+
 
     /// Update the iOS foreground notification presentation options to allow
     /// heads up notifications.
@@ -102,10 +107,17 @@ class PushNotificationsService {
             channelDescription: channel.description,
             // TODO add a proper drawable resource to android, for now using
             //      one that already exists in example app.
-            icon: 'launch_background',
           ),
         ),
       );
     }
+  }
+  static Future<void> requestPermission() async {
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    print('User granted permission: ${settings.authorizationStatus}');
   }
 }
