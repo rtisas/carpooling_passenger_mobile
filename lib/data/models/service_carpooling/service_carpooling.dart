@@ -15,6 +15,7 @@ class ServiceCarpooling {
         required this.route,
         required this.driver,
         required this.serviceStartTime,
+        required this.nameService,
         required this.servicePrice,
         required this.dateService,
         required this.reservation,
@@ -34,6 +35,7 @@ class ServiceCarpooling {
     String? serviceStartTime;
     String servicePrice;
     DateTime dateService;
+    String? nameService;
     int reservation;
     int id;
     Parameter state;
@@ -49,6 +51,7 @@ class ServiceCarpooling {
         route: RouteResponse.fromJson(json["route"]),
         driver: DriverResponse.fromJson(json["driver"]),
         serviceStartTime: json["serviceStartTime"],
+        nameService: json["nameService"],
         servicePrice: json["servicePrice"],
         dateService: DateTime.parse(json["dateService"]),
         reservation: json["reservation"],
@@ -68,6 +71,7 @@ class ServiceCarpooling {
         "driver": driver?.toJson(),
         "serviceStartTime": serviceStartTime,
         "servicePrice": servicePrice,
+        "nameService": nameService,
         "dateService": dateService.toIso8601String(),
         "reservation": reservation,
         "id": id,

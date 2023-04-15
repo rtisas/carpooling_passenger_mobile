@@ -48,13 +48,14 @@ class _CardBooking extends StatelessWidget {
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(15), topRight: Radius.circular(15)),
               child: Container(
-                height: 30,
-                color: booking.color,
+                height: 40,
+                // color: booking.color,
                 child: Center(
-                  child: Text('Ruta ${booking.route?.nameRoute}'),
+                  child: Text('Servicio ${booking.service?.nameService}, con ruta ${booking.route?.nameRoute}'),
                 ),
               ),
             ),
+            Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
