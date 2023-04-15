@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:carpooling_passenger/core/application/preferences.dart';
+import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../data/models/passenger/passenger_response.dart';
@@ -37,4 +38,8 @@ class Helpers {
       return true;
     }
   }
+  static String formatCurrency(double amount) {
+  final formatter = NumberFormat.currency(locale: 'es_CO', symbol: 'COP');
+  return formatter.format(amount);
+}
 }

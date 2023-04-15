@@ -1,3 +1,4 @@
+import 'package:carpooling_passenger/data/models/virtual_wallet/history_recharge.dart';
 import 'package:carpooling_passenger/data/models/virtual_wallet/virtual_wallet.dart';
 import 'package:carpooling_passenger/domain/repositories/virtual_wallet/virtual_wallet_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -13,6 +14,9 @@ class VirtualWalletUseCase{
 
   Future<Either<Failure, VirtualWalletResponse>> getVirtualWalletByPassenger(String idPassenger) {
     return _virtualWalletRepository.getVirtualWalletByPassenegr(idPassenger);
+  }
+  Future<Either<Failure, List<HisotoryRecharge>>> getHistoryRechargePassenger(String idPassenger) {
+    return _virtualWalletRepository.getHistoryRechargeByPassenger(idPassenger);
   }
 
 }

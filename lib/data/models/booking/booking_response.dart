@@ -99,7 +99,7 @@ class BookingResponseComplete {
   StationResponse endStation;
   String? comments;
   int index;
-  int? qualifiying;
+  String? qualifiying;
   dynamic finalizedService;
   String? aproxBooking;
   RouteResponse? route;
