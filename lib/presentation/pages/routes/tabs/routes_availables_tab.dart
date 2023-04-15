@@ -1,3 +1,4 @@
+import 'package:carpooling_passenger/core/styles/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,16 +20,29 @@ class _RoutesAvailablesTabState extends State<RoutesAvailablesTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    SizeConfig(context);
     final homeCtrl = Get.find<HomeController>();
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Obx(() {
-          return Column(
-            children: [
-              ...homeCtrl.listRoutes.value.map((route) => CardRoute(route: route))
-            ],
-          );
-        }
+    return RefreshIndicator(
+      onRefresh: () async {
+        await homeCtrl.getRoutesAvailable();
+      },
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Obx(() {
+          return (homeCtrl.isLoading.value)
+              ? Container(
+                height: SizeConfig.safeBlockSizeVertical(75),
+                child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+              )
+              : Column(
+                  children: [
+                    ...homeCtrl.listRoutes.value
+                        .map((route) => CardRoute(route: route))
+                  ],
+                );
+        }),
       ),
     );
   }

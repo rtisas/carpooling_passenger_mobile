@@ -209,8 +209,8 @@ class _FormBooking extends StatelessWidget {
                 DateTime? pickedDate = await showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),
-                    firstDate: DateTime(2023),
-                    lastDate: DateTime(2025));
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2030));
                 if (pickedDate != null) {
                   print(
                       pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
