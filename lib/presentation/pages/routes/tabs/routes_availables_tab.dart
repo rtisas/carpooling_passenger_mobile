@@ -36,12 +36,16 @@ class _RoutesAvailablesTabState extends State<RoutesAvailablesTab>
                     child: CircularProgressIndicator(),
                   ),
               )
-              : Column(
-                  children: [
-                    ...homeCtrl.listRoutes.value
-                        .map((route) => CardRoute(route: route))
-                  ],
-                );
+              : Container(
+                child: Column(
+                    children: [
+                      if(homeCtrl.listRoutes.value.isEmpty)
+                      Center(child: Text('No hay rutas disponibles al momento')),
+                      ...homeCtrl.listRoutes.value
+                          .map((route) => CardRoute(route: route))
+                    ],
+                  ),
+              );
         }),
       ),
     );
