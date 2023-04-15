@@ -28,7 +28,7 @@ class VirtualWalletPage extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const _CustomVirtualWalletWidget(),
+                    Container(margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),child: const _CustomVirtualWalletWidget()),
                     Container(
                         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                         child: const Text(
@@ -104,10 +104,9 @@ class _CustomVirtualWalletWidget extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Chip(label: Text('COP'), elevation: 0),
                           Obx(() {
                             return Text(
-                                '\$${virtualCtrl.virtualWalletPassenger.value?.currentValue}',
+                                Helpers.formatCurrency(virtualCtrl.virtualWalletPassenger.value?.currentValue.toDouble() ?? 0.0),
                                 style: const TextStyle(
                                     fontSize: 30, fontWeight: FontWeight.w400));
                           }),

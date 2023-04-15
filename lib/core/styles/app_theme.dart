@@ -15,7 +15,7 @@ class AppTheme {
   ThemeData getTheme() => ThemeData(
     useMaterial3: true,
     // brightness: Brightness.light,
-    colorSchemeSeed: colorPrimaryColor
+    colorSchemeSeed: colorPrimaryButton
   );
 
 
