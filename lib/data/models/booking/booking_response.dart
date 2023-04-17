@@ -28,7 +28,7 @@ class BookingResponse {
   OnlyId endStation;
   dynamic comments;
   int index;
-  int qualifiying;
+  String? qualifiying;
   dynamic finalizedService;
   dynamic aproxBooking;
   OnlyId route;

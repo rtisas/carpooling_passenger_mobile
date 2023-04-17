@@ -40,31 +40,23 @@ class VirtualWalletController extends GetxController {
   }
 
   getHisotoryRecharge() async {
+    historyRecharge.value = [];
     _virtualWalletUseCase
         .getHistoryRechargePassenger(passenger.id.toString())
         .then((value) => value.fold((errorRespose) {
               print(
                   'LOG Ocurrió un erorr al cargar historyRecharge ${errorRespose}');
             }, (listHistoryRecharge) {
-              List<DateTime> fechas = listHistoryRecharge.map((recharge) {
+              List<HisotoryRecharge> listRecharge = listHistoryRecharge.map((recharge) {
                 List<String> partesFecha = recharge.paymentDate.split('-');
                 int anio = int.parse(partesFecha[0]);
                 int mes = int.parse(partesFecha[1]);
                 int dia = int.parse(partesFecha[2]);
-
-                return DateTime(anio, mes, dia);
+                recharge.formatDate =  DateTime(anio, mes, dia);
+                return recharge;
               }).toList();
-              fechas.sort((a, b) => b.compareTo(a));
-              historyRecharge.value = fechas.map((fecha) {
-                return listHistoryRecharge.firstWhere((element) {
-                  List<String> partesFecha = element.paymentDate.split('-');
-                  int anio = int.parse(partesFecha[0]);
-                  int mes = int.parse(partesFecha[1]);
-                  int dia = int.parse(partesFecha[2]);
-
-                  return DateTime(anio, mes, dia) == fecha;
-                });
-              }).toList();
+              listRecharge.sort((a, b) => b.formatDate!.compareTo(a.formatDate!));
+              historyRecharge.value = listRecharge;
             }));
   }
 }

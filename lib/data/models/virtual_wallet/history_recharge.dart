@@ -10,6 +10,7 @@ class HisotoryRecharge {
         required this.virtualWallet,
         required this.paymentDescription,
         required this.updater,
+        formatDate,
     });
 
     int paymentValue;
@@ -19,6 +20,7 @@ class HisotoryRecharge {
     VirtualWalletResponse virtualWallet;
     String paymentDescription;
     OnlyId updater;
+    DateTime? formatDate;
 
     factory HisotoryRecharge.fromJson(Map<String, dynamic> json) => HisotoryRecharge(
         paymentValue: json["paymentValue"],
