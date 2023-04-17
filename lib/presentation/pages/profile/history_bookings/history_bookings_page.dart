@@ -108,7 +108,7 @@ class _CardBooking extends StatelessWidget {
               Icon(Icons.calendar_month),
               Expanded(
                   child: Text(
-                '${booking.dateBooking}',
+                ' Fecha de reserva ${booking.dateBooking} - fecha de servicio ${booking.service?.dateService ?? '-'}',
                 style: const TextStyle(fontWeight: FontWeight.w400),
               )),
             ],
@@ -140,6 +140,12 @@ class _CardBooking extends StatelessWidget {
               ),
               Text(Helpers.formatCurrency(
                   double.parse(booking.service?.servicePrice ?? '0.0'))),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Chip(label: Text(booking.state.parameterValue ?? '-')),
             ],
           ),
         ],

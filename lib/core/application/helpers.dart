@@ -38,8 +38,9 @@ class Helpers {
       return true;
     }
   }
+
   static String formatCurrency(double amount) {
-  final formatter = NumberFormat.currency(locale: 'es_CO', symbol: 'COP');
-  return formatter.format(amount);
-}
+    final formatter = NumberFormat.currency(locale: 'es_CO', symbol: 'COP');
+    return formatter.format(amount);
+  }
 }

@@ -27,7 +27,8 @@ class HistoryBookingsController extends GetxController {
 
   getHistoryBookingsPassenger()  async {
     isLoading.value = true;
-    return await _bookingUseCase
+    historyBookings.value = [];
+    await _bookingUseCase
         .getBookingsPassengerByState(
             passenger.id.toString(), STATUS_BOOKING.FINALIZADO.value)
         .then((value) => value.fold((errorResponse) {
@@ -35,6 +36,15 @@ class HistoryBookingsController extends GetxController {
         },(bookingsResponse) {
           isLoading.value = false;
           historyBookings.value = bookingsResponse;
+        }));
+    await _bookingUseCase
+        .getBookingsPassengerByState(
+            passenger.id.toString(), STATUS_BOOKING.ELIMINADO.value)
+        .then((value) => value.fold((errorResponse) {
+          isLoading.value = false;
+        },(bookingsResponse) {
+          isLoading.value = false;
+          historyBookings.value.addAll(bookingsResponse);
         }));
   }
 }
