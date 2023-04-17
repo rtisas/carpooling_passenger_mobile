@@ -108,7 +108,17 @@ class _CardBooking extends StatelessWidget {
               Icon(Icons.calendar_month),
               Expanded(
                   child: Text(
-                ' Fecha de reserva ${booking.dateBooking} - fecha de servicio ${booking.service?.dateService ?? '-'}',
+                'Fecha de reserva ${booking.dateBooking}',
+                style: const TextStyle(fontWeight: FontWeight.w400),
+              )),
+            ],
+          ),
+          Row(
+            children: [
+              Icon(Icons.calendar_month),
+              Expanded(
+                  child: Text(
+                'Fecha de servicio ${booking.service?.dateService.year}-${booking.service?.dateService.month}-${booking.service?.dateService.day}',
                 style: const TextStyle(fontWeight: FontWeight.w400),
               )),
             ],
@@ -132,7 +142,7 @@ class _CardBooking extends StatelessWidget {
           Row(
             children: [
               const Padding(
-                padding: const EdgeInsets.only(right: 10),
+                padding: const EdgeInsets.only(right: 5),
                 child: Icon(
                   Icons.monetization_on,
                   color: Colors.amber,

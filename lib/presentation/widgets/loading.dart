@@ -73,7 +73,7 @@ class LoadingWidgetState extends State<LoadingWidget>
           decoration: const BoxDecoration(
               color: Color.fromARGB(255, 255, 255, 255),
               borderRadius: BorderRadius.all(Radius.circular(20))),
-          height: SizeConfig.blockSizeVertical(28),
+          height: SizeConfig.blockSizeVertical(40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

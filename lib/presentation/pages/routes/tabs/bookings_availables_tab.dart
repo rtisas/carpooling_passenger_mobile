@@ -15,6 +15,7 @@ class BookingsAvailablesTab extends StatelessWidget {
       },
       child: Obx(() {
         return (bookingCtrl.listBookings.value.isEmpty)?Center(child: Text('No hay reservas'),):ListView.builder(
+          physics: const BouncingScrollPhysics(),
           itemCount: bookingCtrl.listBookings.length,
           itemBuilder: (BuildContext context, int index) {
             return _CardBooking(booking: bookingCtrl.listBookings[index]);

@@ -23,16 +23,15 @@ class CardRoute extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  flex: 1,
                   child: Text(
                     route.nameRoute,
                     style: const TextStyle(
-                        fontSize: 30, fontWeight: FontWeight.w500),
+                        fontSize: 23, fontWeight: FontWeight.w500),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
