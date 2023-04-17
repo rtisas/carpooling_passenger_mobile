@@ -49,10 +49,14 @@ class VirtualWalletController extends GetxController {
             }, (listHistoryRecharge) {
               List<HisotoryRecharge> listRecharge = listHistoryRecharge.map((recharge) {
                 List<String> partesFecha = recharge.paymentDate.split('-');
+                try {
                 int anio = int.parse(partesFecha[0]);
                 int mes = int.parse(partesFecha[1]);
                 int dia = int.parse(partesFecha[2]);
                 recharge.formatDate =  DateTime(anio, mes, dia);
+                } catch (e) {
+                  recharge.formatDate = DateTime.now();
+                }
                 return recharge;
               }).toList();
               listRecharge.sort((a, b) => b.formatDate!.compareTo(a.formatDate!));
