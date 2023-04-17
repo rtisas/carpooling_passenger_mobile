@@ -49,17 +49,10 @@ class ProfileMenuPage extends StatelessWidget {
           },
             ),
             OptionProfile(
-          title: 'Mis reservas',
-          iconLeading: Icons.calendar_month_outlined,
-          onPress: () {
-            print('LOG press Mis reservas ${1}');
-          },
-            ),
-            OptionProfile(
-          title: 'Historial de servicios',
+          title: 'Historial de reservas',
           iconLeading: Icons.history,
           onPress: () {
-            Get.toNamed('history-services');
+            Get.toNamed('/history-bookings');
           },
             ),
             OptionProfile(
@@ -74,8 +67,6 @@ class ProfileMenuPage extends StatelessWidget {
           iconLeading: Icons.exit_to_app_outlined,
           onPress: () async {
             await Preferences.storage.deleteAll();
-            // homeCtrl.dispose();
-            // Get.clearRouteTree();
             Get.offAll(() => const LoginPage());
           },
             )

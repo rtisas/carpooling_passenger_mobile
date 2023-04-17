@@ -29,7 +29,7 @@ class VirtualWalletPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                       child: const _CustomVirtualWalletWidget()),
                   Container(
                       margin: const EdgeInsets.symmetric(
@@ -41,13 +41,13 @@ class VirtualWalletPage extends StatelessWidget {
                       )),
                   ...virtualCtrl.historyRecharge.value
                       .map((recharge) => Container(
-                            margin: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 10),
                             decoration: BoxDecoration(
                                 border: Border.all(
                                     color: Color.fromARGB(255, 19, 73, 20))),
                             child: ListTile(
-                              leading: Container(
+                              leading: const SizedBox(
                                   height: double.infinity,
                                   child: Icon(
                                     Icons.monetization_on,

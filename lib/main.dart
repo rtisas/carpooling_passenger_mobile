@@ -1,10 +1,11 @@
 import 'package:carpooling_passenger/core/application/helpers.dart';
-import 'package:carpooling_passenger/push_notifications_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 import 'package:carpooling_passenger/core/application/enviroment.dart';
 import 'package:carpooling_passenger/core/styles/app_theme.dart';
+import 'package:carpooling_passenger/push_notifications_service.dart';
 import 'presentation/exports/binding.dart';
 import 'presentation/pages/pages.dart';
 
@@ -59,6 +60,10 @@ class MyApp extends StatelessWidget {
             name: '/detail_service',
             page: () => const ServiceDetailMapScreen(),
             binding: ServiceDetailBinding()),
+        GetPage(
+            name: '/history-bookings',
+            page: () => const HistoryBookingsPage(),
+            binding: HistoryBookingsBinding()),
       ],
     );
   }

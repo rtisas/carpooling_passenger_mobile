@@ -81,14 +81,7 @@ class BookingDetailPage extends StatelessWidget {
                                           .pop(); // Cierra el diálogo
                                     },
                                     child: Text('Aceptar'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pop(); // Cierra el diálogo
-                                    },
-                                    child: Text('Cancelar'),
-                                  ),
+                                  )
                                 ],
                               ));
                     },

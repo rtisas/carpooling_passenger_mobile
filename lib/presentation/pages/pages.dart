@@ -1,3 +1,5 @@
+export 'package:carpooling_passenger/presentation/pages/profile/history_bookings/history_bookings_page.dart';
+
 export 'package:carpooling_passenger/presentation/pages/routes/booking_detail/detail_booking.page.dart';
 export 'package:carpooling_passenger/presentation/pages/routes/service_detail/service_detail_map.dart';
 export 'package:carpooling_passenger/presentation/pages/auth/frecuent_data.page.dart';
