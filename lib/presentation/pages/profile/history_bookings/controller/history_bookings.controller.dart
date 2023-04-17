@@ -25,9 +25,9 @@ class HistoryBookingsController extends GetxController {
     super.onInit();
   }
 
-  getHistoryBookingsPassenger() {
+  getHistoryBookingsPassenger()  async {
     isLoading.value = true;
-    _bookingUseCase
+    return await _bookingUseCase
         .getBookingsPassengerByState(
             passenger.id.toString(), STATUS_BOOKING.FINALIZADO.value)
         .then((value) => value.fold((errorResponse) {

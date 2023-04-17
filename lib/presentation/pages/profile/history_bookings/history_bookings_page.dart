@@ -25,19 +25,26 @@ class HistoryBookingsPage extends StatelessWidget {
                       child: Text('Aún no hay reservas disponibles'),
                     );
                   }
-                  return ListView.builder(
-                    itemCount: ctrlHisotryBookings.historyBookings.value.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          _CardBooking(
-                              ctrlHisotryBookings.historyBookings.value[index]),
-                          const Divider(
-                            height: 30,
-                          )
-                        ],
-                      );
+                  return RefreshIndicator(
+                    onRefresh: ()async {
+                      await ctrlHisotryBookings.getHistoryBookingsPassenger();
+
                     },
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: ctrlHisotryBookings.historyBookings.value.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            _CardBooking(
+                                ctrlHisotryBookings.historyBookings.value[index]),
+                            const Divider(
+                              height: 30,
+                            )
+                          ],
+                        );
+                      },
+                    ),
                   );
                 });
         }));
