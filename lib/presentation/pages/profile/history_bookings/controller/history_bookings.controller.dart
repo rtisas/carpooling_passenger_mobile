@@ -25,26 +25,27 @@ class HistoryBookingsController extends GetxController {
     super.onInit();
   }
 
-  getHistoryBookingsPassenger()  async {
+  getHistoryBookingsPassenger() async {
     isLoading.value = true;
     historyBookings.value = [];
     await _bookingUseCase
         .getBookingsPassengerByState(
             passenger.id.toString(), STATUS_BOOKING.FINALIZADO.value)
         .then((value) => value.fold((errorResponse) {
-          isLoading.value = false;
-        },(bookingsResponse) {
-          isLoading.value = false;
-          historyBookings.value = bookingsResponse;
-        }));
-    await _bookingUseCase
-        .getBookingsPassengerByState(
-            passenger.id.toString(), STATUS_BOOKING.ELIMINADO.value)
-        .then((value) => value.fold((errorResponse) {
-          isLoading.value = false;
-        },(bookingsResponse) {
-          isLoading.value = false;
-          historyBookings.value.addAll(bookingsResponse);
-        }));
+            }, (bookingsResponse) async {
+              historyBookings.value = bookingsResponse;
+              await _bookingUseCase
+                  .getBookingsPassengerByState(
+                      passenger.id.toString(), STATUS_BOOKING.ELIMINADO.value)
+                  .then((value) => value.fold((errorResponse) {
+                        isLoading.value = false;
+                        print(
+                            'LOG Ocurrió un error al consultar las reservas en estado eliminado ${1}');
+                      }, (bookingsResponse) {
+                        print('LOG get reservas eliminadas${1}');
+                        isLoading.value = false;
+                        historyBookings.value.addAll(bookingsResponse);
+                      }));
+            }));
   }
 }
