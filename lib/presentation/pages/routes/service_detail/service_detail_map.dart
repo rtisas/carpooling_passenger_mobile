@@ -53,7 +53,7 @@ class _MapsRouteComponent extends StatelessWidget {
                 markers: {
                   if (detailServiceCtrl.postionConductor.value != null)
                     Marker(
-                        icon:detailServiceCtrl.busIcon,
+                        icon: detailServiceCtrl.busIcon,
                         markerId: const MarkerId("currentLocation"),
                         position: detailServiceCtrl.postionConductor.value!),
                   ...detailServiceCtrl.markersRoute.value

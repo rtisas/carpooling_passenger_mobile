@@ -142,7 +142,7 @@ class _AppBarCustom extends StatelessWidget {
                       softWrap: true,
                     ),
                   ),
-                )
+                ),
               ],
             )),
       ),

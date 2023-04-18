@@ -3,10 +3,13 @@ import 'package:dartz/dartz.dart';
 
 import '../../../core/errors/failure.dart';
 import '../../../data/models/booking/booking_response.dart';
+import '../../../data/models/booking/update_qualifying.dart';
 
 abstract class BookingRepository{
   Future<Either<Failure, BookingResponse>> createBookingRequest(BookingRequest bookingRequest);
   Future<Either<Failure, List<BookingResponseComplete>>> getBookingsPassengerByState( String idPassenger, String status);
   Future<Either<Failure, BookingResponseComplete>> getBookingsById( String idBooking);
   Future<Either<Failure, dynamic>> deleteBooking( String idBooking);
+  Future<Either<Failure, void>> updateQualifying(String idBooking, UpdateQualifying updateQualifying);
+
 }

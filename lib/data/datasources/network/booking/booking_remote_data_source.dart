@@ -1,5 +1,6 @@
 import 'package:carpooling_passenger/data/models/booking/booking_request.dart';
 import 'package:carpooling_passenger/data/models/booking/booking_response.dart';
+import 'package:carpooling_passenger/data/models/booking/update_qualifying.dart';
 import 'package:carpooling_passenger/data/models/helpers/bookingState.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ abstract class BookingRemoteDataSource {
       String idPassenger, String status);
   Future<BookingResponseComplete> getBookingById(String idBooking);
   Future<dynamic> deleteBooking(String idBooking);
+  Future<dynamic> updateQualifyingBooking(String idBooking, UpdateQualifying updateQualifying);
 }
 
 class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
@@ -139,5 +141,28 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
       bookingResponse.color = Colors.redAccent;
     }
     return bookingResponse;
+  }
+  
+  @override
+  Future updateQualifyingBooking(String idBooking, UpdateQualifying updateQualifying) async {
+     try {
+      final http = await webService.httpClient();
+      final response = await http.put('facade/put-booking/qualifying/$idBooking', data: updateQualifying);
+      if (response.statusCode == 200) {
+        BookingResponseComplete bookingResponse = BookingResponseComplete.fromJson(response.data);
+        return assignedColoBooking(bookingResponse);
+      }else{
+        throw ServerException();
+      }
+    } on DioError catch (e) {
+      switch (e.response?.statusCode) {
+        case 400:
+          throw DataIncorrect();
+        case 404:
+          throw NoFound();
+        default:
+          throw NoNetwork();
+      }
+    }
   }
 }

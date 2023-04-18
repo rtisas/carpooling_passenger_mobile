@@ -1,18 +1,20 @@
 import 'dart:convert';
 
 import 'package:carpooling_passenger/core/application/preferences.dart';
+import 'package:carpooling_passenger/data/models/booking/update_qualifying.dart';
 import 'package:carpooling_passenger/data/models/helpers/bookingState.dart';
 import 'package:carpooling_passenger/domain/usescases/booking/booking_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../data/models/booking/booking_response.dart';
 import '../../../../../data/models/passenger/passenger_response.dart';
 
 class BookingController extends GetxController {
   final BookingUseCase _bookingUseCase;
 
-  var listBookings = [].obs;
-
+  Rx<List<BookingResponseComplete>> listBookings = Rx([]);
+  RxBool isLoading = false.obs;
   BookingController(this._bookingUseCase);
 
   @override
@@ -22,10 +24,13 @@ class BookingController extends GetxController {
   }
 
   loadBookingsActiveByPassenger() async {
-    listBookings.clear();
-    await getBookingsPendientePassenger();
-    await getBookingsAprobadoPassenger();
+    isLoading.value = true;
+    listBookings.value.clear();
     await getBookingsEjecucionPassenger();
+    await getBookingsAprobadoPassenger();
+    await getBookingsPendientePassenger();
+    isLoading.value = false;
+    listBookings.value.sort((a, b) => b.state.id.compareTo(a.state.id));
   }
 
   Future getBookingsPendientePassenger() async {
@@ -34,11 +39,11 @@ class BookingController extends GetxController {
     final failureOrBookings = await _bookingUseCase.getBookingsPassengerByState(
         passenger.id.toString(), STATUS_BOOKING.PENDIENTE.value);
 
-    return failureOrBookings.fold((failure) {
+    return await failureOrBookings.fold((failure) {
       print(
           'LOG Ocurrió un error al momento de consultar los bookings ${failure}');
     }, (listBookingsResponse) {
-      listBookings.addAll(listBookingsResponse);
+      listBookings.value.addAll(listBookingsResponse);
     });
   }
 
@@ -51,7 +56,7 @@ class BookingController extends GetxController {
       print(
           'LOG Ocurrió un error al momento de consultar los bookings ${failure}');
     }, (listBookingsResponse) {
-      listBookings.addAll(listBookingsResponse);
+      listBookings.value.addAll(listBookingsResponse);
     });
   }
 
@@ -64,7 +69,7 @@ class BookingController extends GetxController {
       print(
           'LOG Ocurrió un error al momento de consultar los bookings ${failure}');
     }, (listBookingsResponse) {
-      listBookings.addAll(listBookingsResponse);
+      listBookings.value.addAll(listBookingsResponse);
     });
   }
 
@@ -75,8 +80,23 @@ class BookingController extends GetxController {
     }, (response) async {
       await loadBookingsActiveByPassenger();
       closeDialogLoading();
-      showMessage('Reserva cancelada', 'La reserva ha sido cancelada correctamente');
+      showMessage(
+          'Reserva cancelada', 'La reserva ha sido cancelada correctamente');
     });
+  }
+
+  Future updateQualifyingService(String idBooking, String qualifiying) async {
+    UpdateQualifying updateQualifying =
+        UpdateQualifying(qualifiying: qualifiying);
+    await _bookingUseCase
+        .updateQualifyingBooking(idBooking, updateQualifying)
+        .then((value) => value.fold((errorResponse) {
+              print(
+                  'LOG Ocurrió un error al momento de calificar una reserva ${1}');
+            }, (response) {
+              showMessage('Calificación enviada',
+                  '¡Gracias por calificar nuestro servicio! Tus comentarios nos ayudan a mejorar y ofrecerte la mejor experiencia posible.');
+            }));
   }
 
   void showLoading() {

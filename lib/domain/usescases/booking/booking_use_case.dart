@@ -1,5 +1,6 @@
 import 'package:carpooling_passenger/data/models/booking/booking_request.dart';
 import 'package:carpooling_passenger/data/models/booking/booking_response.dart';
+import 'package:carpooling_passenger/data/models/booking/update_qualifying.dart';
 import 'package:carpooling_passenger/domain/repositories/booking/booking_repository.dart';
 import 'package:dartz/dartz.dart';
 
@@ -21,5 +22,8 @@ class BookingUseCase{
   }
   Future<Either<Failure, dynamic>> deleteBooking(String idBooking) {
     return bookingRepository.deleteBooking(idBooking);
+  }
+  Future<Either<Failure, dynamic>> updateQualifyingBooking(String idBooking, UpdateQualifying updateQualifying) {
+    return bookingRepository.updateQualifying(idBooking, updateQualifying);
   }
 }
