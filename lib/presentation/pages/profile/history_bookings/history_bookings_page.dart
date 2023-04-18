@@ -26,18 +26,19 @@ class HistoryBookingsPage extends StatelessWidget {
                     );
                   }
                   return RefreshIndicator(
-                    onRefresh: ()async {
+                    onRefresh: () async {
                       await ctrlHisotryBookings.getHistoryBookingsPassenger();
-
                     },
                     child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: ctrlHisotryBookings.historyBookings.value.length,
+                      physics:
+                          (ctrlHisotryBookings.historyBookings.value.length <= 3) ? const AlwaysScrollableScrollPhysics() : const BouncingScrollPhysics(),
+                      itemCount:
+                          ctrlHisotryBookings.historyBookings.value.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            _CardBooking(
-                                ctrlHisotryBookings.historyBookings.value[index]),
+                            _CardBooking(ctrlHisotryBookings
+                                .historyBookings.value[index]),
                             const Divider(
                               height: 30,
                             )

@@ -27,7 +27,7 @@ class _RoutesAvailablesTabState extends State<RoutesAvailablesTab>
         await homeCtrl.getRoutesAvailable();
       },
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: (homeCtrl.listRoutes.value.length <= 6)? const AlwaysScrollableScrollPhysics() :const BouncingScrollPhysics(),
         child: Obx(() {
           return (homeCtrl.isLoading.value)
               ? Container(

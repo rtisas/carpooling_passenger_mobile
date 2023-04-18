@@ -26,7 +26,7 @@ class BookingsAvailablesTab extends StatelessWidget {
                   );
                 }
                 return ListView.builder(
-                  physics: const BouncingScrollPhysics(),
+                  physics: (bookingCtrl.listBookings.value.length <= 3)? const AlwaysScrollableScrollPhysics() :const BouncingScrollPhysics(),
                   itemCount: bookingCtrl.listBookings.value.length,
                   itemBuilder: (BuildContext context, int index) {
                     return _CardBooking(
