@@ -237,7 +237,7 @@ class _QualifiyingBookingWidgetState extends State<QualifiyingBookingWidget> {
       actions: [
         TextButton(
             onPressed: () {
-              if (qualifiyingValue != "0.0") {
+              if (qualifiyingValue != "0.0" && qualifiyingValue.length > 0) {
                 bookingCtrl.updateQualifyingService(
                     widget.booking.id.toString(), qualifiyingValue);
               }
