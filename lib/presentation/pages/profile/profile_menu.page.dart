@@ -83,8 +83,12 @@ class ProfileMenuPage extends StatelessWidget {
         onPressed: () async {
           File? file = await homeCtrl.getDocumentPassenger();
           if (file != null) {
-            Uri path = Uri.file(file.path);
-            Share.shareXFiles([XFile(file.path)], text: 'Mi carnet');
+            final box = context.findRenderObject() as RenderBox?;
+            Share.shareXFiles(
+              [XFile(file.path)],
+              text: 'Mi carnet',
+              sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+            );
           }
           // }
         },
