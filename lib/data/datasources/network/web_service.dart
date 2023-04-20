@@ -39,4 +39,30 @@ class WebService {
     }
     return _dio;
   }
+  Future<Dio> httpClientFromFile() async {
+    _dio.options.baseUrl = Enviroment.BASE_URL_QA;
+    _dio.options.headers.addAll({"Content-type": "*/*"});
+    _dio.options.headers.addAll({"Accept": "*/*"});
+    final token = await Preferences.storage.read(key: 'token');
+
+    if (token != null) {
+      _dio.interceptors.add(InterceptorsWrapper(
+        onResponse: ((Response response, ResponseInterceptorHandler handler) async {
+          int statusCode = response.statusCode ?? 0;
+          print('LOG valor del statusCode ${ statusCode }');
+          if(statusCode == 401 || statusCode == 0){
+                await Preferences.storage.deleteAll();
+                Get.offAll(() => const LoginPage());
+          }
+          return handler.next(response);
+        }),
+        onRequest: (options, handler) {
+        options.headers['Authorization'] = token;
+        return handler.next(options);
+      }, onError: (error, handler) {
+        return handler.reject(error);
+      }));
+    }
+    return _dio;
+  }
 }

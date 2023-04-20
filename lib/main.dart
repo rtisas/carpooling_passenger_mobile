@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.validateAuth});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext  context) {
     return GetMaterialApp(
       transitionDuration: Duration.zero,
       debugShowCheckedModeBanner: !Enviroment.production,

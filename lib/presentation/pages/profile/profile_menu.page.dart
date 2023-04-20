@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:carpooling_passenger/presentation/pages/home/controller/home.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../core/application/preferences.dart';
 import '../auth/login.page.dart';
@@ -12,68 +15,83 @@ class ProfileMenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeCtrl = Get.find<HomeController>();
     return Scaffold(
-        body: Container(
-          margin: const EdgeInsets.only(top: 30),
-          child: SingleChildScrollView(
-              child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-          margin: const EdgeInsets.only(top: 30, bottom: 5),
-          child: Obx(() {
-            return CircleAvatar(
-              backgroundImage: NetworkImage(
-                  homeCtrl.user.value!.basicData.profilePicture?.url ?? ''),
-              backgroundColor: Colors.transparent,
-              radius: 80,
-            );
-          }),
-            ),
-            Obx(() {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Text(
-              '${homeCtrl.user.value?.basicData.firstName} ${homeCtrl.user.value?.basicData.lastName}',
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-              textAlign: TextAlign.center,
-            ),
-          );
-            }),
-            OptionProfile(
-          title: 'Editar datos personales',
-          iconLeading: Icons.person_outline,
-          onPress: () {
-            Get.toNamed('/edit-profile');
-          },
-            ),
-            OptionProfile(
-          title: 'Historial de reservas',
-          iconLeading: Icons.history,
-          onPress: () {
-            Get.toNamed('/history-bookings');
-          },
-            ),
-            OptionProfile(
-          title: 'Promociones',
-          iconLeading: Icons.topic_outlined,
-          onPress: () {
-            print('LOG press Promociones ${1}');
-          },
-            ),
-            OptionProfile(
-          title: 'Cerrar Sesión',
-          iconLeading: Icons.exit_to_app_outlined,
-          onPress: () async {
-            await Preferences.storage.deleteAll();
-            Get.offAll(() => const LoginPage());
-          },
-            )
-          ],
+      body: Container(
+        margin: const EdgeInsets.only(top: 30),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 30, bottom: 5),
+                child: Obx(() {
+                  return CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        homeCtrl.user.value!.basicData.profilePicture?.url ??
+                            ''),
+                    backgroundColor: Colors.transparent,
+                    radius: 80,
+                  );
+                }),
               ),
-            ),
-        ));
+              Obx(() {
+                return Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Text(
+                    '${homeCtrl.user.value?.basicData.firstName} ${homeCtrl.user.value?.basicData.lastName}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 25),
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              }),
+              OptionProfile(
+                title: 'Editar datos personales',
+                iconLeading: Icons.person_outline,
+                onPress: () {
+                  Get.toNamed('/edit-profile');
+                },
+              ),
+              OptionProfile(
+                title: 'Historial de reservas',
+                iconLeading: Icons.history,
+                onPress: () {
+                  Get.toNamed('/history-bookings');
+                },
+              ),
+              OptionProfile(
+                title: 'Promociones',
+                iconLeading: Icons.topic_outlined,
+                onPress: () {
+                  print('LOG press Promociones ${1}');
+                },
+              ),
+              OptionProfile(
+                title: 'Cerrar Sesión',
+                iconLeading: Icons.exit_to_app_outlined,
+                onPress: () async {
+                  await Preferences.storage.deleteAll();
+                  Get.offAll(() => const LoginPage());
+                },
+              )
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          File? file = await homeCtrl.getDocumentPassenger();
+          if (file != null) {
+            Uri path = Uri.file(file.path);
+            Share.shareXFiles([XFile(file.path)], text: 'Mi carnet');
+          }
+          // }
+        },
+        label: const Text('Carnet'),
+        icon: const Icon(Icons.assignment_ind_rounded),
+      ),
+    );
   }
 }
 

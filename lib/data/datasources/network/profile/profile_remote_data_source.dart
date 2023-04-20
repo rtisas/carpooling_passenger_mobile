@@ -1,21 +1,27 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:carpooling_passenger/data/models/passenger/passenger_response.dart';
 import 'package:dio/dio.dart';
 
 import 'package:carpooling_passenger/data/datasources/network/web_service.dart';
 import 'package:carpooling_passenger/data/models/file_carpooling/upload_file_response.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../../core/application/preferences.dart';
 import '../../../../core/errors/exeptions.dart';
 import '../../../models/helpers/statusUser.dart';
 import '../../../models/passenger/passenger_update_request.dart';
 import '../../../models/user/push_token_request.dart';
+import 'package:http/http.dart' as http;
 
 abstract class ProfileRemoteDataSource {
   Future<UploadFileResponse> uploadPictureUserPasseger(
       String pathFilePicture, String idUser);
-  Future<PassengerResoponse> updatePassenger(String idPassanger, UpdatePassager updatePassager);
-  Future updatePushTokenPassenger(String idUser, PushTokenRequest pushTokenRequest);
+  Future<PassengerResoponse> updatePassenger(
+      String idPassanger, UpdatePassager updatePassager);
+  Future updatePushTokenPassenger(
+      String idUser, PushTokenRequest pushTokenRequest);
+  Future<File?> downloadDocumentPassenger(String idPassanger);
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -62,12 +68,12 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       final response = await http.put('facade/put-passenger/$idPassanger',
           data: updatePassager);
       if (response.statusCode == 200) {
-        
         //esto es debido a que el usuario cambio la el correo electrónico
-        if (response.data["basicData"]["status"]["id"] == STATUS_USER.CHANGE_PASSWORD.value) {
+        if (response.data["basicData"]["status"]["id"] ==
+            STATUS_USER.CHANGE_PASSWORD.value) {
           // await Preferences.storage.deleteAll();
           // Get.offAll(() => const LoginPage());
-          throw NeedChangePassword(); 
+          throw NeedChangePassword();
         }
         PassengerResoponse passenger = await getPassengerByUser(response
             .data["basicData"]["id"]
@@ -112,14 +118,52 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       }
     }
   }
-  
+
   @override
-  Future updatePushTokenPassenger(String idUser, PushTokenRequest pushTokenRequest) async {
+  Future updatePushTokenPassenger(
+      String idUser, PushTokenRequest pushTokenRequest) async {
     try {
       final http = await webService.httpClient();
-      final response = await http.put('facade/put-token/$idUser',  data: pushTokenRequest);
+      final response =
+          await http.put('facade/put-token/$idUser', data: pushTokenRequest);
       if (response.statusCode == 200) {
         return true;
+      } else {
+        throw ServerException();
+      }
+    } on DioError catch (e) {
+      switch (e.response?.statusCode) {
+        case 400:
+          throw DataIncorrect();
+        case 404:
+          throw NoFound();
+        default:
+          throw NoNetwork();
+      }
+    }
+  }
+
+  @override
+  Future<File?> downloadDocumentPassenger(String idPassanger) async {
+    try {
+      final http = await webService.httpClientFromFile();
+      final response = await http.post('facade/get-document/$idPassanger',
+          options: Options(
+            responseType: ResponseType.bytes,
+          ));
+      if (response.statusCode == 200) {
+        final directorio = await getApplicationDocumentsDirectory();
+        final rutaCompleta = '${directorio.path}/documento.pdf';
+        try {
+          final bytes = response.data;
+          final archivo = File(rutaCompleta);
+          await archivo.writeAsBytes(bytes);
+          return archivo;
+        } catch (e) {
+          print('LOG convertir error pdf ${e}');
+        }
+        return null;
+        // Write down the file as bytes from the bytes getted from the HTTP request.
       } else {
         throw ServerException();
       }

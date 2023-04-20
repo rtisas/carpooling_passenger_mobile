@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:carpooling_passenger/data/models/passenger/passenger_response.dart';
 import 'package:carpooling_passenger/data/models/user/push_token_request.dart';
@@ -12,14 +13,14 @@ import '../../../../domain/usescases/routes/routes_use_case.dart';
 
 class HomeController extends GetxController {
   final RoutesUseCase routesUseCase;
-  final ProfileUseCase _profileController;
+  final ProfileUseCase _profileUseCase;
 
   RxBool isLoading = false.obs;
   RxInt tabIndex = 1.obs;
   Rx<PassengerResoponse?> user = Rx(null);
   Rx<List<RouteResponse>> listRoutes = Rx([]);
 
-  HomeController(this.routesUseCase, this._profileController);
+  HomeController(this.routesUseCase, this._profileUseCase);
 
   @override
   void onInit() async {
@@ -34,7 +35,7 @@ class HomeController extends GetxController {
     user.value = PassengerResoponse.fromJson(
         jsonDecode(await Preferences.storage.read(key: 'userPassenger') ?? ''));
 
-    await _profileController
+    await _profileUseCase
         .updatePassengerPushToken(
             user.value?.basicData.id.toString() ?? '0',
             PushTokenRequest(
@@ -58,6 +59,21 @@ class HomeController extends GetxController {
               isLoading.value = false;
               listRoutes.value = responseListRoutes;
               return listRoutes;
+            }));
+  }
+
+  Future<File?> getDocumentPassenger() async {
+    isLoading.value = true;
+    print('LOG que se va a descargar ${ 1 }');
+    return await _profileUseCase
+        .downloadDocumentPassenger(user.value?.id.toString() ?? '0')
+        .then((value) => value.fold((failure) {
+              isLoading.value = false;
+              print('LOG no ha descargo el documento ${ 1 }');
+            }, (responseFile) {
+              isLoading.value = false;
+              print('LOG se ha descargado el documento ${ 1 }');
+              return responseFile;
             }));
   }
 }

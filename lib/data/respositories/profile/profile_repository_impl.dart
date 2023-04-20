@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carpooling_passenger/data/models/file_carpooling/upload_file_response.dart';
 import 'package:carpooling_passenger/core/errors/failure.dart';
 import 'package:carpooling_passenger/data/models/passenger/passenger_update_request.dart';
@@ -89,6 +91,23 @@ class ProfileRepositoryImpl implements ProfileRepositoy {
     } on ServerException {
       return Left(FailureResponse(
           message: 'Ocurrió un error, comuníquese con administración'));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, File?>> downloadDocumentPassenger(String idPassenger) async {
+    try {
+      final responseDownload = await profileRemoteDataSource.downloadDocumentPassenger(idPassenger);
+      return Right(responseDownload);
+    } on DataIncorrect {
+      return Left(FailureResponse(message: 'No se pudo descargar el documento'));
+    } on NoNetwork {
+      return Left(
+          FailureResponse(message: 'Ocurrió un error, No hay conexión'));
+    } on NoFound {
+      return Left(FailureResponse( message:'No se encontro un documento asociado'));
+    } on ServerException {
+      return Left(FailureResponse( message: 'Ocurrió un error, comuníquese con administración'));
     }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carpooling_passenger/data/models/file_carpooling/upload_file_response.dart';
 import 'package:carpooling_passenger/data/models/passenger/passenger_response.dart';
 import 'package:carpooling_passenger/data/models/user/push_token_request.dart';
@@ -24,5 +26,9 @@ class ProfileUseCase {
   Future<Either<Failure, void>> updatePassengerPushToken(
       String idUser, PushTokenRequest pushTokenRequest) {
     return profileRepository.updatePushTokenPassenger(idUser, pushTokenRequest);
+  }
+
+  Future<Either<Failure, File?>> downloadDocumentPassenger(String idPassenger) {
+    return profileRepository.downloadDocumentPassenger(idPassenger);
   }
 }
