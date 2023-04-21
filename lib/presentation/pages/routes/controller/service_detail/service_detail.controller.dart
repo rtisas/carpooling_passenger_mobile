@@ -22,6 +22,8 @@ class ServiceDetailController extends GetxController {
   Rx<List<PointLatLng>>? polylinePoints = Rx([]);
   Rx<LatLng?> postionConductor = Rx(null);
 
+  RxBool followerVehicle = false.obs;
+
   BitmapDescriptor busIcon = BitmapDescriptor.defaultMarker;
 
   ServiceDetailController(this._routesUseCase);
@@ -35,7 +37,9 @@ class ServiceDetailController extends GetxController {
     setMarkerIcon();
   }
 
-  getLocationDriverRealTime() {
+  getLocationDriverRealTime() async {
+    GoogleMapController googleMapController = await controllerMap.future;
+
     refFirebase
         .child('services')
         .child(Get.arguments.service.id.toString())
@@ -46,6 +50,10 @@ class ServiceDetailController extends GetxController {
         final latitude = (data['latitude'] ?? 0).toDouble();
         final longitude = (data['longitude'] ?? 0).toDouble();
         postionConductor.value = LatLng(latitude, longitude);
+        if (followerVehicle.value) {
+          googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+              CameraPosition(zoom: 16.5, target: LatLng(latitude, longitude))));
+        }
       }
     });
   }

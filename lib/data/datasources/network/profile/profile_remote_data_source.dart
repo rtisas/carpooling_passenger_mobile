@@ -12,7 +12,6 @@ import '../../../../core/errors/exeptions.dart';
 import '../../../models/helpers/statusUser.dart';
 import '../../../models/passenger/passenger_update_request.dart';
 import '../../../models/user/push_token_request.dart';
-import 'package:http/http.dart' as http;
 
 abstract class ProfileRemoteDataSource {
   Future<UploadFileResponse> uploadPictureUserPasseger(

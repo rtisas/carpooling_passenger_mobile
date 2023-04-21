@@ -10,12 +10,24 @@ class ServiceDetailMapScreen extends StatelessWidget {
   const ServiceDetailMapScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final detailServiceCtrl = Get.find<ServiceDetailController>();
+
     SizeConfig(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Servicio en ejecución'),
       ),
       body: const _MapsRouteComponent(),
+      floatingActionButton: Obx(() {
+          return FloatingActionButton.extended(
+            onPressed: () {
+              detailServiceCtrl.followerVehicle.value = !detailServiceCtrl.followerVehicle.value;
+            },
+            label: (detailServiceCtrl.followerVehicle.value)?  const Text('Dejar de seguir') : const Text('Seguir vehículo'),
+            icon: (detailServiceCtrl.followerVehicle.value)? const Icon(Icons.bus_alert) :  const Icon(Icons.location_searching_sharp),
+          );
+        }
+      ),
     );
   }
 }
