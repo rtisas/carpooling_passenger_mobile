@@ -1,7 +1,7 @@
 import 'package:carpooling_passenger/data/models/booking/booking_response.dart';
 import 'package:carpooling_passenger/data/models/helpers/bookingState.dart';
+import 'package:carpooling_passenger/data/models/helpers/statusService.dart';
 import 'package:carpooling_passenger/presentation/pages/routes/controller/booking/booking.controller.dart';
-import 'package:carpooling_passenger/presentation/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -26,7 +26,9 @@ class BookingsAvailablesTab extends StatelessWidget {
                   );
                 }
                 return ListView.builder(
-                  physics: (bookingCtrl.listBookings.value.length <= 3)? const AlwaysScrollableScrollPhysics() :const BouncingScrollPhysics(),
+                  physics: (bookingCtrl.listBookings.value.length <= 3)
+                      ? const AlwaysScrollableScrollPhysics()
+                      : const BouncingScrollPhysics(),
                   itemCount: bookingCtrl.listBookings.value.length,
                   itemBuilder: (BuildContext context, int index) {
                     return _CardBooking(
@@ -56,6 +58,7 @@ class _CardBooking extends StatelessWidget {
         Get.toNamed('detail_booking', arguments: booking);
       },
       child: Card(
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           children: [
             ClipRRect(
@@ -103,11 +106,9 @@ class _CardBooking extends StatelessWidget {
                   margin: EdgeInsets.symmetric(horizontal: 40),
                   child: Column(
                     children: [
-                      const Text('Estado',
-                          style: TextStyle(fontWeight: FontWeight.w800)),
                       Chip(
                         backgroundColor: booking.color,
-                        label: Text(booking.state.parameterValue ?? ''),
+                        label: Text(changePhrase(booking.state.id)),
                       ),
                       if (booking.service != null)
                         Text('Vehículo ${booking.service?.vehicle?.plate}')
@@ -163,6 +164,24 @@ class _CardBooking extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            if(booking.service?.state.id == STATUS_SERVICE.EN_EJECUCION.value )
+            Container(
+              width: double.infinity,
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.bus_alert, color: Colors.white,),
+                  Text('¡El vehículo está en camino!', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),),
+                ],
+              ),
+              decoration: const BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10))),
             )
           ],
         ),
@@ -247,4 +266,15 @@ class _QualifiyingBookingWidgetState extends State<QualifiyingBookingWidget> {
       ],
     );
   }
+}
+
+String changePhrase(int idStateParameterBooking){
+  if(idStateParameterBooking.toString() == STATUS_BOOKING.EN_EJECUCION.value){
+    return 'Abordo';
+  }else if(idStateParameterBooking.toString() == STATUS_BOOKING.APROBADO.value){
+    return 'Aprobado';
+  }else if(idStateParameterBooking.toString() == STATUS_BOOKING.PENDIENTE.value){
+    return 'Pendiente';
+  }
+  return '';
 }

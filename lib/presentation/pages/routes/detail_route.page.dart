@@ -72,35 +72,38 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             )),
         Obx(() {
-
-          if(routeCtrl.listStations.value.isEmpty) {
+          if (routeCtrl.listStations.value.isEmpty) {
             return const Center(child: Text('No hay paradas'));
           }
-          return (routeCtrl.latLen.isEmpty)? const Center(child: Text('No hay paradas'),) :SizedBox(
-            height: SizeConfig.safeBlockSizeVertical(30),
-            width: double.infinity,
-            child: GoogleMap(
-              rotateGesturesEnabled: true,
-              mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(
-                  target: routeCtrl.latLen[0], zoom: 14.4746, tilt: 45.0),
-              polylines: {
-                if (routeCtrl.polylinePoints != null)
-                  Polyline(
-                    polylineId: const PolylineId('overview_polyline'),
-                    color: Colors.red,
-                    width: 5,
-                    points: routeCtrl.polylinePoints!.value
-                        .map((e) => LatLng(e.latitude, e.longitude))
-                        .toList(),
+          return (routeCtrl.latLen.isEmpty)
+              ? const Center(
+                  child: Text('No hay paradas'),
+                )
+              : SizedBox(
+                  height: SizeConfig.safeBlockSizeVertical(30),
+                  width: double.infinity,
+                  child: GoogleMap(
+                    rotateGesturesEnabled: true,
+                    mapType: MapType.normal,
+                    initialCameraPosition: CameraPosition(
+                        target: routeCtrl.latLen[0], zoom: 14.4746, tilt: 45.0),
+                    polylines: {
+                      if (routeCtrl.polylinePoints != null)
+                        Polyline(
+                          polylineId: const PolylineId('overview_polyline'),
+                          color: Colors.red,
+                          width: 5,
+                          points: routeCtrl.polylinePoints!.value
+                              .map((e) => LatLng(e.latitude, e.longitude))
+                              .toList(),
+                        ),
+                    },
+                    markers: routeCtrl.markersRoute.value,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
                   ),
-              },
-              markers: routeCtrl.markersRoute.value,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
-            ),
-          );
+                );
         }),
         const _GenerateBooking(),
       ],
@@ -206,11 +209,8 @@ class _FormBooking extends StatelessWidget {
                   labelText: "Selecciona la fecha"),
               readOnly: true,
               onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2030));
+                DateTime? pickedDate = await _SelectDateValid(
+                    context, _getDayOfWeek, detailRouteCtrl);
                 if (pickedDate != null) {
                   print(
                       pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
@@ -278,6 +278,69 @@ class _FormBooking extends StatelessWidget {
         ),
       ),
     );
-    ;
+  }
+
+  Future<DateTime?> _SelectDateValid(
+      BuildContext context,
+      String Function(int dayOfWeek) _getDayOfWeek,
+      DetailRouteController detailRouteCtrl) {
+    DateTime initialDate = DateTime.now();
+    String initialDayOfWeek = _getDayOfWeek(initialDate.weekday);
+    List<String> listDaysEnabled =
+        detailRouteCtrl.route.availableDays.split(',');
+
+    while (!listDaysEnabled.contains(initialDayOfWeek)) {
+      initialDate = initialDate.add(Duration(days: 1));
+      initialDayOfWeek = _getDayOfWeek(initialDate.weekday);
+    }
+    return showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)),
+      selectableDayPredicate: (DateTime day) {
+        final dayOfWeek = _getDayOfWeek(day.weekday);
+        List<String> listaDiasSinTildes =
+            listDaysEnabled.map((e) => quitarTildes(e).toLowerCase()).toList();
+        return listaDiasSinTildes
+            .contains(quitarTildes(dayOfWeek).toLowerCase());
+      },
+    );
+  }
+}
+
+String quitarTildes(String texto) {
+  final Map<String, String> caracteresEspeciales = {
+    'á': 'a',
+    'é': 'e',
+    'í': 'i',
+    'ó': 'o',
+    'ú': 'u',
+  };
+  caracteresEspeciales.forEach((caracter, sinTilde) {
+    texto = texto.replaceAll(RegExp(caracter), sinTilde);
+  });
+
+  return texto;
+}
+
+String _getDayOfWeek(int dayOfWeek) {
+  switch (dayOfWeek) {
+    case DateTime.monday:
+      return 'Lunes';
+    case DateTime.tuesday:
+      return 'Martes';
+    case DateTime.wednesday:
+      return 'Miercoles';
+    case DateTime.thursday:
+      return 'Jueves';
+    case DateTime.friday:
+      return 'Viernes';
+    case DateTime.saturday:
+      return 'Sábado';
+    case DateTime.sunday:
+      return 'Domingo';
+    default:
+      throw ArgumentError('Invalid day of week: $dayOfWeek.');
   }
 }

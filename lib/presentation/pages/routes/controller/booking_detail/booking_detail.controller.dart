@@ -18,7 +18,7 @@ class BookingDetailController extends GetxController {
 
   Rx<List<PointLatLng>>? polylinePoints = Rx([]);
   Rx<Set<Marker>> markersRoute = Rx({});
-  late PassengerResoponse passenger;
+  Rx<PassengerResoponse?> passenger = Rx(null);
 
   RxBool isLoading = false.obs;
   final bookingDetailArgument = Get.arguments as BookingResponseComplete;
@@ -33,7 +33,7 @@ class BookingDetailController extends GetxController {
   @override
   void onInit() async {
     await getBooking();
-    passenger = PassengerResoponse.fromJson(
+    passenger.value = PassengerResoponse.fromJson(
         jsonDecode(await Preferences.storage.read(key: 'userPassenger') ?? ''));
     setMarkesInParadaStartAndEnd();
     await getWayPointsFromGoogleMaps();

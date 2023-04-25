@@ -58,6 +58,16 @@ class ServiceDetailController extends GetxController {
     });
   }
 
+  followDriver() async {
+    if (postionConductor.value != null && postionConductor.value?.latitude != null && postionConductor.value?.longitude != null) {
+      GoogleMapController googleMapController = await controllerMap.future;
+      googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(
+              zoom: 16.5,
+              target: LatLng(postionConductor.value!.latitude, postionConductor.value!.longitude))));
+    }
+  }
+
 //método que nos permite establecer icono del bus
   setMarkerIcon() async {
     BitmapDescriptor.fromAssetImage(

@@ -36,17 +36,19 @@ class BookingDetailPage extends StatelessWidget {
                             bookingDetail:
                                 detailBookingCtrl.bookingComplete.value ??
                                     detailBookingCtrl.bookingDetailArgument),
-                        if (detailBookingCtrl.bookingComplete.value?.service != null)
-                        _CardServiceInformation(
-                            bookingDetail:
-                                detailBookingCtrl.bookingComplete.value ??
-                                    detailBookingCtrl.bookingDetailArgument),
+                        if (detailBookingCtrl.bookingComplete.value?.service !=
+                            null)
+                          _CardServiceInformation(
+                              bookingDetail:
+                                  detailBookingCtrl.bookingComplete.value ??
+                                      detailBookingCtrl.bookingDetailArgument),
                       ],
                     ),
                   ),
                 ]),
               ),
-              const SliverToBoxAdapter(child: _MapsWithRouteAndCurrentPosition())
+              const SliverToBoxAdapter(
+                  child: _MapsWithRouteAndCurrentPosition())
             ],
           ),
         );
@@ -66,27 +68,35 @@ class BookingDetailPage extends StatelessWidget {
                     onPressed: () {
                       showDialog(
                           context: context,
-                          builder: (_) => AlertDialog(
-                                title: Text('Tú código QR de pago'),
-                                content: (detailBookingCtrl.passenger.basicData
-                                            .profilePicture?.qrUrl !=
-                                        null)
-                                    ? Image.network(detailBookingCtrl.passenger
-                                        .basicData.profilePicture!.qrUrl!)
-                                    : Container(),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pop(); // Cierra el diálogo
-                                    },
-                                    child: Text('Aceptar'),
-                                  )
-                                ],
-                              ));
+                          builder: (_) => Obx(() {
+                              return AlertDialog(
+                                    title: Text('Tú código QR de pago'),
+                                    content: (detailBookingCtrl.passenger.value
+                                                ?.basicData.profilePicture?.qrUrl !=
+                                            null)
+                                        ? Image.network(detailBookingCtrl
+                                                .passenger
+                                                .value
+                                                ?.basicData
+                                                .profilePicture
+                                                ?.qrUrl ??
+                                            'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg')
+                                        : Container(),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Cierra el diálogo
+                                        },
+                                        child: Text('Aceptar'),
+                                      )
+                                    ],
+                                  );
+                            }
+                          ));
                     },
                     label: const Text(
-                      'Realizar pago',
+                      'Tú código QR',
                       style: TextStyle(fontSize: 20, letterSpacing: 2),
                     ),
                   ))
