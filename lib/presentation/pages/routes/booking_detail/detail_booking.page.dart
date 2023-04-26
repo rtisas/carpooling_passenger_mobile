@@ -67,6 +67,7 @@ class BookingDetailPage extends StatelessWidget {
                     icon: const Icon(Icons.qr_code_2),
                     onPressed: () {
                       showDialog(
+                        //TODO:ACTUALIZAR LA BOOKING PARA SABER SI ESTA EN ESTADO FINALIZADO
                           context: context,
                           builder: (_) => Obx(() {
                               return AlertDialog(

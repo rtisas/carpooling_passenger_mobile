@@ -133,56 +133,64 @@ class _CardBooking extends StatelessWidget {
                                     booking: booking);
                               });
                         },
-                        child: Text('Calificar servicio')),
-                  TextButton(
-                    child: const Text('Cancelar'),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext ctx) {
-                            return AlertDialog(
-                              title: const Text('Confirmación'),
-                              content: const Text(
-                                  '¿Está seguro de cancelar la reserva?'),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      bookingCtrl
-                                          .deleteBooking(booking.id.toString());
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Aceptar')),
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Cancelar'))
-                              ],
-                            );
-                          });
-                    },
-                  ),
+                        child: const Text('Calificar servicio')),
+                  if (booking.state.id.toString() != STATUS_BOOKING.EN_EJECUCION.value)
+                    TextButton(
+                      child: const Text('Cancelar'),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext ctx) {
+                              return AlertDialog(
+                                title: const Text('Confirmación'),
+                                content: const Text(
+                                    '¿Está seguro de cancelar la reserva?'),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        bookingCtrl.deleteBooking(
+                                            booking.id.toString());
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Aceptar')),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Cancelar'))
+                                ],
+                              );
+                            });
+                      },
+                    ),
                 ],
               ),
             ),
-            if(booking.service?.state.id == STATUS_SERVICE.EN_EJECUCION.value )
-            Container(
-              width: double.infinity,
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.bus_alert, color: Colors.white,),
-                  Text('¡El vehículo está en camino!', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),),
-                ],
-              ),
-              decoration: const BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10))),
-            )
+            if (booking.service?.state.id == STATUS_SERVICE.EN_EJECUCION.value)
+              Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.bus_alert,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      '¡El vehículo está en camino!',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+              )
           ],
         ),
       ),
@@ -262,18 +270,20 @@ class _QualifiyingBookingWidgetState extends State<QualifiyingBookingWidget> {
               }
               Navigator.pop(context);
             },
-            child: Text('Enviar Calificación'))
+            child: const Text('Enviar Calificación'))
       ],
     );
   }
 }
 
-String changePhrase(int idStateParameterBooking){
-  if(idStateParameterBooking.toString() == STATUS_BOOKING.EN_EJECUCION.value){
+String changePhrase(int idStateParameterBooking) {
+  if (idStateParameterBooking.toString() == STATUS_BOOKING.EN_EJECUCION.value) {
     return 'Abordo';
-  }else if(idStateParameterBooking.toString() == STATUS_BOOKING.APROBADO.value){
+  } else if (idStateParameterBooking.toString() ==
+      STATUS_BOOKING.APROBADO.value) {
     return 'Aprobado';
-  }else if(idStateParameterBooking.toString() == STATUS_BOOKING.PENDIENTE.value){
+  } else if (idStateParameterBooking.toString() ==
+      STATUS_BOOKING.PENDIENTE.value) {
     return 'Pendiente';
   }
   return '';

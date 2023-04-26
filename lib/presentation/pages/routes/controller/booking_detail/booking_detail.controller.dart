@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:carpooling_passenger/data/models/helpers/bookingState.dart';
 import 'package:carpooling_passenger/data/models/passenger/passenger_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -46,6 +47,9 @@ class BookingDetailController extends GetxController {
         .then((value) => value.fold((failure) {
               print('LOG Ocurrió un error BookingById ${failure.message}');
             }, (bookingResponse) {
+              if(bookingResponse.state.id.toString() == STATUS_BOOKING.FINALIZADO.value){
+                Get.offNamed('/home');
+              }
               bookingComplete.value = bookingResponse;
             }));
   }

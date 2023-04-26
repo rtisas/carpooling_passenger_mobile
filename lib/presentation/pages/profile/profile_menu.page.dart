@@ -54,7 +54,7 @@ class ProfileMenuPage extends StatelessWidget {
                 },
               ),
               OptionProfile(
-                title: 'Historial de reservas',
+                title: 'Historial de servicios',
                 iconLeading: Icons.history,
                 onPress: () {
                   Get.toNamed('/history-bookings');

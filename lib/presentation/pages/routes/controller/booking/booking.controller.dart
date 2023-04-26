@@ -26,6 +26,7 @@ class BookingController extends GetxController {
   loadBookingsActiveByPassenger() async {
     isLoading.value = true;
     listBookings.value.clear();
+    listBookings.value = [];
     await getBookingsEjecucionPassenger();
     await getBookingsAprobadoPassenger();
     await getBookingsPendientePassenger();

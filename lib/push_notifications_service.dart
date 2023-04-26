@@ -1,7 +1,11 @@
+import 'package:carpooling_passenger/presentation/pages/routes/controller/booking/booking.controller.dart';
+import 'package:carpooling_passenger/presentation/pages/routes/controller/booking_detail/booking_detail.controller.dart';
+import 'package:carpooling_passenger/presentation/pages/virtual_wallet/controller/virtual_wallet.controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'firebase_options.dart';
 
 class PushNotificationsService {
@@ -13,7 +17,7 @@ class PushNotificationsService {
 
   static Future initializeApp() async {
     //Push notifications
-   
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
       print('Message data: ${message.data}');
@@ -39,17 +43,53 @@ class PushNotificationsService {
   }
 
   static Future _onBackgroundHandler(RemoteMessage message) async {
-    print('LOG backgroundHandeler ${message.messageId}');
+    print('LOG backgroundHandeler ${message.messageId} , ${message}');
+    try {
+      final ctrlVirtualWallet = Get.find<VirtualWalletController>();
+      final ctrlBooking = Get.find<BookingController>();
+      // final ctrlDetailBooking = Get.find<BookingDetailController>();
+      await ctrlVirtualWallet.getVirtualWalletByPassenger();
+      await ctrlVirtualWallet.getHisotoryRecharge();
+      await ctrlBooking.loadBookingsActiveByPassenger();
+      // ctrlDetailBooking.onInit();
+    } catch (e) {
+      print('LOG _onBackgroundHandler catch ${message.messageId}, ${message}');
+    }
+
     showFlutterNotification(message);
   }
 
   static Future _onMessageHandler(RemoteMessage message) async {
-    print('LOG backgroundHandeler ${message.messageId}');
+    print('LOG onMessageHandler ${message.messageId}, ${message}');
+    try {
+      final ctrlVirtualWallet = Get.find<VirtualWalletController>();
+      final ctrlBooking = Get.find<BookingController>();
+      // final ctrlDetailBooking = Get.find<BookingDetailController>();
+      await ctrlVirtualWallet.getVirtualWalletByPassenger();
+      await ctrlVirtualWallet.getHisotoryRecharge();
+      await ctrlBooking.loadBookingsActiveByPassenger();
+      // ctrlDetailBooking.onInit();
+    } catch (e) {
+      print('LOG onMessageHandler catch ${message.messageId}, ${message}');
+    }
+
     showFlutterNotification(message);
   }
 
   static Future _onMessageOpenApp(RemoteMessage message) async {
-    print('LOG backgroundHandeler ${message.messageId}');
+    print('LOG onMessageOpenApp ${message.messageId}, ${message}');
+    try {
+      final ctrlVirtualWallet = Get.find<VirtualWalletController>();
+      final ctrlBooking = Get.find<BookingController>();
+      // final ctrlDetailBooking = Get.find<BookingDetailController>();
+      await ctrlVirtualWallet.getVirtualWalletByPassenger();
+      await ctrlVirtualWallet.getHisotoryRecharge();
+      await ctrlBooking.loadBookingsActiveByPassenger();
+      // ctrlDetailBooking.onInit();
+    } catch (e) {
+      print('LOG onMessageOpenApp catch ${message.messageId}, ${message}');
+    }
+
     showFlutterNotification(message);
   }
 
@@ -67,7 +107,8 @@ class PushNotificationsService {
 
     //logo de la notificación
     var initializationSettingsAndroid = AndroidInitializationSettings('logo');
-    var initializationSettings = InitializationSettings(android: initializationSettingsAndroid );
+    var initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
@@ -79,7 +120,6 @@ class PushNotificationsService {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
-
 
     /// Update the iOS foreground notification presentation options to allow
     /// heads up notifications.
@@ -112,6 +152,7 @@ class PushNotificationsService {
       );
     }
   }
+
   static Future<void> requestPermission() async {
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
