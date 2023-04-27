@@ -117,8 +117,8 @@ class BookingController extends GetxController {
     Get.snackbar(
       title,
       content,
-      backgroundColor: Colors.grey,
-      colorText: Colors.white,
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      colorText: Color.fromARGB(255, 73, 73, 73),
       snackPosition: SnackPosition.TOP,
     );
   }

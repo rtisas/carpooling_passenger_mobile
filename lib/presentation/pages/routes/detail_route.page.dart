@@ -240,6 +240,7 @@ class _FormBooking extends StatelessWidget {
                 TimeOfDay? pickedTime = await showTimePicker(
                   initialTime: TimeOfDay.now(),
                   context: context,
+                  useRootNavigator: false 
                 );
                 if (pickedTime != null) {
                   // print(pickedTime.format(context)); //output 10:51 PM

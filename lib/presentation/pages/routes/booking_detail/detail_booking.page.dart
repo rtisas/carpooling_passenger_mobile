@@ -1,3 +1,4 @@
+import 'package:carpooling_passenger/data/models/helpers/bookingState.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -6,6 +7,7 @@ import '../../../../core/styles/size_config.dart';
 import '../../../../data/models/booking/booking_response.dart';
 import '../../../../data/models/helpers/statusService.dart';
 import '../controller/booking_detail/booking_detail.controller.dart';
+import '../tabs/bookings_availables_tab.dart';
 
 class BookingDetailPage extends StatelessWidget {
   const BookingDetailPage({Key? key}) : super(key: key);
@@ -59,49 +61,55 @@ class BookingDetailPage extends StatelessWidget {
             ? const _FloatingButtonService()
             : Container();
       }),
-      bottomNavigationBar:
-          (detailBookingCtrl.bookingDetailArgument.service != null)
-              ? Container(
-                  margin: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
-                  child: OutlinedButton.icon(
-                    icon: const Icon(Icons.qr_code_2),
-                    onPressed: () {
-                      showDialog(
-                        //TODO:ACTUALIZAR LA BOOKING PARA SABER SI ESTA EN ESTADO FINALIZADO
-                          context: context,
-                          builder: (_) => Obx(() {
-                              return AlertDialog(
-                                    title: Text('Tú código QR de pago'),
-                                    content: (detailBookingCtrl.passenger.value
-                                                ?.basicData.profilePicture?.qrUrl !=
-                                            null)
-                                        ? Image.network(detailBookingCtrl
-                                                .passenger
-                                                .value
-                                                ?.basicData
-                                                .profilePicture
-                                                ?.qrUrl ??
-                                            'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg')
-                                        : Container(),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context)
-                                              .pop(); // Cierra el diálogo
-                                        },
-                                        child: Text('Aceptar'),
-                                      )
-                                    ],
-                                  );
-                            }
-                          ));
-                    },
-                    label: const Text(
-                      'Tú código QR',
-                      style: TextStyle(fontSize: 20, letterSpacing: 2),
-                    ),
-                  ))
-              : null,
+      bottomNavigationBar: (detailBookingCtrl.bookingDetailArgument.service !=
+              null)
+          ? Container(
+              margin: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
+              child: OutlinedButton.icon(
+                icon: const Icon(Icons.qr_code_2),
+                onPressed: () async {
+                  final result = await showDialog(
+                    //TODO:ACTUALIZAR LA BOOKING PARA SABER SI ESTA EN ESTADO FINALIZADO
+                    context: context,
+                    builder: (_) => Obx(() {
+                      return AlertDialog(
+                        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                        title: Text('Tú código QR de pago'),
+                        content: (detailBookingCtrl.passenger.value?.basicData
+                                    .profilePicture?.qrUrl !=
+                                null)
+                            ? Image.network(detailBookingCtrl.passenger.value
+                                    ?.basicData.profilePicture?.qrUrl ??
+                                'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg')
+                            : Container(),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context, 'ok'); // Cierra el diálogo
+                            },
+                            child: Text('Aceptar'),
+                          )
+                        ],
+                      );
+                    }),
+                  );
+                  if (detailBookingCtrl.bookingComplete.value?.state.id
+                          .toString() ==
+                      STATUS_BOOKING.EN_EJECUCION.value) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return QualifiyingBookingWidget(
+                              booking: detailBookingCtrl.bookingDetailArgument);
+                        });
+                  }
+                },
+                label: const Text(
+                  'Tú código QR',
+                  style: TextStyle(fontSize: 20, letterSpacing: 2),
+                ),
+              ))
+          : null,
     );
   }
 }

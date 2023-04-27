@@ -45,7 +45,9 @@ class HistoryBookingsController extends GetxController {
                         print('LOG get reservas eliminadas${1}');
                         isLoading.value = false;
                         historyBookings.value.addAll(bookingsResponse);
+                        historyBookings.value.sort((a, b) => b.dateBooking.compareTo(a.dateBooking));
                       }));
+
             }));
   }
 }

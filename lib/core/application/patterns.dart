@@ -12,7 +12,7 @@ class Patterns {
   }
 
   static RegExp patternNumbers() {
-    return RegExp('^([1-9]\\d{8,48})\$', caseSensitive: false);
+    return RegExp('^([1-9]\\d{8,15})\$', caseSensitive: false);
   }
 
   static RegExp patternName() {
