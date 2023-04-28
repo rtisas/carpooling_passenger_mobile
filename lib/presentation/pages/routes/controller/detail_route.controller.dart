@@ -15,6 +15,8 @@ class DetailRouteController extends GetxController {
   RxString idSelectedStartStation = "0".obs;
   RxString idSelectedEndStation = "0".obs;
 
+  Rx<TimeOfDay?> pickedTime = Rx(null);
+
   //Formulario
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RxBool isValidForm = false.obs;
@@ -138,8 +140,8 @@ class DetailRouteController extends GetxController {
     Get.snackbar(
       title,
       content,
-      backgroundColor: Colors.grey,
-      colorText: Colors.white,
+      backgroundColor: Colors.white,
+      colorText: Color.fromARGB(255, 46, 46, 46),
       snackPosition: SnackPosition.TOP,
     );
     Get.offAllNamed('/home');

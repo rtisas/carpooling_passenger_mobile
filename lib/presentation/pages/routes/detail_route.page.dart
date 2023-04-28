@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -237,24 +238,62 @@ class _FormBooking extends StatelessWidget {
                   labelText: "Selecciona la hora"),
               readOnly: true,
               onTap: () async {
-                TimeOfDay? pickedTime = await showTimePicker(
-                  initialTime: TimeOfDay.now(),
+                List<String> timesEnabled =
+                    detailRouteCtrl.route.availableTime.split('-');
+                String timeFirstString = timesEnabled[0];
+                DateTime parsedTime =
+                    DateFormat('h:mm a').parse(timeFirstString);
+                DateTime time = DateFormat.jm().parse(timeFirstString);
+                int hourFirst = time.hour;
+                int minuteFirst = time.minute;
+
+                String timeEndString = timesEnabled[1];
+                DateTime parsedTimeEnd =
+                    DateFormat('h:mm a').parse(timeEndString);
+                DateTime timeEnd = DateFormat.jm().parse(timeEndString);
+                int hourEnd = timeEnd.hour;
+                int minuteEnd = timeEnd.minute;
+
+                showModalBottomSheet(
                   context: context,
-                  useRootNavigator: false 
+                  builder: (BuildContext builder) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Intervalo de tiempo disponible ${detailRouteCtrl.route.availableTime}',
+                          style: TextStyle(fontSize: 17),
+                        ),
+                        Container(
+                          height: 200,
+                          child: CupertinoDatePicker(
+                            initialDateTime: DateTime.now(),
+                            onDateTimeChanged: (DateTime newdate) {
+                              DateTime parsedTime = DateFormat.jm().parse(TimeOfDay.fromDateTime(newdate).format(context).toString());
+                              String formattedTime = DateFormat('HH:mm:ss').format(parsedTime);
+                              detailRouteCtrl.timeinput.text = TimeOfDay.fromDateTime(newdate).format(context);
+                            },
+                            use24hFormat: false,
+                            minuteInterval: 1,
+                            mode: CupertinoDatePickerMode.time,
+                            minimumDate: DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day,
+                                hourFirst,
+                                minuteFirst),
+                            maximumDate: DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day,
+                                hourEnd,
+                                minuteEnd),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 );
-                if (pickedTime != null) {
-                  // print(pickedTime.format(context)); //output 10:51 PM
-                  DateTime parsedTime = DateFormat.jm()
-                      .parse(pickedTime.format(context).toString());
-                  // print(parsedTime); //output 1970-01-01 22:53:00.000
-                  String formattedTime =
-                      DateFormat('HH:mm:ss').format(parsedTime);
-                  // print(formattedTime); //output 14:59:00
-                  //DateFormat() is from intl package, you can format the time on any pattern you need.
-                  detailRouteCtrl.timeinput.text = pickedTime.format(context);
-                } else {
-                  // print("Time is not selected");
-                }
               },
             ),
             Container(
