@@ -14,7 +14,7 @@ class HistoryBookingsPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text('Historial de reservas'),
+          title: const Text('Historial de servicios'),
         ),
         body: Obx(() {
           return (ctrlHisotryBookings.isLoading.value)
