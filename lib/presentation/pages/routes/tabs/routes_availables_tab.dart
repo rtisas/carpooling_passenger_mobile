@@ -30,9 +30,9 @@ class _RoutesAvailablesTabState extends State<RoutesAvailablesTab>
         physics: (homeCtrl.listRoutes.value.length <= 6)? const AlwaysScrollableScrollPhysics() :const BouncingScrollPhysics(),
         child: Obx(() {
           return (homeCtrl.isLoading.value)
-              ? Container(
+              ? SizedBox(
                 height: SizeConfig.safeBlockSizeVertical(75),
-                child: Center(
+                child: const Center(
                     child: CircularProgressIndicator(),
                   ),
               )
@@ -40,7 +40,7 @@ class _RoutesAvailablesTabState extends State<RoutesAvailablesTab>
                 child: Column(
                     children: [
                       if(homeCtrl.listRoutes.value.isEmpty)
-                      Center(child: Text('No hay rutas disponibles al momento')),
+                      const Center(child: Text('No hay rutas disponibles al momento')),
                       ...homeCtrl.listRoutes.value
                           .map((route) => CardRoute(route: route))
                     ],

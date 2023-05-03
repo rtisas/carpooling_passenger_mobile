@@ -153,7 +153,7 @@ class _FormBooking extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Estación inicial'),
+            Text('Parada inicial'),
             Obx(() {
               return DropdownButtonFormField(
                   isExpanded: true,
@@ -176,7 +176,7 @@ class _FormBooking extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Estación final'),
+                  const Text('Parada final'),
                   // if (detailRouteCtrl.stationsDropdownEnd.isNotEmpty)
                   DropdownButtonFormField(
                       validator: (value) {
@@ -262,15 +262,14 @@ class _FormBooking extends StatelessWidget {
                       children: [
                         Text(
                           'Intervalo de tiempo disponible ${detailRouteCtrl.route.availableTime}',
-                          style: TextStyle(fontSize: 17),
+                          style: TextStyle(fontSize: 14),
                         ),
                         Container(
                           height: 200,
                           child: CupertinoDatePicker(
+
                             initialDateTime: DateTime.now(),
                             onDateTimeChanged: (DateTime newdate) {
-                              DateTime parsedTime = DateFormat.jm().parse(TimeOfDay.fromDateTime(newdate).format(context).toString());
-                              String formattedTime = DateFormat('HH:mm:ss').format(parsedTime);
                               detailRouteCtrl.timeinput.text = TimeOfDay.fromDateTime(newdate).format(context);
                             },
                             use24hFormat: false,

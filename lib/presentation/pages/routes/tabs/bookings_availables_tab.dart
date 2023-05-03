@@ -103,16 +103,20 @@ class _CardBooking extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 40),
-                  child: Column(
-                    children: [
-                      Chip(
-                        backgroundColor: booking.color,
-                        label: Text(changePhrase(booking.state.id)),
-                      ),
-                      if (booking.service != null)
-                        Text('Vehículo ${booking.service?.vehicle?.plate}')
-                    ],
+                  padding: EdgeInsets.only(right: 10),
+                  child: Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Chip(
+                          backgroundColor: booking.color,
+                          label: Text(changePhrase(booking.state.id)),
+                        ),
+                        if (booking.service != null)
+                          Text('Vehículo ${booking.service?.vehicle?.plate}')
+                      ],
+                    ),
                   ),
                 )
               ],
