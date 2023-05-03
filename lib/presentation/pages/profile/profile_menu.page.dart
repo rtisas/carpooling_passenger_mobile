@@ -68,6 +68,13 @@ class ProfileMenuPage extends StatelessWidget {
                 },
               ),
               OptionProfile(
+                title: 'Datos frecuentes',
+                iconLeading: Icons.find_replace_rounded,
+                onPress: () {
+                    Get.toNamed('/frecuent_profile');
+                },
+              ),
+              OptionProfile(
                 title: 'Cerrar Sesión',
                 iconLeading: Icons.exit_to_app_outlined,
                 onPress: () async {
