@@ -74,13 +74,18 @@ class BookingDetailPage extends StatelessWidget {
                     builder: (_) => Obx(() {
                       return AlertDialog(
                         backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                        title: Text('Tú código QR de pago'),
+                        title: const Text('Tú código QR de pago'),
                         content: (detailBookingCtrl.passenger.value?.basicData
                                     .profilePicture?.qrUrl !=
                                 null)
-                            ? Image.network(detailBookingCtrl.passenger.value
-                                    ?.basicData.profilePicture?.qrUrl ??
-                                'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg')
+                            ? Image.network(
+                                detailBookingCtrl.passenger.value?.basicData
+                                        .profilePicture?.qrUrl ??
+                                    'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg',
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Text('No se pudo cargar el código QR');
+                                },
+                              )
                             : Container(),
                         actions: [
                           TextButton(
@@ -250,14 +255,18 @@ class _CardServiceInformation extends StatelessWidget {
             Row(children: [
               const Text('Conductor ',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
-              Text(
-                  '${bookingDetail.service?.driver?.basicData.firstName} ${bookingDetail.service?.driver?.basicData.lastName}')
+              Expanded(
+                child: Text(
+                    '${bookingDetail.service?.driver?.basicData.firstName} ${bookingDetail.service?.driver?.basicData.lastName}'),
+              )
             ]),
             Row(children: [
               const Text('Vehículo ',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
-              Text(
-                  '${bookingDetail.service?.vehicle?.plate} ${bookingDetail.service?.vehicle?.vehicleClass.parameterValue}')
+              Expanded(
+                child: Text(
+                    '${bookingDetail.service?.vehicle?.plate} ${bookingDetail.service?.vehicle?.vehicleClass.parameterValue}'),
+              )
             ]),
           ],
         ),
