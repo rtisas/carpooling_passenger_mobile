@@ -110,11 +110,11 @@ class _CustomVirtualWalletWidget extends StatelessWidget {
                                           content: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: const [
-                                              Text('Para nosotros es importante tu seguridad, es por ello necesario comunicarse a través de los siguientes canales de información para solicitar una recarga de tu billetera virtual.'),
-                                              Divider(),
-                                              Text('info@rtisas.com.co', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),),
-                                              Text('recursosbiiletera@rtisas.com', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                                            children:  [
+                                              const Text('Para nosotros es importante tu seguridad, es por ello necesario comunicarse a través de los siguientes canales de información para solicitar una recarga de tu billetera virtual.'),
+                                              const Divider(),
+                                              Text(virtualCtrl.passenger.value?.transportCompany.email ?? '', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),),
+                                              Text(virtualCtrl.passenger.value?.transportCompany.phoneNumber ?? '', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                                             ],
                                           ),
                                         );

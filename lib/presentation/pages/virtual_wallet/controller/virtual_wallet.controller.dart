@@ -14,13 +14,13 @@ class VirtualWalletController extends GetxController {
   RxBool userContainVirtualWallet = false.obs;
   Rx<VirtualWalletResponse?> virtualWalletPassenger = Rx(null);
   Rx<List<HisotoryRecharge>> historyRecharge = Rx([]);
-  late PassengerResoponse passenger;
+  Rx<PassengerResoponse?> passenger = Rx(null);
 
   VirtualWalletController(this._virtualWalletUseCase);
 
   @override
   void onInit() async {
-    passenger = PassengerResoponse.fromJson(
+    passenger.value = PassengerResoponse.fromJson(
         jsonDecode(await Preferences.storage.read(key: "userPassenger") ?? ''));
     getVirtualWalletByPassenger();
     getHisotoryRecharge();
@@ -29,7 +29,7 @@ class VirtualWalletController extends GetxController {
 
   getVirtualWalletByPassenger() async {
     _virtualWalletUseCase
-        .getVirtualWalletByPassenger(passenger.id.toString())
+        .getVirtualWalletByPassenger(passenger.value?.id.toString() ?? '0')
         .then((value) => value.fold((l) {
               print('LOG Ocurrió un error ${l.message}');
               userContainVirtualWallet.value = false;
@@ -42,7 +42,7 @@ class VirtualWalletController extends GetxController {
   getHisotoryRecharge() async {
     historyRecharge.value = [];
     _virtualWalletUseCase
-        .getHistoryRechargePassenger(passenger.id.toString())
+        .getHistoryRechargePassenger(passenger.value?.id.toString() ?? '')
         .then((value) => value.fold((errorRespose) {
               print(
                   'LOG Ocurrió un erorr al cargar historyRecharge ${errorRespose}');
