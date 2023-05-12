@@ -48,7 +48,7 @@ class BookingDetailController extends GetxController {
               print('LOG Ocurrió un error BookingById ${failure.message}');
             }, (bookingResponse) {
               if(bookingResponse.state.id.toString() == STATUS_BOOKING.FINALIZADO.value){
-                Get.offNamed('/home');
+                Get.offAllNamed('/home');
               }
               bookingComplete.value = bookingResponse;
             }));

@@ -27,6 +27,11 @@ class BookingController extends GetxController {
     isLoading.value = true;
     listBookings.value.clear();
     listBookings.value = [];
+    listBookings.update((val) { 
+    listBookings.value = [];
+    });
+    listBookings.refresh();
+    await Future.delayed(Duration(seconds: 5));
     await getBookingsEjecucionPassenger();
     await getBookingsAprobadoPassenger();
     await getBookingsPendientePassenger();

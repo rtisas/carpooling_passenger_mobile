@@ -20,8 +20,9 @@ class ServiceDetailMapScreen extends StatelessWidget {
       body: const _MapsRouteComponent(),
       floatingActionButton: Obx(() {
           return FloatingActionButton.extended(
-            onPressed: () {
+            onPressed: () async {
               detailServiceCtrl.followerVehicle.value = !detailServiceCtrl.followerVehicle.value;
+              await detailServiceCtrl.getLocationDriverRealTime();
             },
             label: (detailServiceCtrl.followerVehicle.value)?  const Text('Dejar de seguir') : const Text('Seguir vehículo'),
             icon: (detailServiceCtrl.followerVehicle.value)? const Icon(Icons.bus_alert) :  const Icon(Icons.location_searching_sharp),

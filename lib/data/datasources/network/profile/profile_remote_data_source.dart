@@ -151,18 +151,16 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
             responseType: ResponseType.bytes,
           ));
       if (response.statusCode == 200) {
-        final directorio = await getApplicationDocumentsDirectory();
-        final rutaCompleta = '${directorio.path}/documento.pdf';
-        try {
-          final bytes = response.data;
-          final archivo = File(rutaCompleta);
-          await archivo.writeAsBytes(bytes);
-          return archivo;
-        } catch (e) {
-          print('LOG convertir error pdf ${e}');
+        final bytes = response.data;
+        Directory? dir;
+        if (Platform.isAndroid) {
+          dir = await getExternalStorageDirectory();
+        } else if (Platform.isIOS) {
+          dir = await getApplicationDocumentsDirectory();
         }
-        return null;
-        // Write down the file as bytes from the bytes getted from the HTTP request.
+        final file = File('${dir?.path}/carnet_$idPassanger.pdf');
+        await file.writeAsBytes(bytes);
+        return file;
       } else {
         throw ServerException();
       }

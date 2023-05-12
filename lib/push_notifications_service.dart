@@ -47,11 +47,13 @@ class PushNotificationsService {
     try {
       final ctrlVirtualWallet = Get.find<VirtualWalletController>();
       final ctrlBooking = Get.find<BookingController>();
-      // final ctrlDetailBooking = Get.find<BookingDetailController>();
+      final ctrlDetailBooking = Get.find<BookingDetailController>();
       await ctrlVirtualWallet.getVirtualWalletByPassenger();
       await ctrlVirtualWallet.getHisotoryRecharge();
       await ctrlBooking.loadBookingsActiveByPassenger();
-      // ctrlDetailBooking.onInit();
+      if (ctrlDetailBooking.initialized) {
+        ctrlDetailBooking.onInit();
+      }
     } catch (e) {
       print('LOG _onBackgroundHandler catch ${message.messageId}, ${message}');
     }
@@ -64,11 +66,13 @@ class PushNotificationsService {
     try {
       final ctrlVirtualWallet = Get.find<VirtualWalletController>();
       final ctrlBooking = Get.find<BookingController>();
-      // final ctrlDetailBooking = Get.find<BookingDetailController>();
+      final ctrlDetailBooking = Get.find<BookingDetailController>();
       await ctrlVirtualWallet.getVirtualWalletByPassenger();
       await ctrlVirtualWallet.getHisotoryRecharge();
       await ctrlBooking.loadBookingsActiveByPassenger();
-      // ctrlDetailBooking.onInit();
+      if (ctrlDetailBooking.initialized) {
+        ctrlDetailBooking.onInit();
+      }
     } catch (e) {
       print('LOG onMessageHandler catch ${message.messageId}, ${message}');
     }
@@ -81,11 +85,13 @@ class PushNotificationsService {
     try {
       final ctrlVirtualWallet = Get.find<VirtualWalletController>();
       final ctrlBooking = Get.find<BookingController>();
-      // final ctrlDetailBooking = Get.find<BookingDetailController>();
+      final ctrlDetailBooking = Get.find<BookingDetailController>();
       await ctrlVirtualWallet.getVirtualWalletByPassenger();
       await ctrlVirtualWallet.getHisotoryRecharge();
       await ctrlBooking.loadBookingsActiveByPassenger();
-      // ctrlDetailBooking.onInit();
+      if (ctrlDetailBooking.initialized) {
+        ctrlDetailBooking.onInit();
+      }
     } catch (e) {
       print('LOG onMessageOpenApp catch ${message.messageId}, ${message}');
     }

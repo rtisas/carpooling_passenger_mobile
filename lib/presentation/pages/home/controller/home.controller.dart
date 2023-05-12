@@ -6,6 +6,7 @@ import 'package:carpooling_passenger/data/models/user/push_token_request.dart';
 import 'package:carpooling_passenger/domain/usescases/profile/profile_use_case.dart';
 import 'package:carpooling_passenger/push_notifications_service.dart';
 import 'package:get/get.dart';
+import 'package:open_file/open_file.dart';
 
 import '../../../../core/application/preferences.dart';
 import '../../../../data/models/routes/route_response.dart';
@@ -73,6 +74,7 @@ class HomeController extends GetxController {
             }, (responseFile) {
               isLoading.value = false;
               print('LOG se ha descargado el documento ${ 1 }');
+              OpenFile.open(responseFile?.path);
               return responseFile;
             }));
   }

@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:carpooling_passenger/presentation/pages/home/controller/home.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../../core/application/preferences.dart';
 import '../auth/login.page.dart';
@@ -61,13 +58,6 @@ class ProfileMenuPage extends StatelessWidget {
                 },
               ),
               OptionProfile(
-                title: 'Promociones',
-                iconLeading: Icons.topic_outlined,
-                onPress: () {
-                  print('LOG press Promociones ${1}');
-                },
-              ),
-              OptionProfile(
                 title: 'Datos frecuentes',
                 iconLeading: Icons.find_replace_rounded,
                 onPress: () {
@@ -88,16 +78,7 @@ class ProfileMenuPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          File? file = await homeCtrl.getDocumentPassenger();
-          if (file != null) {
-            final box = context.findRenderObject() as RenderBox?;
-            Share.shareXFiles(
-              [XFile(file.path)],
-              text: 'Mi carnet',
-              sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
-            );
-          }
-          // }
+           await homeCtrl.getDocumentPassenger();
         },
         label: const Text('Carnet'),
         icon: const Icon(Icons.assignment_ind_rounded),
