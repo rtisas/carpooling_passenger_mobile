@@ -47,32 +47,38 @@ class BookingDetailController extends GetxController {
         .then((value) => value.fold((failure) {
               print('LOG Ocurrió un error BookingById ${failure.message}');
             }, (bookingResponse) {
-              if(bookingResponse.state.id.toString() == STATUS_BOOKING.FINALIZADO.value){
+              if (bookingResponse.state.id.toString() ==
+                  STATUS_BOOKING.FINALIZADO.value) {
                 Get.offAllNamed('/home');
               }
               bookingComplete.value = bookingResponse;
             }));
   }
 
-  setMarkesInParadaStartAndEnd() {
-    markersRoute.value.add(Marker(
-        markerId: MarkerId(bookingDetailArgument.startStation.index.toString()),
-        position: LatLng(
-            double.parse(bookingDetailArgument.startStation.latitude),
-            double.parse(bookingDetailArgument.startStation.longitude)),
-        icon: BitmapDescriptor.defaultMarker,
-        infoWindow: InfoWindow(
-          title: bookingDetailArgument.startStation.nameStation,
-        )));
-    markersRoute.value.add(Marker(
-        markerId: MarkerId(bookingDetailArgument.endStation.index.toString()),
-        position: LatLng(
-            double.parse(bookingDetailArgument.endStation.latitude),
-            double.parse(bookingDetailArgument.endStation.longitude)),
-        icon: BitmapDescriptor.defaultMarker,
-        infoWindow: InfoWindow(
-          title: bookingDetailArgument.endStation.nameStation,
-        )));
+  setMarkesInParadaStartAndEnd() async {
+    await BitmapDescriptor.fromAssetImage(
+            ImageConfiguration.empty, 'assets/parada.png')
+        .then((value) {
+      markersRoute.value.add(Marker(
+          markerId:
+              MarkerId(bookingDetailArgument.startStation.index.toString()),
+          position: LatLng(
+              double.parse(bookingDetailArgument.startStation.latitude),
+              double.parse(bookingDetailArgument.startStation.longitude)),
+          icon: value,
+          infoWindow: InfoWindow(
+            title: bookingDetailArgument.startStation.nameStation,
+          )));
+      markersRoute.value.add(Marker(
+          markerId: MarkerId(bookingDetailArgument.endStation.index.toString()),
+          position: LatLng(
+              double.parse(bookingDetailArgument.endStation.latitude),
+              double.parse(bookingDetailArgument.endStation.longitude)),
+          icon: value,
+          infoWindow: InfoWindow(
+            title: bookingDetailArgument.endStation.nameStation,
+          )));
+    });
   }
 
   getWayPointsFromGoogleMaps() async {
@@ -93,16 +99,5 @@ class BookingDetailController extends GetxController {
               isLoading.value = false;
               return polylinePoints;
             }));
-  }
-
-  void showMessage(String title, String content) {
-    Get.closeAllSnackbars();
-    Get.snackbar(
-      title,
-      content,
-      backgroundColor: Colors.grey,
-      colorText: Colors.white,
-      snackPosition: SnackPosition.TOP,
-    );
   }
 }

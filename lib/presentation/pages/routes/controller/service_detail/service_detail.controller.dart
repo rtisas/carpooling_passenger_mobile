@@ -59,12 +59,15 @@ class ServiceDetailController extends GetxController {
   }
 
   followDriver() async {
-    if (postionConductor.value != null && postionConductor.value?.latitude != null && postionConductor.value?.longitude != null) {
+    if (postionConductor.value != null &&
+        postionConductor.value?.latitude != null &&
+        postionConductor.value?.longitude != null) {
       GoogleMapController googleMapController = await controllerMap.future;
       googleMapController.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(
               zoom: 16.5,
-              target: LatLng(postionConductor.value!.latitude, postionConductor.value!.longitude))));
+              target: LatLng(postionConductor.value!.latitude,
+                  postionConductor.value!.longitude))));
     }
   }
 
@@ -90,16 +93,21 @@ class ServiceDetailController extends GetxController {
               for (var station in listStations.value) {
                 latLen.add(LatLng(double.parse(station.latitude),
                     double.parse(station.longitude)));
-                Marker marker = Marker(
-                  markerId: MarkerId(station.index.toString()),
-                  position: LatLng(double.parse(station.latitude),
-                      double.parse(station.longitude)),
-                  icon: BitmapDescriptor.defaultMarker,
-                  infoWindow: InfoWindow(
-                    title: station.nameStation,
-                  ),
-                );
-                markersRoute.value.add(marker);
+
+                await BitmapDescriptor.fromAssetImage(
+                        ImageConfiguration.empty, 'assets/parada.png')
+                    .then((value) {
+                  Marker marker = Marker(
+                    markerId: MarkerId(station.index.toString()),
+                    position: LatLng(double.parse(station.latitude),
+                        double.parse(station.longitude)),
+                    icon: value,
+                    infoWindow: InfoWindow(
+                      title: station.nameStation,
+                    ),
+                  );
+                  markersRoute.value.add(marker);
+                });
               }
               return await getWayPointsFromGoogleMaps();
             }));

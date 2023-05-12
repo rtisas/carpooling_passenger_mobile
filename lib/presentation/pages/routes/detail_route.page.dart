@@ -92,7 +92,7 @@ class _MapsState extends State<_Maps> with SingleTickerProviderStateMixin {
                       if (routeCtrl.polylinePoints != null)
                         Polyline(
                           polylineId: const PolylineId('overview_polyline'),
-                          color: Colors.red,
+                          color: Colors.blue,
                           width: 5,
                           points: routeCtrl.polylinePoints!.value
                               .map((e) => LatLng(e.latitude, e.longitude))

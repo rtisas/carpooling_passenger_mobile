@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -37,16 +38,19 @@ class RoutesController extends GetxController {
               for (var station in listStations.value) {
                 latLen.add(LatLng(double.parse(station.latitude),
                     double.parse(station.longitude)));
-                Marker marker = Marker(
-                  markerId: MarkerId(station.index.toString()),
-                  position: LatLng(double.parse(station.latitude),
-                      double.parse(station.longitude)),
-                  icon: BitmapDescriptor.defaultMarker,
-                  infoWindow: InfoWindow(
-                    title: station.nameStation,
-                  )
-                );
-                markersRoute.value.add(marker);
+                await BitmapDescriptor.fromAssetImage(
+                        ImageConfiguration.empty, 'assets/parada.png')
+                    .then((value) {
+                  Marker marker = Marker(
+                      markerId: MarkerId(station.index.toString()),
+                      position: LatLng(double.parse(station.latitude),
+                          double.parse(station.longitude)),
+                      icon: value,
+                      infoWindow: InfoWindow(
+                        title: station.nameStation,
+                      ));
+                  markersRoute.value.add(marker);
+                });
               }
               return await getWayPointsFromGoogleMaps();
             }));
@@ -54,7 +58,8 @@ class RoutesController extends GetxController {
 
   getWayPointsFromGoogleMaps() async {
     //TODO: EL 99 ES LA ÚLTIMA ESTACIÓN
-    StationResponse destine = listStations.value.where((element) => element.index == 99).toList()[0];
+    StationResponse destine =
+        listStations.value.where((element) => element.index == 99).toList()[0];
     String latlogDestine = '${destine.latitude},${destine.longitude}';
     List<String> waypoints =
         latLen.map((e) => '${e.latitude},${e.longitude}').toList();

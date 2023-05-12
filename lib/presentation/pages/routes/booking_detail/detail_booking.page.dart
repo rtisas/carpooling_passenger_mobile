@@ -324,7 +324,7 @@ class _MapsWithRouteAndCurrentPosition extends StatelessWidget {
                     polylines: {
                       Polyline(
                           polylineId: const PolylineId('overview_polyline1'),
-                          color: Colors.red,
+                          color: Colors.blue,
                           width: 5,
                           points: detailBookingCtrl.polylinePoints!.value
                               .map((e) => LatLng(e.latitude, e.longitude))

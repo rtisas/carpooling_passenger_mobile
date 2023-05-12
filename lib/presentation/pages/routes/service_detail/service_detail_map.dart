@@ -56,7 +56,7 @@ class _MapsRouteComponent extends StatelessWidget {
                   if (detailServiceCtrl.polylinePoints != null)
                     Polyline(
                       polylineId: const PolylineId('overview_polyline'),
-                      color: Colors.red,
+                      color: Colors.blue,
                       width: 5,
                       points: detailServiceCtrl.polylinePoints!.value
                           .map((e) => LatLng(e.latitude, e.longitude))
