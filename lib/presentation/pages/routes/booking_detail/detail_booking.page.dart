@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../../core/application/helpers.dart';
 import '../../../../core/styles/size_config.dart';
 import '../../../../data/models/booking/booking_response.dart';
 import '../../../../data/models/helpers/statusService.dart';
@@ -197,6 +198,11 @@ class _DataBookingInformation extends StatelessWidget {
               const Text('Ruta: ',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
               Text('${bookingDetail.route?.nameRoute}')
+            ]),
+            Row(children: [
+              const Text('Precio: ',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
+              Text(Helpers.formatCurrency(double.parse(bookingDetail.route?.price ?? '0')))
             ]),
             Row(children: [
               const Text('Hora estiamda bus: ',

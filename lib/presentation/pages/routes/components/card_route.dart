@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/application/helpers.dart';
 import '../../../../data/models/routes/route_response.dart';
 
 class CardRoute extends StatelessWidget {
@@ -46,7 +47,11 @@ class CardRoute extends StatelessWidget {
                       Container(
                           margin: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 10),
-                          child: Text(route.availableTime))
+                          child: Text(route.availableTime)),
+                      Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          child: Text('\$${Helpers.formatCurrency(double.parse(route.price ?? '0'))}'))
                     ],
                   ),
                 )

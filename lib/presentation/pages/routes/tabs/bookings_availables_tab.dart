@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/application/helpers.dart';
+
 class BookingsAvailablesTab extends StatelessWidget {
   const BookingsAvailablesTab({Key? key}) : super(key: key);
 
@@ -104,19 +106,18 @@ class _CardBooking extends StatelessWidget {
                 ),
                 Container(
                   padding: EdgeInsets.only(right: 10),
-                  child: Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Chip(
-                          backgroundColor: booking.color,
-                          label: Text(changePhrase(booking.state.id)),
-                        ),
-                        if (booking.service != null)
-                          Text('Vehículo ${booking.service?.vehicle?.plate}')
-                      ],
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Chip(
+                        backgroundColor: booking.color,
+                        label: Text(changePhrase(booking.state.id)),
+                      ),
+                      if (booking.service != null)
+                        Text('Vehículo ${booking.service?.vehicle?.plate}'),
+                      Text('Precio ${Helpers.formatCurrency(double.parse(booking.route?.price ?? '0' ))}')
+                    ],
                   ),
                 )
               ],
@@ -138,7 +139,8 @@ class _CardBooking extends StatelessWidget {
                               });
                         },
                         child: const Text('Calificar servicio')),
-                  if (booking.state.id.toString() != STATUS_BOOKING.EN_EJECUCION.value)
+                  if (booking.state.id.toString() !=
+                      STATUS_BOOKING.EN_EJECUCION.value)
                     TextButton(
                       child: const Text('Cancelar'),
                       onPressed: () {

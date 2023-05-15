@@ -8,6 +8,7 @@ class RouteResponse {
         required this.id,
         required this.nameRoute,
         required this.availableDays,
+        required this.price,
     });
 
     String availableTime;
@@ -16,6 +17,7 @@ class RouteResponse {
     int id;
     String nameRoute;
     String availableDays;
+    String? price;
 
     factory RouteResponse.fromJson(Map<String, dynamic> json) => RouteResponse(
         availableTime: json["availableTime"],
@@ -23,6 +25,7 @@ class RouteResponse {
         companyResponsible: Company.fromJson(json["companyResponsible"]),
         id: json["id"],
         nameRoute: json["nameRoute"],
+        price: json["price"],
         availableDays: json["availableDays"],
     );
 
@@ -32,6 +35,7 @@ class RouteResponse {
         "companyResponsible": companyResponsible.toJson(),
         "id": id,
         "nameRoute": nameRoute,
+        "price": price,
         "availableDays": availableDays,
     };
 }

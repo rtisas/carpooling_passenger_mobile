@@ -117,6 +117,8 @@ class _GenerateBooking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final detailRouteCtrl = Get.find<DetailRouteController>();
+
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
@@ -124,8 +126,8 @@ class _GenerateBooking extends StatelessWidget {
             Container(
               margin: const EdgeInsets.all(15),
               alignment: Alignment.topLeft,
-              child: const Text(
-                '¡Reserva tu puesto ahora!',
+              child: Text(
+                '¡Reserva tu puesto ahora! - \$${detailRouteCtrl.route.price}',
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
             ),
@@ -267,10 +269,11 @@ class _FormBooking extends StatelessWidget {
                         Container(
                           height: 200,
                           child: CupertinoDatePicker(
-
                             initialDateTime: DateTime.now(),
                             onDateTimeChanged: (DateTime newdate) {
-                              detailRouteCtrl.timeinput.text = TimeOfDay.fromDateTime(newdate).format(context);
+                              detailRouteCtrl.timeinput.text =
+                                  TimeOfDay.fromDateTime(newdate)
+                                      .format(context);
                             },
                             use24hFormat: false,
                             minuteInterval: 1,
