@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../data/models/routes/station_response.dart';
 import '../../../../domain/usescases/routes/routes_use_case.dart';
+import 'dart:io' show Platform;
 
 class RoutesController extends GetxController {
   final RoutesUseCase routesUseCase;
@@ -39,7 +40,10 @@ class RoutesController extends GetxController {
                 latLen.add(LatLng(double.parse(station.latitude),
                     double.parse(station.longitude)));
                 await BitmapDescriptor.fromAssetImage(
-                        ImageConfiguration.empty, 'assets/parada.png')
+                        ImageConfiguration.empty,
+                        Platform.isIOS
+                            ? 'assets/parada_ios.png'
+                            : 'assets/parada.png')
                     .then((value) {
                   Marker marker = Marker(
                       markerId: MarkerId(station.index.toString()),

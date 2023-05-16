@@ -127,7 +127,7 @@ class _GenerateBooking extends StatelessWidget {
               margin: const EdgeInsets.all(15),
               alignment: Alignment.topLeft,
               child: Text(
-                '¡Reserva tu puesto ahora! - \$${detailRouteCtrl.route.price}',
+                '¡Reserva tu puesto ahora! - \$${detailRouteCtrl.route.price ?? '0'}',
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
             ),

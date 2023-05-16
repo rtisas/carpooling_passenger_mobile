@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:carpooling_passenger/data/models/helpers/bookingState.dart';
 import 'package:carpooling_passenger/data/models/passenger/passenger_response.dart';
@@ -57,7 +58,9 @@ class BookingDetailController extends GetxController {
 
   setMarkesInParadaStartAndEnd() async {
     await BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, 'assets/parada.png')
+            ImageConfiguration.empty,    Platform.isIOS
+                            ? 'assets/parada_ios.png'
+                            : 'assets/parada.png')
         .then((value) {
       markersRoute.value.add(Marker(
           markerId:

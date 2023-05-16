@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +96,10 @@ class ServiceDetailController extends GetxController {
                     double.parse(station.longitude)));
 
                 await BitmapDescriptor.fromAssetImage(
-                        ImageConfiguration.empty, 'assets/parada.png')
+                        ImageConfiguration.empty,
+                        Platform.isIOS
+                            ? 'assets/parada_ios.png'
+                            : 'assets/parada.png')
                     .then((value) {
                   Marker marker = Marker(
                     markerId: MarkerId(station.index.toString()),
