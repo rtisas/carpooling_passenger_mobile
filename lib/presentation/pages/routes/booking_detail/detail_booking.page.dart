@@ -212,7 +212,7 @@ class _DataBookingInformation extends StatelessWidget {
             Row(children: [
               const Text('Fecha: ',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
-              Text('${bookingDetail.service?.dateService.year}-${bookingDetail.service?.dateService.month}-${bookingDetail.service?.dateService.day}' ?? 'No definida')
+              Text('${bookingDetail.service?.dateService.year ?? ''}-${bookingDetail.service?.dateService.month ?? '' }-${bookingDetail.service?.dateService.day ?? ''}' ?? 'No definida')
             ]),
             Row(children: [
               const Text('Parada de inicio: ',
